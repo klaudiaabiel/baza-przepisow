@@ -490,7 +490,7 @@
         <!-- Recipe Header & Image -->
         <div class="relative bg-stone-900 text-white min-h-[220px] flex items-end p-6 sm:p-8">
           <div class="absolute inset-0 overflow-hidden">
-            <img id="modal-img" src="" alt="" class="w-full h-full object-cover opacity-40 blur-xs" onerror="handleImageError(this, '')">
+            <img id="modal-img" src="" alt="" class="w-full h-full object-cover opacity-40 blur-xs" onerror="handleImageError(this)">
             <div class="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-900/60 to-transparent"></div>
           </div>
 
@@ -508,7 +508,7 @@
 
             <!-- Dish icon preview -->
             <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-white/10 backdrop-blur-md p-1 border border-white/20 shadow-lg flex-shrink-0 self-start sm:self-auto overflow-hidden">
-              <img id="modal-thumb" src="" alt="" class="w-full h-full object-cover rounded-xl" onerror="handleImageError(this, '')">
+              <img id="modal-thumb" src="" alt="" class="w-full h-full object-cover rounded-xl" onerror="handleImageError(this)">
             </div>
           </div>
         </div>
@@ -1005,7 +1005,7 @@
         container.innerHTML = state.recipes.map(r => `
           <div onclick="openRecipeModal(${r.id})" class="bg-white p-3.5 rounded-2xl border border-stone-200 hover:border-brand-500/50 hover:shadow-md transition-all cursor-pointer flex items-center gap-3">
             <div class="w-16 h-16 rounded-xl bg-stone-100 flex-shrink-0 overflow-hidden relative">
-              <img src="${formatImagePath(r.image_path)}" alt="${r.title}" class="w-full h-full object-cover" onerror="handleImageError(this, `${r.title}`)">
+              <img src="${formatImagePath(r.image_path)}" alt="${r.title}" class="w-full h-full object-cover" onerror="handleImageError(this)">
             </div>
             <div class="flex-1 min-w-0">
               <div class="flex items-center gap-1.5 mb-1 flex-wrap">
@@ -1034,7 +1034,7 @@
         <div onclick="openRecipeModal(${r.id})" class="group bg-white rounded-3xl border border-stone-200/80 hover:border-brand-500/40 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer overflow-hidden flex flex-col">
           <!-- Card Image Container -->
           <div class="relative w-full h-48 sm:h-52 bg-stone-100 overflow-hidden">
-            <img src="${formatImagePath(r.image_path)}" alt="${r.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" onerror="handleImageError(this, `${r.title}`)" />
+            <img src="${formatImagePath(r.image_path)}" alt="${r.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" onerror="handleImageError(this)" />
             <!-- Favorite button -->
             <button 
               onclick="event.stopPropagation(); toggleFavorite(${r.id})" 
