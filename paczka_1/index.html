@@ -11,6 +11,9 @@
       darkMode: 'class',
       theme: {
         extend: {
+          aspectRatio: {
+            '4/3': '4 / 3',
+          },
           colors: {
             brand: {
               50: '#ecfdf5',
@@ -65,16 +68,16 @@
     }
   </style>
 </head>
-<body class="bg-stone-50 text-stone-800 min-h-screen flex flex-col antialiased selection:bg-brand-500 selection:text-white">
+<body class="bg-[#FAFAF9] text-stone-800 min-h-screen flex flex-col antialiased selection:bg-brand-500 selection:text-white">
 
   <!-- TOP NAVIGATION -->
-  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-stone-200">
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-stone-200 shadow-2xs">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
         
         <!-- Logo -->
         <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('catalog')">
-          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-emerald-400 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
+          <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-brand-600 to-emerald-400 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
             <i class="fa-solid fa-utensils text-lg"></i>
           </div>
           <div>
@@ -102,20 +105,23 @@
 
         <!-- Right Quick Controls -->
         <div class="flex items-center space-x-2">
+          <!-- Creator Mode Button -->
+          <button onclick="handleCreatorButtonClick()" id="creator-mode-btn" class="px-2.5 py-2 rounded-xl border border-stone-200 text-stone-600 hover:text-amber-600 hover:border-amber-300 hover:bg-amber-50/50 transition-all text-xs font-bold flex items-center gap-1.5" title="Tryb Twórcy / Support">
+            <i class="fa-solid fa-crown text-amber-500"></i>
+            <span id="creator-btn-label" class="hidden sm:inline">Twórca</span>
+          </button>
+          
           <button onclick="toggleFavoritesOnly()" id="fav-toggle-btn" class="p-2.5 rounded-xl border border-stone-200 text-stone-500 hover:text-red-500 hover:border-red-200 hover:bg-red-50 transition-all text-sm font-medium flex items-center gap-1.5" title="Tylko ulubione">
             <i class="fa-solid fa-heart" id="fav-toggle-icon"></i>
             <span class="hidden sm:inline text-xs font-semibold">Ulubione</span>
           </button>
-          <a href="/docs" target="_blank" class="hidden sm:flex p-2.5 rounded-xl border border-stone-200 text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-all text-sm" title="Dokumentacja API">
-            <i class="fa-solid fa-code"></i>
-          </a>
         </div>
       </div>
     </div>
 
-    <!-- Mobile Nav Bar (Bottom or under header) -->
+    <!-- Mobile Nav Bar (Under header) -->
     <div class="md:hidden flex justify-around border-t border-stone-200 bg-white py-2 px-1 text-xs font-semibold">
-      <button onclick="switchTab('catalog')" id="mob-catalog" class="mob-btn flex flex-col items-center text-brand-600 py-1 px-2 rounded-lg">
+      <button onclick="switchTab('catalog')" id="mob-catalog" class="mob-btn flex flex-col items-center text-brand-600 py-1 px-2 rounded-lg font-bold">
         <i class="fa-solid fa-book-open text-base mb-1"></i>Katalog
       </button>
       <button onclick="switchTab('planner')" id="mob-planner" class="mob-btn flex flex-col items-center text-stone-500 py-1 px-2 rounded-lg">
@@ -140,7 +146,6 @@
       
       <!-- HERO SEARCH & FILTERS BANNER -->
       <div class="bg-gradient-to-br from-stone-900 via-stone-800 to-stone-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
-        <!-- Background decorative pattern -->
         <div class="absolute -right-10 -bottom-10 opacity-10 pointer-events-none">
           <i class="fa-solid fa-bowl-food text-[240px]"></i>
         </div>
@@ -197,162 +202,143 @@
             </button>
           </div>
 
-          <!-- Row 2: Subtype Special Filters -->
-          <div class="flex items-center gap-2 overflow-x-auto pb-1 custom-scrollbar text-xs font-semibold">
-            <span class="text-[11px] text-stone-400 font-bold uppercase mr-1 whitespace-nowrap">Typ dania:</span>
-            <button onclick="setSubtypeFilter('Owsianki')" class="sub-pill px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-stone-200 transition-all whitespace-nowrap flex items-center gap-1.5" data-sub="Owsianki">
-              🥣 Owsianki (33)
+          <!-- Row 2: Sub-types -->
+          <div class="flex items-center gap-2 overflow-x-auto pb-1 custom-scrollbar text-xs">
+            <span class="text-[11px] text-amber-400 font-bold uppercase mr-1 whitespace-nowrap">Typ:</span>
+            <button onclick="setSubtypeFilter('Owsianki')" class="sub-pill px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-stone-200 transition-all whitespace-nowrap flex items-center gap-1.5 font-semibold" data-sub="Owsianki">
+              <span>🥣</span> Owsianki (33)
             </button>
-            <button onclick="setSubtypeFilter('Placuszki')" class="sub-pill px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-stone-200 transition-all whitespace-nowrap flex items-center gap-1.5" data-sub="Placuszki">
-              🥞 Placuszki & Naleśniki (15)
+            <button onclick="setSubtypeFilter('Placuszki')" class="sub-pill px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-stone-200 transition-all whitespace-nowrap flex items-center gap-1.5 font-semibold" data-sub="Placuszki">
+              <span>🥞</span> Placuszki (15)
             </button>
-            <button onclick="setSubtypeFilter('Wrapy')" class="sub-pill px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-stone-200 transition-all whitespace-nowrap flex items-center gap-1.5" data-sub="Wrapy">
-              🌯 Wrapy & Tortille (15)
+            <button onclick="setSubtypeFilter('Wrapy')" class="sub-pill px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-stone-200 transition-all whitespace-nowrap flex items-center gap-1.5 font-semibold" data-sub="Wrapy">
+              <span>🌯</span> Wrapy (15)
             </button>
-            <button onclick="setSubtypeFilter('Kanapki')" class="sub-pill px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-stone-200 transition-all whitespace-nowrap flex items-center gap-1.5" data-sub="Kanapki">
-              🥪 Kanapki & Tosty (47)
+            <button onclick="setSubtypeFilter('Kanapki')" class="sub-pill px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-stone-200 transition-all whitespace-nowrap flex items-center gap-1.5 font-semibold" data-sub="Kanapki">
+              <span>🥪</span> Kanapki (47)
             </button>
           </div>
         </div>
       </div>
 
-      <!-- COLLAPSIBLE ADVANCED FILTER PANEL -->
-      <div id="filter-panel" class="hidden bg-white p-6 rounded-2xl border border-stone-200 shadow-sm space-y-4 transition-all">
-        <div class="flex items-center justify-between pb-3 border-b border-stone-100">
-          <h3 class="font-bold text-stone-900 text-sm flex items-center gap-2">
-            <i class="fa-solid fa-filter text-brand-600"></i> Filtry zaawansowane
-          </h3>
-          <button onclick="resetFilters()" class="text-xs text-stone-500 hover:text-stone-800 font-semibold underline">
-            Zresetuj filtry
-          </button>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs font-medium">
-          <!-- Diet Source -->
+      <!-- ADVANCED FILTER PANEL -->
+      <div id="filter-panel" class="hidden bg-white p-6 rounded-3xl border border-stone-200 shadow-sm space-y-4 animate-in fade-in duration-200">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div>
-            <label class="block text-stone-600 font-semibold mb-1.5">Źródło diety:</label>
-            <select id="diet-select" onchange="applyFilters()" class="w-full p-2.5 rounded-xl border border-stone-200 bg-stone-50 text-stone-800 focus:bg-white focus:border-brand-500 outline-none">
+            <label class="block text-xs font-bold text-stone-500 uppercase mb-1">Źródłowa dieta</label>
+            <select id="diet-select" onchange="applyFilters()" class="w-full p-2.5 rounded-xl border border-stone-200 text-sm font-semibold bg-stone-50 focus:bg-white outline-none">
               <option value="Wszystkie">Wszystkie diety</option>
               <option value="Dieta 2200 (5 posiłków)">Dieta 2200 (5 posiłków)</option>
-              <option value="Dieta 2200 cz. 2 (5 posiłków)">Dieta 2200 cz. 2</option>
-              <option value="Dieta 2200 cz. 3 (5 posiłków)">Dieta 2200 cz. 3</option>
+              <option value="Dieta 2200 cz. 2 (5 posiłków)">Dieta 2200 cz. 2 (5 posiłków)</option>
+              <option value="Dieta 2200 cz. 3 (5 posiłków)">Dieta 2200 cz. 3 (5 posiłków)</option>
               <option value="Dieta 2400 (6 posiłków)">Dieta 2400 (6 posiłków)</option>
-              <option value="Dieta Agi 1800 (4 posiłki)">Dieta Agi 1800</option>
-              <option value="Paczka Urodzinowa (Zrzuty)">Paczka Urodzinowa (Screeny)</option>
+              <option value="Paczka Urodzinowa">Paczka Urodzinowa</option>
             </select>
           </div>
 
-          <!-- Calories range -->
           <div>
-            <div class="flex justify-between items-center mb-1.5">
-              <label class="text-stone-600 font-semibold">Maks. kalorii:</label>
-              <span id="cal-val" class="font-bold text-stone-800">800 kcal</span>
+            <div class="flex justify-between items-center mb-1">
+              <label class="text-xs font-bold text-stone-500 uppercase">Maks. kalorie</label>
+              <span id="cal-val" class="text-xs font-extrabold text-stone-900">800 kcal</span>
             </div>
             <input type="range" id="cal-range" min="150" max="800" step="25" value="800" oninput="document.getElementById('cal-val').innerText = this.value + ' kcal'; applyFilters()" class="w-full accent-brand-600">
           </div>
 
-          <!-- Min protein -->
           <div>
-            <div class="flex justify-between items-center mb-1.5">
-              <label class="text-stone-600 font-semibold">Min. białka:</label>
-              <span id="prot-val" class="font-bold text-stone-800">0 g</span>
+            <div class="flex justify-between items-center mb-1">
+              <label class="text-xs font-bold text-stone-500 uppercase">Min. białko</label>
+              <span id="prot-val" class="text-xs font-extrabold text-stone-900">0 g</span>
             </div>
-            <input type="range" id="prot-range" min="0" max="60" step="5" value="0" oninput="document.getElementById('prot-val').innerText = this.value + ' g'; applyFilters()" class="w-full accent-brand-600">
+            <input type="range" id="prot-range" min="0" max="60" step="2" value="0" oninput="document.getElementById('prot-val').innerText = this.value + ' g'; applyFilters()" class="w-full accent-brand-600">
           </div>
 
-          <!-- Sort By -->
           <div>
-            <label class="block text-stone-600 font-semibold mb-1.5">Sortowanie:</label>
-            <select id="sort-select" onchange="applyFilters()" class="w-full p-2.5 rounded-xl border border-stone-200 bg-stone-50 text-stone-800 focus:bg-white focus:border-brand-500 outline-none">
-              <option value="title">Nazwa (A-Z)</option>
-              <option value="calories_asc">Kalorie (od najniższych)</option>
-              <option value="calories_desc">Kalorie (od najwyższych)</option>
-              <option value="protein_desc">Najwięcej białka (B)</option>
+            <label class="block text-xs font-bold text-stone-500 uppercase mb-1">Sortowanie</label>
+            <select id="sort-select" onchange="applyFilters()" class="w-full p-2.5 rounded-xl border border-stone-200 text-sm font-semibold bg-stone-50 focus:bg-white outline-none">
+              <option value="title">Alfabetycznie (A-Z)</option>
+              <option value="calories_asc">Kalorie: od najmniejszych</option>
+              <option value="calories_desc">Kalorie: od największych</option>
+              <option value="protein_desc">Białko: od największego</option>
             </select>
           </div>
         </div>
 
-        <!-- TAGS CHIPS -->
-        <div class="pt-2 border-t border-stone-100 flex flex-wrap gap-1.5 items-center">
-          <span class="text-xs text-stone-400 font-semibold mr-1">Popularne tagi:</span>
-          <button onclick="toggleTagFilter('Wysokobiałkowe')" class="tag-chip px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-medium" data-tag="Wysokobiałkowe">💪 Wysokobiałkowe</button>
-          <button onclick="toggleTagFilter('Wegetariańskie')" class="tag-chip px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-medium" data-tag="Wegetariańskie">🌱 Wegetariańskie</button>
-          <button onclick="toggleTagFilter('Płatki / Owsianki')" class="tag-chip px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-medium" data-tag="Płatki / Owsianki">🥣 Owsianki</button>
-          <button onclick="toggleTagFilter('Jajka')" class="tag-chip px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-medium" data-tag="Jajka">🍳 Dania z jajek</button>
-          <button onclick="toggleTagFilter('Wrapy / Tortille')" class="tag-chip px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-medium" data-tag="Wrapy / Tortille">🌯 Wrapy</button>
-          <button onclick="toggleTagFilter('Sałatka')" class="tag-chip px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-medium" data-tag="Sałatka">🥗 Sałatki</button>
-          <button onclick="toggleTagFilter('Wypieki / Desery')" class="tag-chip px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-medium" data-tag="Wypieki / Desery">🍰 Słodkości</button>
+        <div class="pt-2 flex justify-end gap-2 border-t border-stone-100">
+          <button onclick="resetFilters()" class="px-4 py-2 rounded-xl text-xs font-bold text-stone-500 hover:text-stone-800 hover:bg-stone-100 transition">
+            Zresetuj filtry
+          </button>
         </div>
       </div>
 
-      <!-- RESULTS COUNT & STATUS -->
-      <div class="flex items-center justify-between text-xs sm:text-sm font-semibold text-stone-500 px-1">
-        <div>
-          Znaleziono: <span id="results-count" class="font-extrabold text-stone-900">0</span> przepisów
-          <span id="active-filter-badge" class="ml-2 font-normal text-stone-400"></span>
+      <!-- RESULTS HEADER & CONTROLS -->
+      <div class="flex items-center justify-between pt-2">
+        <div class="text-sm text-stone-500 font-medium">
+          Znaleziono <span id="results-count" class="font-extrabold text-stone-900">0</span> przepisów
         </div>
         <div class="flex items-center gap-2">
-          <button onclick="setCardView('grid')" id="view-grid-btn" class="p-1.5 rounded-lg bg-stone-200 text-stone-800" title="Kafelki">
-            <i class="fa-solid fa-grip"></i>
-          </button>
-          <button onclick="setCardView('compact')" id="view-compact-btn" class="p-1.5 rounded-lg hover:bg-stone-200 text-stone-500" title="Lista zwarta">
-            <i class="fa-solid fa-list"></i>
-          </button>
+          <div class="bg-stone-100 p-1 rounded-xl flex items-center">
+            <button onclick="setCardView('grid')" id="view-grid-btn" class="p-1.5 rounded-lg bg-stone-200 text-stone-800" title="Karty siatkowe">
+              <i class="fa-solid fa-table-cells-large text-sm"></i>
+            </button>
+            <button onclick="setCardView('compact')" id="view-compact-btn" class="p-1.5 rounded-lg text-stone-500 hover:bg-stone-200" title="Lista kompaktowa">
+              <i class="fa-solid fa-list text-sm"></i>
+            </button>
+          </div>
         </div>
       </div>
 
-      <!-- RECIPES GRID -->
+      <!-- RECIPES GRID CONTAINER -->
       <div id="recipes-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        <!-- Recipe cards injected here by JavaScript -->
+        <!-- Rendered dynamically via JS -->
       </div>
 
       <!-- EMPTY STATE -->
-      <div id="empty-state" class="hidden text-center py-16 bg-white rounded-3xl border border-dashed border-stone-200">
-        <div class="w-16 h-16 rounded-full bg-stone-100 text-stone-400 flex items-center justify-center mx-auto mb-4 text-2xl">
-          <i class="fa-solid fa-utensils"></i>
-        </div>
-        <h3 class="text-lg font-bold text-stone-800 mb-1">Brak przepisów spełniających kryteria</h3>
-        <p class="text-sm text-stone-500 max-w-sm mx-auto mb-4">Spróbuj zmienić słowa kluczowe lub zresetować filtry kalorii i kategorii.</p>
-        <button onclick="resetFilters()" class="px-4 py-2 rounded-xl bg-brand-600 text-white text-xs font-bold shadow-md hover:bg-brand-700 transition">
-          Zresetuj filtry
+      <div id="empty-state" class="hidden text-center py-16 bg-white rounded-3xl border border-stone-200">
+        <i class="fa-solid fa-magnifying-glass text-4xl text-stone-300 mb-3"></i>
+        <h3 class="text-base font-bold text-stone-800">Nie znaleziono przepisów</h3>
+        <p class="text-xs text-stone-400 mt-1 max-w-sm mx-auto">Spróbuj wpisać inną frazę lub zresetować filtry kategorii i kalorii.</p>
+        <button onclick="resetFilters()" class="mt-4 px-4 py-2 rounded-xl bg-brand-50 text-brand-700 font-bold text-xs">
+          Wyczyść filtry
         </button>
       </div>
 
     </section>
 
     <!-- ========================================== -->
-    <!-- TAB 2: MEAL PLANNER                       -->
+    <!-- TAB 2: MEAL PLANNER (JADŁOSPIS)           -->
     <!-- ========================================== -->
     <section id="tab-planner" class="hidden space-y-6">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-3xl border border-stone-200 shadow-sm">
-        <div>
-          <span class="text-xs font-bold uppercase tracking-wider text-brand-600">Planer żywieniowy</span>
-          <h2 class="text-2xl font-extrabold text-stone-900">Jadłospis na 7 dni</h2>
-          <p class="text-xs sm:text-sm text-stone-500">Zaplanuj swoje posiłki na cały tydzień i jednym kliknięciem wygeneruj listę zakupów.</p>
+      <div class="bg-white p-6 sm:p-8 rounded-3xl border border-stone-200 shadow-sm">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-stone-100">
+          <div>
+            <h2 class="text-xl sm:text-2xl font-extrabold text-stone-900 flex items-center gap-2">
+              <i class="fa-regular fa-calendar-days text-brand-600"></i> Twój Jadłospis Tygodniowy
+            </h2>
+            <p class="text-xs sm:text-sm text-stone-500">Planuj posiłki na każdy dzień i automatycznie generuj listę zakupów.</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="generateShoppingListFromPlan()" class="px-4 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-xs shadow-md transition flex items-center gap-2">
+              <i class="fa-solid fa-cart-plus"></i>
+              <span>Generuj listę zakupów z planu</span>
+            </button>
+          </div>
         </div>
-        <div class="flex items-center gap-3">
-          <button onclick="generateShoppingListFromPlan()" class="px-4 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs sm:text-sm shadow-md shadow-brand-500/20 flex items-center gap-2 transition-all">
-            <i class="fa-solid fa-cart-arrow-down"></i>
-            <span>Stwórz listę zakupów z planu</span>
-          </button>
-        </div>
-      </div>
 
-      <!-- Weekly Board -->
-      <div class="grid grid-cols-1 lg:grid-cols-7 gap-4" id="planner-board">
-        <!-- Days generated by JS: Poniedziałek - Niedziela -->
+        <!-- 7-DAY BOARD -->
+        <div id="planner-board" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-7 gap-4">
+          <!-- Rendered dynamically via JS -->
+        </div>
       </div>
     </section>
 
     <!-- ========================================== -->
-    <!-- TAB 3: SHOPPING LIST                      -->
+    <!-- TAB 3: SHOPPING LIST (LISTA ZAKUPÓW)       -->
     <!-- ========================================== -->
     <section id="tab-shopping" class="hidden space-y-6">
-      <div class="bg-white p-6 sm:p-8 rounded-3xl border border-stone-200 shadow-sm max-w-4xl mx-auto">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-stone-100">
+      <div class="bg-white p-6 sm:p-8 rounded-3xl border border-stone-200 shadow-sm max-w-3xl mx-auto">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4 pb-4 border-b border-stone-100">
           <div>
-            <span class="text-xs font-bold uppercase tracking-wider text-accent-500">Zakupy spożywcze</span>
-            <h2 class="text-2xl font-extrabold text-stone-900 flex items-center gap-2">
+            <h2 class="text-xl sm:text-2xl font-extrabold text-stone-900 flex items-center gap-2">
               <i class="fa-solid fa-cart-shopping text-accent-500"></i> Lista Zakupów
             </h2>
             <p class="text-xs sm:text-sm text-stone-500">Odhaczaj składniki w sklepie lub skopiuj listę do schowka / wyślij na telefon.</p>
@@ -374,7 +360,7 @@
         </div>
 
         <!-- Add Custom Shopping Item -->
-        <div class="py-4 flex gap-2">
+        <div class="py-2 flex gap-2">
           <input type="text" id="custom-item-name" placeholder="Dodaj własny produkt (np. 1 kg jabłek, mleko owsiane)..." class="flex-1 p-3 rounded-xl border border-stone-200 bg-stone-50 focus:bg-white focus:border-brand-500 text-sm outline-none">
           <button onclick="addCustomShoppingItem()" class="px-5 py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm transition">
             Dodaj
@@ -411,57 +397,53 @@
             <input type="text" id="new-title" required placeholder="np. Domowa szakszuka z pomidorami i fetą" class="w-full p-3 rounded-xl border border-stone-200 focus:border-brand-500 text-sm outline-none">
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
             <div>
-              <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Kategoria *</label>
-              <select id="new-category" required class="w-full p-3 rounded-xl border border-stone-200 focus:border-brand-500 text-sm outline-none bg-white">
-                <option value="Obiady">Obiady</option>
-                <option value="Inne">Inne (~400 kcal)</option>
-                <option value="Przekąski">Przekąski (do 300 kcal)</option>
+              <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Kategoria</label>
+              <select id="new-category" class="w-full p-3 rounded-xl border border-stone-200 text-sm font-semibold bg-stone-50">
+                <option value="Obiady">🍛 Obiady</option>
+                <option value="Inne">🥣 Inne (~400 kcal)</option>
+                <option value="Przekąski">🍎 Przekąski (&le;300 kcal)</option>
               </select>
             </div>
             <div>
               <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Liczba porcji</label>
-              <input type="number" id="new-portions" value="1" min="1" class="w-full p-3 rounded-xl border border-stone-200 focus:border-brand-500 text-sm outline-none">
+              <input type="number" id="new-portions" value="1" min="1" max="12" class="w-full p-3 rounded-xl border border-stone-200 text-sm">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Kalorie (kcal)</label>
+              <input type="number" id="new-kcal" required placeholder="np. 450" class="w-full p-3 rounded-xl border border-stone-200 text-sm">
             </div>
           </div>
 
-          <!-- Macros -->
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-stone-50 p-4 rounded-2xl border border-stone-200">
+          <div class="grid grid-cols-3 gap-3">
             <div>
-              <label class="block text-[11px] font-bold text-stone-500 uppercase mb-1">Kalorie (Kcal) *</label>
-              <input type="number" id="new-kcal" required placeholder="450" class="w-full p-2.5 rounded-lg border border-stone-200 bg-white text-sm outline-none font-bold">
+              <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Białko (g)</label>
+              <input type="number" step="0.1" id="new-prot" placeholder="np. 25" class="w-full p-3 rounded-xl border border-stone-200 text-sm">
             </div>
             <div>
-              <label class="block text-[11px] font-bold text-stone-500 uppercase mb-1">Białko (B) g</label>
-              <input type="number" step="0.1" id="new-prot" placeholder="25" class="w-full p-2.5 rounded-lg border border-stone-200 bg-white text-sm outline-none">
+              <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Węglowodany (g)</label>
+              <input type="number" step="0.1" id="new-carbs" placeholder="np. 45" class="w-full p-3 rounded-xl border border-stone-200 text-sm">
             </div>
             <div>
-              <label class="block text-[11px] font-bold text-stone-500 uppercase mb-1">Węglowodany (W) g</label>
-              <input type="number" step="0.1" id="new-carbs" placeholder="45" class="w-full p-2.5 rounded-lg border border-stone-200 bg-white text-sm outline-none">
-            </div>
-            <div>
-              <label class="block text-[11px] font-bold text-stone-500 uppercase mb-1">Tłuszcze (T) g</label>
-              <input type="number" step="0.1" id="new-fat" placeholder="15" class="w-full p-2.5 rounded-lg border border-stone-200 bg-white text-sm outline-none">
+              <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Tłuszcze (g)</label>
+              <input type="number" step="0.1" id="new-fat" placeholder="np. 15" class="w-full p-3 rounded-xl border border-stone-200 text-sm">
             </div>
           </div>
 
-          <!-- Ingredients area -->
           <div>
-            <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Składniki (jeden w każdej linii) *</label>
-            <p class="text-xs text-stone-400 mb-1.5">Format: Nazwa składnika – miara (gramatura), np. <em>Jajko całe – 2 sztuki (112 g)</em></p>
-            <textarea id="new-ingredients" rows="4" required placeholder="Jajko całe – 2 sztuki (112 g)&#10;Pomidory krojone – 1 puszka (400 g)&#10;Ser typu Feta – 1 plaster (30 g)" class="w-full p-3 rounded-xl border border-stone-200 focus:border-brand-500 text-sm font-mono outline-none"></textarea>
+            <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Składniki (jeden w linijce, np. Jajka – 2 szt.)</label>
+            <textarea id="new-ingredients" rows="4" placeholder="Jajka – 2 szt.\nPomidory krojone – 200 g\nSer feta – 30 g\nOliwa z oliwek – 1 łyżka" class="w-full p-3 rounded-xl border border-stone-200 text-sm outline-none"></textarea>
           </div>
 
-          <!-- Instructions area -->
           <div>
-            <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Sposób przygotowania (kroki) *</label>
-            <textarea id="new-instructions" rows="4" required placeholder="1. Na patelni rozgrzewamy oliwę i podsmażamy czosnek.&#10;2. Dodajemy pomidory i dusimy przez 5 minut.&#10;3. Wbijamy jajka, posypujemy serem i przykrywamy na 4 minuty." class="w-full p-3 rounded-xl border border-stone-200 focus:border-brand-500 text-sm outline-none"></textarea>
+            <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Kroki przygotowania (jeden w linijce)</label>
+            <textarea id="new-instructions" rows="4" placeholder="1. Na patelni rozgrzej oliwę.\n2. Dodaj pomidory i duś przez 5 minut.\n3. Wbij jajka i posyp fetą." class="w-full p-3 rounded-xl border border-stone-200 text-sm outline-none"></textarea>
           </div>
 
-          <div class="pt-4 flex justify-end">
-            <button type="submit" class="px-6 py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm shadow-md transition">
-              Zapisz przepis
+          <div class="pt-2">
+            <button type="submit" class="w-full py-3.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-sm shadow-md transition">
+              Zapisz przepis w bazie
             </button>
           </div>
         </form>
@@ -471,23 +453,21 @@
   </main>
 
   <!-- ========================================== -->
-  <!-- RECIPE DETAIL MODAL                        -->
+  <!-- MODAL: RECIPE DETAILS                      -->
   <!-- ========================================== -->
-  <div id="recipe-modal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
-    <div class="bg-white w-full max-w-3xl rounded-3xl shadow-2xl overflow-hidden my-auto max-h-[92vh] flex flex-col relative animate-scale-up">
+  <div id="recipe-modal" class="hidden fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-2xl w-full shadow-2xl border border-stone-200 overflow-hidden my-8 transform transition-all">
       
       <!-- Close button -->
-      <button onclick="closeModal()" class="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-white/80 hover:bg-white text-stone-700 backdrop-blur-md shadow-md flex items-center justify-center transition">
+      <button onclick="closeModal()" class="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-white/80 hover:bg-white text-stone-800 backdrop-blur-md shadow-md flex items-center justify-center transition-all">
         <i class="fa-solid fa-xmark text-lg"></i>
       </button>
 
-      <!-- Modal Body (Scrollable) -->
-      <div class="overflow-y-auto custom-scrollbar p-0 flex-1">
-        
+      <div class="max-h-[85vh] overflow-y-auto custom-scrollbar">
         <!-- Recipe Header & Image -->
         <div class="relative bg-stone-900 text-white min-h-[220px] flex items-end p-6 sm:p-8">
           <div class="absolute inset-0 overflow-hidden">
-            <img id="modal-img" src="" alt="" class="w-full h-full object-cover opacity-40 blur-xs">
+            <img id="modal-img" src="" alt="" class="w-full h-full object-cover opacity-40 blur-xs" onerror="handleImageError(this)">
             <div class="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-900/60 to-transparent"></div>
           </div>
 
@@ -503,9 +483,8 @@
               <h2 id="modal-title" class="text-2xl sm:text-3xl font-extrabold text-white leading-tight"></h2>
             </div>
 
-            <!-- Dish icon preview -->
             <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-white/10 backdrop-blur-md p-1 border border-white/20 shadow-lg flex-shrink-0 self-start sm:self-auto overflow-hidden">
-              <img id="modal-thumb" src="" alt="" class="w-full h-full object-cover rounded-xl">
+              <img id="modal-thumb" src="" alt="" class="w-full h-full object-cover rounded-xl" onerror="handleImageError(this)">
             </div>
           </div>
         </div>
@@ -514,33 +493,37 @@
           
           <!-- MACRONUTRIENTS BADGES & PORTIONS SCALER -->
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-stone-50 p-4 rounded-2xl border border-stone-200">
-            <!-- Macros -->
-            <div class="flex items-center gap-3 sm:gap-4 flex-wrap">
-              <div class="text-center px-3 py-1.5 bg-white rounded-xl shadow-xs border border-stone-200">
-                <div id="modal-kcal" class="text-lg font-black text-stone-900">0</div>
-                <div class="text-[10px] uppercase font-bold text-stone-400">Kalorie</div>
-              </div>
-              <div class="text-center px-3 py-1.5 bg-white rounded-xl shadow-xs border border-stone-200">
-                <div id="modal-prot" class="text-lg font-black text-emerald-600">0g</div>
-                <div class="text-[10px] uppercase font-bold text-stone-400">Białko</div>
-              </div>
-              <div class="text-center px-3 py-1.5 bg-white rounded-xl shadow-xs border border-stone-200">
-                <div id="modal-carbs" class="text-lg font-black text-sky-600">0g</div>
-                <div class="text-[10px] uppercase font-bold text-stone-400">Węgle</div>
-              </div>
-              <div class="text-center px-3 py-1.5 bg-white rounded-xl shadow-xs border border-stone-200">
-                <div id="modal-fat" class="text-lg font-black text-amber-600">0g</div>
-                <div class="text-[10px] uppercase font-bold text-stone-400">Tłuszcze</div>
+            <div>
+              <div class="text-xs text-stone-400 font-bold uppercase mb-1">Wartości w porcji</div>
+              <div class="flex items-center gap-4">
+                <div>
+                  <span id="modal-kcal" class="text-2xl font-black text-stone-900">0</span>
+                  <span class="text-xs font-bold text-stone-400">kcal</span>
+                </div>
+                <div class="h-6 w-px bg-stone-200"></div>
+                <div class="text-xs">
+                  <span class="text-stone-400">B:</span> <strong id="modal-prot" class="text-stone-800">0g</strong>
+                </div>
+                <div class="text-xs">
+                  <span class="text-stone-400">W:</span> <strong id="modal-carbs" class="text-stone-800">0g</strong>
+                </div>
+                <div class="text-xs">
+                  <span class="text-stone-400">T:</span> <strong id="modal-fat" class="text-stone-800">0g</strong>
+                </div>
               </div>
             </div>
 
             <!-- Portion Scaler -->
-            <div class="flex items-center gap-2 self-start sm:self-auto">
-              <span class="text-xs font-bold text-stone-600 uppercase">Porcje:</span>
-              <div class="flex items-center bg-white rounded-xl border border-stone-200 p-1 shadow-xs">
-                <button onclick="adjustPortions(-1)" class="w-7 h-7 rounded-lg hover:bg-stone-100 flex items-center justify-center font-bold text-stone-600">-</button>
-                <span id="modal-portion-count" class="w-8 text-center font-extrabold text-sm text-stone-900">1</span>
-                <button onclick="adjustPortions(1)" class="w-7 h-7 rounded-lg hover:bg-stone-100 flex items-center justify-center font-bold text-stone-600">+</button>
+            <div class="flex items-center gap-3 bg-white px-3 py-1.5 rounded-xl border border-stone-200 shadow-2xs self-start sm:self-auto">
+              <span class="text-xs font-bold text-stone-500 uppercase">Porcje:</span>
+              <div class="flex items-center gap-2">
+                <button onclick="adjustPortions(-1)" class="w-7 h-7 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 font-bold flex items-center justify-center transition">
+                  <i class="fa-solid fa-minus text-xs"></i>
+                </button>
+                <span id="modal-portion-count" class="w-6 text-center font-black text-sm text-stone-900">1</span>
+                <button onclick="adjustPortions(1)" class="w-7 h-7 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 font-bold flex items-center justify-center transition">
+                  <i class="fa-solid fa-plus text-xs"></i>
+                </button>
               </div>
             </div>
           </div>
@@ -574,43 +557,35 @@
 
           <!-- TAGS & SOURCE -->
           <div class="pt-4 border-t border-stone-100 flex flex-wrap items-center justify-between text-xs text-stone-400 gap-2">
-            <div id="modal-tags" class="flex flex-wrap gap-1.5">
-              <!-- Tags -->
-            </div>
-            <div id="modal-source" class="font-medium">
-              <!-- Source info -->
-            </div>
+            <div id="modal-tags" class="flex flex-wrap gap-1.5"></div>
+            <div id="modal-source" class="font-medium"></div>
           </div>
 
         </div>
       </div>
 
       <!-- Modal Footer Action Bar -->
-      <div class="p-4 bg-stone-50 border-t border-stone-200 flex items-center justify-between gap-3">
+      <div class="p-4 bg-stone-50 border-t border-stone-200 flex flex-wrap items-center justify-between gap-3">
         <div class="flex items-center gap-2">
-          <button id="modal-fav-btn" onclick="toggleModalFavorite()" class="px-4 py-2 rounded-xl border border-stone-300 text-stone-700 hover:text-red-600 hover:border-red-200 text-xs font-bold transition flex items-center gap-1.5">
+          <button id="modal-fav-btn" onclick="toggleModalFavorite()" class="px-3.5 py-2.5 rounded-xl border border-stone-300 text-stone-700 hover:text-red-600 hover:border-red-200 text-xs font-bold transition flex items-center gap-1.5">
             <i class="fa-regular fa-heart"></i>
             <span>Ulubione</span>
           </button>
-          <button onclick="printCurrentRecipe()" class="px-4 py-2 rounded-xl border border-stone-300 text-stone-700 hover:bg-stone-200 text-xs font-bold transition flex items-center gap-1.5">
+          <button onclick="printCurrentRecipe()" class="px-3.5 py-2.5 rounded-xl border border-stone-300 text-stone-700 hover:bg-stone-200 text-xs font-bold transition flex items-center gap-1.5">
             <i class="fa-solid fa-print"></i>
             <span>Drukuj</span>
+          </button>
+          <!-- Creator Delete Button in Modal -->
+          <button id="modal-creator-delete-btn" onclick="deleteCurrentModalRecipe()" class="hidden px-3.5 py-2.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 text-xs font-extrabold transition flex items-center gap-1.5">
+            <i class="fa-solid fa-trash-can"></i>
+            <span>Usuń z bazy</span>
           </button>
         </div>
 
         <div class="flex items-center gap-2">
-          <select id="modal-plan-day" class="p-2 rounded-xl border border-stone-300 text-xs font-semibold bg-white outline-none">
-            <option value="0">Poniedziałek</option>
-            <option value="1">Wtorek</option>
-            <option value="2">Środa</option>
-            <option value="3">Czwartek</option>
-            <option value="4">Piątek</option>
-            <option value="5">Sobota</option>
-            <option value="6">Niedziela</option>
-          </select>
-          <button onclick="assignModalToPlan()" class="px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs shadow-md transition flex items-center gap-1.5">
-            <i class="fa-solid fa-calendar-plus"></i>
-            <span>Dodaj do dnia</span>
+          <button onclick="openDayPickerFromModal()" class="px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-xs shadow-md transition flex items-center gap-2">
+            <i class="fa-solid fa-calendar-plus text-sm"></i>
+            <span>Dodaj do dnia...</span>
           </button>
         </div>
       </div>
@@ -618,14 +593,126 @@
     </div>
   </div>
 
-  <!-- PRINT CONTAINER (Hidden on screen, visible on print) -->
+  <!-- ========================================== -->
+  <!-- MODAL: QUICK DAY PICKER (1-KLIK)           -->
+  <!-- ========================================== -->
+  <div id="day-picker-modal" class="hidden fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-sm w-full shadow-2xl border border-stone-200 overflow-hidden transform transition-all animate-in fade-in zoom-in duration-200">
+      <!-- Header -->
+      <div class="p-5 border-b border-stone-100 flex items-center justify-between bg-stone-50/70">
+        <div class="flex items-center gap-2.5">
+          <div class="w-10 h-10 rounded-2xl bg-brand-50 text-brand-600 flex items-center justify-center font-bold shadow-sm">
+            <i class="fa-regular fa-calendar-plus text-lg"></i>
+          </div>
+          <div>
+            <h3 class="font-extrabold text-stone-900 text-base leading-tight">Wybierz dzień tygodnia</h3>
+            <p id="picker-recipe-title" class="text-xs text-stone-500 font-semibold truncate max-w-[200px]"></p>
+          </div>
+        </div>
+        <button onclick="closeDayPicker()" class="w-8 h-8 rounded-full hover:bg-stone-200 text-stone-400 hover:text-stone-700 flex items-center justify-center transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- 7 Days Grid: 1-click adds directly! -->
+      <div class="p-5 space-y-3">
+        <p class="text-xs text-stone-400 font-bold uppercase tracking-wider">Kliknij dzień, aby przypisać posiłek:</p>
+        <div class="grid grid-cols-1 gap-2" id="picker-days-container">
+          <!-- Populated by JS: Poniedziałek, Wtorek, Środa, Czwartek, Piątek, Sobota, Niedziela -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: CREATOR PIN INPUT (0000)            -->
+  <!-- ========================================== -->
+  <div id="creator-pin-modal" class="hidden fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-sm w-full shadow-2xl border border-stone-200 p-6 text-center transform transition-all">
+      <div class="w-14 h-14 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center mx-auto mb-3 text-2xl shadow-sm">
+        <i class="fa-solid fa-crown"></i>
+      </div>
+      <h3 class="font-extrabold text-stone-900 text-lg mb-1">Dostęp Twórcy</h3>
+      <p class="text-xs text-stone-500 mb-4 font-medium">Wpisz 4-cyfrowy kod PIN, aby odblokować zarządzanie i usuwanie dań z bazy.</p>
+      
+      <input 
+        type="password" 
+        id="creator-pin-input" 
+        maxlength="8" 
+        placeholder="••••" 
+        class="w-full text-center tracking-[0.4em] text-3xl font-bold py-3 px-4 rounded-2xl border border-stone-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 outline-none mb-2 bg-stone-50"
+        onkeydown="if(event.key==='Enter') verifyCreatorPin()"
+      />
+      <p id="creator-pin-error" class="hidden text-xs font-bold text-red-500 mb-3"></p>
+
+      <div class="grid grid-cols-2 gap-2 mt-3">
+        <button onclick="closeCreatorPinModal()" class="py-2.5 px-4 rounded-xl border border-stone-200 hover:bg-stone-50 font-bold text-xs text-stone-600 transition">
+          Anuluj
+        </button>
+        <button onclick="verifyCreatorPin()" class="py-2.5 px-4 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-extrabold text-xs shadow-md transition">
+          Odblokuj
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: CREATOR DASHBOARD & EXPORT          -->
+  <!-- ========================================== -->
+  <div id="creator-status-modal" class="hidden fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl border border-stone-200 p-6">
+      <div class="flex items-center justify-between mb-4 pb-3 border-b border-stone-100">
+        <div class="flex items-center gap-2">
+          <span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
+          <h3 class="font-extrabold text-stone-900 text-base">👑 Tryb Twórcy Aktywny</h3>
+        </div>
+        <button onclick="closeCreatorStatusModal()" class="text-stone-400 hover:text-stone-700">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      
+      <div class="space-y-3 text-xs text-stone-600 mb-6">
+        <div class="p-3 bg-stone-50 rounded-xl flex items-center justify-between">
+          <span class="font-medium">Aktywnych przepisów w bazie:</span>
+          <span id="creator-active-count" class="font-extrabold text-stone-900 text-sm">257</span>
+        </div>
+        <div class="p-3 bg-stone-50 rounded-xl flex items-center justify-between">
+          <span class="font-medium">Usuniętych dań przez Ciebie:</span>
+          <span id="creator-deleted-count" class="font-extrabold text-red-600 text-sm">0</span>
+        </div>
+        <div class="p-3 bg-amber-50/70 border border-amber-200/60 rounded-xl text-amber-900 text-[11px] leading-relaxed">
+          <i class="fa-solid fa-circle-info mr-1"></i>
+          Na kafelkach dań oraz w oknie przepisu widoczna jest czerwona ikona kosza. Usunięte dania natychmiast znikają ze wszystkich widoków.
+        </div>
+      </div>
+
+      <div class="space-y-2">
+        <button onclick="downloadCleanRecipesJson()" class="w-full py-3 px-4 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-xs shadow-md flex items-center justify-center gap-2 transition">
+          <i class="fa-solid fa-cloud-arrow-down"></i>
+          <span>Pobierz zaktualizowane recipes.json</span>
+        </button>
+        <button onclick="exitCreatorMode()" class="w-full py-2.5 px-4 rounded-xl border border-red-200 text-red-600 hover:bg-red-50 font-bold text-xs transition">
+          Zablokuj / Wyloguj z Trybu Twórcy
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="app-toast" class="fixed bottom-6 right-6 z-50 bg-stone-900/95 text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 text-xs sm:text-sm font-semibold transition-all transform translate-y-20 opacity-0 pointer-events-none backdrop-blur-md border border-white/10"></div>
+
+  <!-- PRINT CONTAINER -->
   <div id="print-area" class="hidden p-8 font-sans"></div>
 
   <!-- JAVASCRIPT APPLICATION LOGIC -->
   <script>
     // State management
+    const CREATOR_PIN = "0000";
     let state = {
       isStaticMode: false,
+      isCreatorMode: localStorage.getItem('creator_mode_active') === 'true',
+      deletedRecipeIds: new Set(JSON.parse(localStorage.getItem('deleted_recipe_ids') || '[]')),
+      selectedRecipeForPlan: null,
       activeTab: 'catalog',
       recipes: [],
       currentRecipe: null,
@@ -648,7 +735,8 @@
     let allStaticRecipes = [];
 
     const DAYS = ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota', 'Niedziela'];
-    const SLOTS = ['Śniadanie', 'II Śniadanie', 'Obiad', 'Podwieczorek', 'Kolacja'];
+
+    const LIVE_IMAGE_MAP = {"docx_salatka_crispy_rice.png": "/paczka_1/static/images/docx_salatka_crispy_rice.png", "recipe_dieta_2200_cz_3_5_posiłków__p30_m1.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p30_m1.png", "recipe_dieta_2200_5_posiłków__p40_m4.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p40_m4.png", "recipe_dieta_2400_6_posiłków__p26_m4.png": "/paczka_2/static/images/recipe_dieta_2400_6_posiłków__p26_m4.png", "recipe_dieta_2200_cz_3_5_posiłków__p33_m1.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p33_m1.png", "recipe_dieta_agi_1800_4_posiłki__p40_m4.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p40_m4.png", "recipe_dieta_2400_6_posiłków__p26_m6.png": "/paczka_2/static/images/recipe_dieta_2400_6_posiłków__p26_m6.png", "recipe_dieta_2400_6_posiłków__p27_m2.png": "/paczka_3/static/images/recipe_dieta_2400_6_posiłków__p27_m2.png", "recipe_dieta_2400_6_posiłków__p31_m6.png": "/paczka_3/static/images/recipe_dieta_2400_6_posiłków__p31_m6.png", "recipe_dieta_2200_cz_2_5_posiłków__p43_m2.png": "/paczka_2/static/images/recipe_dieta_2200_cz_2_5_posiłków__p43_m2.png", "docx_blondie_cytrynowe.png": "/paczka_1/static/images/docx_blondie_cytrynowe.png", "recipe_dieta_2200_5_posiłków__p35_m4.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p35_m4.png", "recipe_dieta_2400_6_posiłków__p29_m2.png": "/paczka_3/static/images/recipe_dieta_2400_6_posiłków__p29_m2.png", "recipe_dieta_2200_cz_3_5_posiłków__p48_m5.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p48_m5.png", "recipe_dieta_agi_1800_4_posiłki__p42_m4.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p42_m4.png", "recipe_dieta_2200_5_posiłków__p27_m3.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p27_m3.png", "recipe_dieta_2200_cz_2_5_posiłków__p19_m3.png": "/paczka_1/static/images/recipe_dieta_2200_cz_2_5_posiłków__p19_m3.png", "recipe_dieta_2400_6_posiłków__p38_m3.png": "/paczka_3/static/images/recipe_dieta_2400_6_posiłków__p38_m3.png", "recipe_dieta_agi_1800_4_posiłki__p22_m2.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p22_m2.png", "recipe_dieta_agi_1800_4_posiłki__p27_m3.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p27_m3.png", "recipe_dieta_2400_6_posiłków__p39_m6.png": "/paczka_3/static/images/recipe_dieta_2400_6_posiłków__p39_m6.png", "recipe_dieta_2200_cz_2_5_posiłków__p22_m3.png": "/paczka_1/static/images/recipe_dieta_2200_cz_2_5_posiłków__p22_m3.png", "recipe_dieta_2200_cz_2_5_posiłków__p24_m5.png": "/paczka_1/static/images/recipe_dieta_2200_cz_2_5_posiłków__p24_m5.png", "recipe_dieta_2200_cz_3_5_posiłków__p29_m5.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p29_m5.png", "docx_ciasteczka_czarny_las.png": "/paczka_1/static/images/docx_ciasteczka_czarny_las.png", "recipe_dieta_2200_5_posiłków__p26_m1.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p26_m1.png", "recipe_dieta_2200_cz_3_5_posiłków__p42_m5.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p42_m5.png", "docx_cukinia_wrapy.png": "/paczka_1/static/images/docx_cukinia_wrapy.png", "recipe_dieta_2200_5_posiłków__p24_m3.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p24_m3.png", "recipe_dieta_2400_6_posiłków__p38_m4.png": "/paczka_3/static/images/recipe_dieta_2400_6_posiłków__p38_m4.png", "recipe_dieta_2200_5_posiłków__p36_m2.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p36_m2.png", "recipe_dieta_2200_cz_3_5_posiłków__p40_m1.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p40_m1.png", "recipe_dieta_2200_cz_2_5_posiłków__p25_m2.png": "/paczka_1/static/images/recipe_dieta_2200_cz_2_5_posiłków__p25_m2.png", "recipe_dieta_2400_6_posiłków__p35_m2.png": "/paczka_3/static/images/recipe_dieta_2400_6_posiłków__p35_m2.png", "recipe_dieta_agi_1800_4_posiłki__p27_m4.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p27_m4.png", "docx_deser_zeberka.png": "/paczka_1/static/images/docx_deser_zeberka.png", "recipe_dieta_agi_1800_4_posiłki__p19_m4.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p19_m4.png", "recipe_dieta_2200_cz_2_5_posiłków__p21_m1.png": "/paczka_1/static/images/recipe_dieta_2200_cz_2_5_posiłków__p21_m1.png", "recipe_dieta_2200_cz_2_5_posiłków__p44_m4.png": "/paczka_2/static/images/recipe_dieta_2200_cz_2_5_posiłków__p44_m4.png", "recipe_dieta_agi_1800_4_posiłki__p50_m1.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p50_m1.png", "recipe_dieta_agi_1800_4_posiłki__p37_m2.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p37_m2.png", "recipe_dieta_2200_cz_2_5_posiłków__p22_m4.png": "/paczka_1/static/images/recipe_dieta_2200_cz_2_5_posiłków__p22_m4.png", "recipe_dieta_agi_1800_4_posiłki__p28_m1.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p28_m1.png", "recipe_dieta_2200_cz_3_5_posiłków__p26_m2.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p26_m2.png", "recipe_dieta_agi_1800_4_posiłki__p32_m3.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p32_m3.png", "recipe_dieta_2200_cz_2_5_posiłków__p28_m2.png": "/paczka_1/static/images/recipe_dieta_2200_cz_2_5_posiłków__p28_m2.png", "recipe_dieta_agi_1800_4_posiłki__p40_m3.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p40_m3.png", "recipe_dieta_2200_cz_2_5_posiłków__p26_m3.png": "/paczka_1/static/images/recipe_dieta_2200_cz_2_5_posiłków__p26_m3.png", "docx_gofry_francuskie.png": "/paczka_1/static/images/docx_gofry_francuskie.png", "recipe_dieta_2200_cz_2_5_posiłków__p47_m4.png": "/paczka_2/static/images/recipe_dieta_2200_cz_2_5_posiłków__p47_m4.png", "recipe_dieta_2200_5_posiłków__p35_m5.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p35_m5.png", "recipe_dieta_2200_cz_3_5_posiłków__p22_m5.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p22_m5.png", "recipe_dieta_2200_cz_3_5_posiłków__p34_m4.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p34_m4.png", "recipe_dieta_2200_5_posiłków__p37_m4.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p37_m4.png", "recipe_dieta_2400_6_posiłków__p28_m4.png": "/paczka_3/static/images/recipe_dieta_2400_6_posiłków__p28_m4.png", "recipe_dieta_agi_1800_4_posiłki__p50_m2.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p50_m2.png", "recipe_dieta_2200_5_posiłków__p35_m3.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p35_m3.png", "recipe_dieta_2200_cz_3_5_posiłków__p35_m5.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p35_m5.png", "recipe_dieta_agi_1800_4_posiłki__p51_m4.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p51_m4.png", "recipe_dieta_2400_6_posiłków__p28_m6.png": "/paczka_3/static/images/recipe_dieta_2400_6_posiłków__p28_m6.png", "recipe_dieta_agi_1800_4_posiłki__p38_m4.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p38_m4.png", "recipe_dieta_agi_1800_4_posiłki__p35_m4.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p35_m4.png", "recipe_dieta_2200_cz_3_5_posiłków__p50_m4.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p50_m4.png", "recipe_dieta_2200_cz_3_5_posiłków__p25_m5.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p25_m5.png", "recipe_dieta_2200_5_posiłków__p41_m5.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p41_m5.png", "recipe_dieta_2200_cz_2_5_posiłków__p34_m1.png": "/paczka_1/static/images/recipe_dieta_2200_cz_2_5_posiłków__p34_m1.png", "recipe_dieta_2400_6_posiłków__p27_m1.png": "/paczka_3/static/images/recipe_dieta_2400_6_posiłków__p27_m1.png", "recipe_dieta_2200_cz_3_5_posiłków__p39_m5.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p39_m5.png", "recipe_dieta_2200_cz_2_5_posiłków__p41_m3.png": "/paczka_2/static/images/recipe_dieta_2200_cz_2_5_posiłków__p41_m3.png", "recipe_dieta_2200_5_posiłków__p32_m3.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p32_m3.png", "recipe_dieta_2200_cz_2_5_posiłków__p29_m3.png": "/paczka_1/static/images/recipe_dieta_2200_cz_2_5_posiłków__p29_m3.png", "recipe_dieta_2200_cz_2_5_posiłków__p42_m5.png": "/paczka_2/static/images/recipe_dieta_2200_cz_2_5_posiłków__p42_m5.png", "recipe_dieta_2200_cz_3_5_posiłków__p21_m4.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p21_m4.png", "recipe_dieta_2200_cz_3_5_posiłków__p46_m2.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p46_m2.png", "recipe_dieta_2200_5_posiłków__p20_m5.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p20_m5.png", "recipe_dieta_2200_cz_2_5_posiłków__p32_m2.png": "/paczka_1/static/images/recipe_dieta_2200_cz_2_5_posiłków__p32_m2.png", "recipe_dieta_agi_1800_4_posiłki__p33_m1.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p33_m1.png", "recipe_dieta_2200_5_posiłków__p29_m2.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p29_m2.png", "recipe_dieta_2200_cz_3_5_posiłków__p42_m4.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p42_m4.png", "recipe_dieta_2400_6_posiłków__p34_m5.png": "/paczka_3/static/images/recipe_dieta_2400_6_posiłków__p34_m5.png", "recipe_dieta_2200_cz_3_5_posiłków__p44_m4.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p44_m4.png", "recipe_dieta_2400_6_posiłków__p29_m1.png": "/paczka_3/static/images/recipe_dieta_2400_6_posiłków__p29_m1.png", "recipe_dieta_2200_5_posiłków__p38_m5.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p38_m5.png", "recipe_dieta_2200_5_posiłków__p31_m4.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p31_m4.png", "recipe_dieta_2400_6_posiłków__p37_m1.png": "/paczka_3/static/images/recipe_dieta_2400_6_posiłków__p37_m1.png", "recipe_dieta_2200_cz_2_5_posiłków__p42_m4.png": "/paczka_2/static/images/recipe_dieta_2200_cz_2_5_posiłków__p42_m4.png", "recipe_dieta_2200_cz_2_5_posiłków__p27_m5.png": "/paczka_1/static/images/recipe_dieta_2200_cz_2_5_posiłków__p27_m5.png", "recipe_dieta_2200_5_posiłków__p21_m1.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p21_m1.png", "recipe_dieta_agi_1800_4_posiłki__p23_m3.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p23_m3.png", "recipe_dieta_2200_5_posiłków__p33_m5.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p33_m5.png", "recipe_dieta_2200_5_posiłków__p22_m5.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p22_m5.png", "recipe_dieta_2200_5_posiłków__p32_m1.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p32_m1.png", "recipe_dieta_agi_1800_4_posiłki__p43_m1.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p43_m1.png", "recipe_dieta_2200_5_posiłków__p29_m1.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p29_m1.png", "recipe_dieta_2200_cz_3_5_posiłków__p46_m1.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p46_m1.png", "recipe_dieta_2200_cz_3_5_posiłków__p51_m5.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p51_m5.png", "recipe_dieta_2200_5_posiłków__p20_m4.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p20_m4.png", "recipe_dieta_2400_6_posiłków__p22_m4.png": "/paczka_2/static/images/recipe_dieta_2400_6_posiłków__p22_m4.png", "recipe_dieta_2200_cz_2_5_posiłków__p44_m5.png": "/paczka_2/static/images/recipe_dieta_2200_cz_2_5_posiłków__p44_m5.png", "recipe_dieta_agi_1800_4_posiłki__p42_m3.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p42_m3.png", "recipe_dieta_2200_5_posiłków__p42_m1.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p42_m1.png", "recipe_dieta_2200_cz_2_5_posiłków__p43_m1.png": "/paczka_2/static/images/recipe_dieta_2200_cz_2_5_posiłków__p43_m1.png", "recipe_dieta_2200_5_posiłków__p36_m1.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p36_m1.png", "recipe_dieta_2200_cz_2_5_posiłków__p36_m5.png": "/paczka_2/static/images/recipe_dieta_2200_cz_2_5_posiłków__p36_m5.png", "recipe_dieta_2200_5_posiłków__p31_m5.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p31_m5.png", "recipe_dieta_2400_6_posiłków__p34_m4.png": "/paczka_3/static/images/recipe_dieta_2400_6_posiłków__p34_m4.png", "recipe_dieta_2200_cz_3_5_posiłków__p47_m4.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p47_m4.png", "recipe_dieta_2400_6_posiłków__p28_m5.png": "/paczka_3/static/images/recipe_dieta_2400_6_posiłków__p28_m5.png", "recipe_dieta_agi_1800_4_posiłki__p47_m4.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p47_m4.png", "recipe_dieta_2200_cz_3_5_posiłków__p43_m2.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p43_m2.png", "recipe_dieta_2200_cz_2_5_posiłków__p46_m3.png": "/paczka_2/static/images/recipe_dieta_2200_cz_2_5_posiłków__p46_m3.png", "recipe_dieta_2200_cz_3_5_posiłków__p20_m3.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p20_m3.png", "recipe_dieta_2200_5_posiłków__p30_m3.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p30_m3.png", "recipe_dieta_2200_5_posiłków__p40_m3.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p40_m3.png", "recipe_dieta_2400_6_posiłków__p28_m3.png": "/paczka_3/static/images/recipe_dieta_2400_6_posiłków__p28_m3.png", "recipe_dieta_agi_1800_4_posiłki__p30_m4.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p30_m4.png", "recipe_dieta_agi_1800_4_posiłki__p29_m2.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p29_m2.png", "recipe_dieta_2200_cz_3_5_posiłków__p33_m3.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p33_m3.png", "recipe_dieta_2200_5_posiłków__p37_m3.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p37_m3.png", "recipe_dieta_2200_cz_3_5_posiłków__p37_m3.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p37_m3.png", "recipe_dieta_2400_6_posiłków__p36_m6.png": "/paczka_3/static/images/recipe_dieta_2400_6_posiłków__p36_m6.png", "recipe_dieta_2200_cz_2_5_posiłków__p32_m3.png": "/paczka_1/static/images/recipe_dieta_2200_cz_2_5_posiłków__p32_m3.png", "recipe_dieta_2200_cz_3_5_posiłków__p41_m3.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p41_m3.png", "recipe_dieta_2200_cz_2_5_posiłków__p38_m3.png": "/paczka_2/static/images/recipe_dieta_2200_cz_2_5_posiłków__p38_m3.png", "recipe_dieta_2400_6_posiłków__p25_m3.png": "/paczka_2/static/images/recipe_dieta_2400_6_posiłków__p25_m3.png", "recipe_dieta_2400_6_posiłków__p33_m3.png": "/paczka_3/static/images/recipe_dieta_2400_6_posiłków__p33_m3.png", "recipe_dieta_2200_cz_2_5_posiłków__p20_m5.png": "/paczka_1/static/images/recipe_dieta_2200_cz_2_5_posiłków__p20_m5.png", "recipe_dieta_2200_cz_3_5_posiłków__p28_m4.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p28_m4.png", "recipe_dieta_agi_1800_4_posiłki__p26_m2.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p26_m2.png", "recipe_dieta_2200_cz_3_5_posiłków__p44_m3.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p44_m3.png", "recipe_dieta_2200_cz_3_5_posiłków__p33_m2.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p33_m2.png", "recipe_dieta_2200_cz_2_5_posiłków__p25_m1.png": "/paczka_1/static/images/recipe_dieta_2200_cz_2_5_posiłków__p25_m1.png", "recipe_dieta_2200_cz_3_5_posiłków__p49_m1.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p49_m1.png", "recipe_dieta_2200_5_posiłków__p22_m4.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p22_m4.png", "recipe_dieta_2400_6_posiłków__p36_m4.png": "/paczka_3/static/images/recipe_dieta_2400_6_posiłków__p36_m4.png", "recipe_dieta_2200_cz_3_5_posiłków__p40_m2.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p40_m2.png", "recipe_dieta_2200_cz_3_5_posiłków__p36_m2.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p36_m2.png", "recipe_dieta_2400_6_posiłków__p31_m4.png": "/paczka_3/static/images/recipe_dieta_2400_6_posiłków__p31_m4.png", "recipe_dieta_2200_cz_2_5_posiłków__p18_m1.png": "/paczka_1/static/images/recipe_dieta_2200_cz_2_5_posiłków__p18_m1.png", "recipe_dieta_agi_1800_4_posiłki__p25_m1.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p25_m1.png", "recipe_dieta_agi_1800_4_posiłki__p17_m1.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p17_m1.png", "recipe_dieta_2200_cz_3_5_posiłków__p23_m1.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p23_m1.png", "recipe_dieta_2200_5_posiłków__p18_m1.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p18_m1.png", "recipe_dieta_2200_cz_2_5_posiłków__p33_m5.png": "/paczka_1/static/images/recipe_dieta_2200_cz_2_5_posiłków__p33_m5.png", "recipe_dieta_2200_cz_2_5_posiłków__p40_m1.png": "/paczka_2/static/images/recipe_dieta_2200_cz_2_5_posiłków__p40_m1.png", "recipe_dieta_agi_1800_4_posiłki__p32_m4.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p32_m4.png", "recipe_dieta_2200_cz_2_5_posiłków__p45_m2.png": "/paczka_2/static/images/recipe_dieta_2200_cz_2_5_posiłków__p45_m2.png", "recipe_dieta_2200_5_posiłków__p39_m2.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p39_m2.png", "recipe_dieta_agi_1800_4_posiłki__p20_m1.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p20_m1.png", "recipe_dieta_2200_5_posiłków__p28_m4.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p28_m4.png", "recipe_dieta_2400_6_posiłków__p24_m2.png": "/paczka_2/static/images/recipe_dieta_2400_6_posiłków__p24_m2.png", "recipe_dieta_2200_5_posiłków__p45_m5.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p45_m5.png", "recipe_dieta_2200_5_posiłków__p42_m2.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p42_m2.png", "recipe_dieta_2200_cz_2_5_posiłków__p29_m4.png": "/paczka_1/static/images/recipe_dieta_2200_cz_2_5_posiłków__p29_m4.png", "recipe_dieta_2200_cz_2_5_posiłków__p19_m4.png": "/paczka_1/static/images/recipe_dieta_2200_cz_2_5_posiłków__p19_m4.png", "recipe_dieta_2200_cz_2_5_posiłków__p35_m4.png": "/paczka_2/static/images/recipe_dieta_2200_cz_2_5_posiłków__p35_m4.png", "recipe_dieta_2200_5_posiłków__p32_m2.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p32_m2.png", "recipe_dieta_2200_cz_3_5_posiłków__p32_m5.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p32_m5.png", "recipe_dieta_2200_cz_2_5_posiłków__p33_m4.png": "/paczka_1/static/images/recipe_dieta_2200_cz_2_5_posiłków__p33_m4.png", "recipe_dieta_agi_1800_4_posiłki__p41_m1.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p41_m1.png", "recipe_dieta_agi_1800_4_posiłki__p22_m1.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p22_m1.png", "recipe_dieta_2200_5_posiłków__p18_m2.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p18_m2.png", "recipe_dieta_agi_1800_4_posiłki__p35_m3.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p35_m3.png", "recipe_dieta_2200_5_posiłków__p39_m1.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p39_m1.png", "recipe_dieta_2200_5_posiłków__p25_m4.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p25_m4.png", "recipe_dieta_2400_6_posiłków__p24_m1.png": "/paczka_2/static/images/recipe_dieta_2400_6_posiłków__p24_m1.png", "recipe_dieta_2200_cz_2_5_posiłków__p28_m1.png": "/paczka_1/static/images/recipe_dieta_2200_cz_2_5_posiłków__p28_m1.png", "recipe_dieta_2200_5_posiłków__p28_m5.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p28_m5.png", "recipe_dieta_2200_5_posiłków__p44_m4.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p44_m4.png", "recipe_dieta_2400_6_posiłków__p34_m6.png": "/paczka_3/static/images/recipe_dieta_2400_6_posiłków__p34_m6.png", "recipe_dieta_2200_5_posiłków__p23_m2.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p23_m2.png", "recipe_dieta_2200_cz_3_5_posiłków__p19_m2.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p19_m2.png", "recipe_dieta_agi_1800_4_posiłki__p41_m2.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p41_m2.png", "recipe_dieta_2200_cz_2_5_posiłków__p45_m1.png": "/paczka_2/static/images/recipe_dieta_2200_cz_2_5_posiłków__p45_m1.png", "recipe_dieta_2200_cz_2_5_posiłków__p43_m3.png": "/paczka_2/static/images/recipe_dieta_2200_cz_2_5_posiłków__p43_m3.png", "recipe_dieta_2200_cz_3_5_posiłków__p27_m3.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p27_m3.png", "recipe_dieta_2400_6_posiłków__p35_m3.png": "/paczka_3/static/images/recipe_dieta_2400_6_posiłków__p35_m3.png", "recipe_dieta_2200_cz_3_5_posiłków__p31_m3.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p31_m3.png", "recipe_dieta_agi_1800_4_posiłki__p20_m2.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p20_m2.png", "recipe_dieta_2400_6_posiłków__p22_m3.png": "/paczka_2/static/images/recipe_dieta_2400_6_posiłków__p22_m3.png", "recipe_dieta_2200_cz_2_5_posiłków__p26_m4.png": "/paczka_1/static/images/recipe_dieta_2200_cz_2_5_posiłków__p26_m4.png", "recipe_dieta_2200_cz_3_5_posiłków__p38_m4.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p38_m4.png", "recipe_dieta_2200_cz_3_5_posiłków__p49_m2.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p49_m2.png", "recipe_dieta_2400_6_posiłków__p35_m1.png": "/paczka_3/static/images/recipe_dieta_2400_6_posiłków__p35_m1.png", "recipe_dieta_agi_1800_4_posiłki__p49_m4.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p49_m4.png", "recipe_dieta_agi_1800_4_posiłki__p48_m2.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p48_m2.png", "recipe_dieta_2400_6_posiłków__p26_m5.png": "/paczka_2/static/images/recipe_dieta_2400_6_posiłków__p26_m5.png", "recipe_dieta_2400_6_posiłków__p23_m5.png": "/paczka_2/static/images/recipe_dieta_2400_6_posiłków__p23_m5.png", "recipe_dieta_2200_cz_2_5_posiłków__p37_m2.png": "/paczka_2/static/images/recipe_dieta_2200_cz_2_5_posiłków__p37_m2.png", "recipe_dieta_2400_6_posiłków__p32_m1.png": "/paczka_3/static/images/recipe_dieta_2400_6_posiłków__p32_m1.png", "recipe_dieta_agi_1800_4_posiłki__p21_m4.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p21_m4.png", "recipe_dieta_2400_6_posiłków__p39_m5.png": "/paczka_3/static/images/recipe_dieta_2400_6_posiłków__p39_m5.png", "recipe_dieta_2200_cz_3_5_posiłków__p23_m2.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p23_m2.png", "recipe_dieta_agi_1800_4_posiłki__p44_m4.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p44_m4.png", "recipe_dieta_agi_1800_4_posiłki__p31_m1.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p31_m1.png", "recipe_dieta_2400_6_posiłków__p21_m2.png": "/paczka_2/static/images/recipe_dieta_2400_6_posiłków__p21_m2.png", "recipe_dieta_2200_cz_3_5_posiłków__p47_m3.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p47_m3.png", "recipe_dieta_2200_cz_2_5_posiłków__p37_m1.png": "/paczka_2/static/images/recipe_dieta_2200_cz_2_5_posiłków__p37_m1.png", "recipe_dieta_agi_1800_4_posiłki__p21_m3.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p21_m3.png", "recipe_dieta_agi_1800_4_posiłki__p34_m2.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p34_m2.png", "recipe_dieta_agi_1800_4_posiłki__p30_m3.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p30_m3.png", "recipe_dieta_agi_1800_4_posiłki__p39_m2.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p39_m2.png", "recipe_dieta_agi_1800_4_posiłki__p46_m2.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p46_m2.png", "recipe_dieta_2200_cz_2_5_posiłków__p38_m4.png": "/paczka_2/static/images/recipe_dieta_2200_cz_2_5_posiłków__p38_m4.png", "recipe_dieta_2200_cz_2_5_posiłków__p41_m2.png": "/paczka_2/static/images/recipe_dieta_2200_cz_2_5_posiłków__p41_m2.png", "recipe_dieta_2200_5_posiłków__p25_m5.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p25_m5.png", "recipe_dieta_2200_cz_2_5_posiłków__p21_m2.png": "/paczka_1/static/images/recipe_dieta_2200_cz_2_5_posiłków__p21_m2.png", "recipe_dieta_2200_5_posiłków__p27_m2.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p27_m2.png", "recipe_dieta_agi_1800_4_posiłki__p19_m3.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p19_m3.png", "recipe_dieta_2200_cz_2_5_posiłków__p34_m2.png": "/paczka_2/static/images/recipe_dieta_2200_cz_2_5_posiłków__p34_m2.png", "recipe_dieta_agi_1800_4_posiłki__p39_m1.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p39_m1.png", "recipe_dieta_2200_5_posiłków__p33_m4.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p33_m4.png", "recipe_dieta_2200_cz_3_5_posiłków__p30_m2.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p30_m2.png", "docx_serniczek_waniliowy.png": "/paczka_1/static/images/docx_serniczek_waniliowy.png", "recipe_dieta_2200_5_posiłków__p34_m2.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p34_m2.png", "docx_sernik_matcha.png": "/paczka_1/static/images/docx_sernik_matcha.png", "recipe_dieta_2200_cz_2_5_posiłków__p18_m2.png": "/paczka_1/static/images/recipe_dieta_2200_cz_2_5_posiłków__p18_m2.png", "recipe_dieta_2400_6_posiłków__p21_m1.png": "/paczka_2/static/images/recipe_dieta_2400_6_posiłków__p21_m1.png", "recipe_dieta_agi_1800_4_posiłki__p50_m3.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p50_m3.png", "recipe_dieta_2400_6_posiłków__p31_m5.png": "/paczka_3/static/images/recipe_dieta_2400_6_posiłków__p31_m5.png", "recipe_dieta_2400_6_posiłków__p23_m6.png": "/paczka_2/static/images/recipe_dieta_2400_6_posiłków__p23_m6.png", "recipe_dieta_2200_cz_3_5_posiłków__p24_m3.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p24_m3.png", "recipe_dieta_2400_6_posiłków__p37_m2.png": "/paczka_3/static/images/recipe_dieta_2400_6_posiłków__p37_m2.png", "recipe_dieta_agi_1800_4_posiłki__p36_m1.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p36_m1.png", "recipe_dieta_2400_6_posiłków__p32_m2.png": "/paczka_3/static/images/recipe_dieta_2400_6_posiłków__p32_m2.png", "recipe_dieta_2400_6_posiłków__p36_m5.png": "/paczka_3/static/images/recipe_dieta_2400_6_posiłków__p36_m5.png", "recipe_dieta_2200_cz_3_5_posiłków__p50_m3.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p50_m3.png", "recipe_dieta_2200_cz_3_5_posiłków__p36_m1.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p36_m1.png", "recipe_dieta_2200_5_posiłków__p43_m3.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p43_m3.png", "recipe_dieta_2200_5_posiłków__p23_m1.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p23_m1.png", "recipe_dieta_agi_1800_4_posiłki__p49_m3.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p49_m3.png", "recipe_dieta_agi_1800_4_posiłki__p37_m3.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p37_m3.png", "recipe_dieta_2200_cz_2_5_posiłków__p31_m1.png": "/paczka_1/static/images/recipe_dieta_2200_cz_2_5_posiłków__p31_m1.png", "recipe_dieta_agi_1800_4_posiłki__p44_m3.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p44_m3.png", "recipe_dieta_2200_5_posiłków__p34_m1.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p34_m1.png", "recipe_dieta_2200_cz_3_5_posiłków__p26_m1.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p26_m1.png", "recipe_dieta_2200_cz_2_5_posiłków__p47_m5.png": "/paczka_2/static/images/recipe_dieta_2200_cz_2_5_posiłków__p47_m5.png", "recipe_dieta_2200_cz_3_5_posiłków__p43_m1.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p43_m1.png", "recipe_dieta_agi_1800_4_posiłki__p46_m3.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p46_m3.png", "recipe_dieta_2200_cz_2_5_posiłków__p39_m5.png": "/paczka_2/static/images/recipe_dieta_2200_cz_2_5_posiłków__p39_m5.png", "recipe_dieta_agi_1800_4_posiłki__p24_m4.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p24_m4.png", "recipe_dieta_agi_1800_4_posiłki__p45_m1.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p45_m1.png", "recipe_dieta_2200_cz_2_5_posiłków__p30_m5.png": "/paczka_1/static/images/recipe_dieta_2200_cz_2_5_posiłków__p30_m5.png", "recipe_dieta_2200_cz_3_5_posiłków__p24_m4.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p24_m4.png", "recipe_dieta_agi_1800_4_posiłki__p48_m1.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p48_m1.png", "recipe_dieta_2200_cz_3_5_posiłków__p32_m4.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p32_m4.png", "recipe_dieta_agi_1800_4_posiłki__p31_m2.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p31_m2.png", "recipe_dieta_agi_1800_4_posiłki__p43_m2.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p43_m2.png", "recipe_dieta_agi_1800_4_posiłki__p18_m2.png": "/paczka_3/static/images/recipe_dieta_agi_1800_4_posiłki__p18_m2.png", "recipe_dieta_2200_5_posiłków__p21_m3.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p21_m3.png", "recipe_dieta_2200_5_posiłków__p21_m2.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p21_m2.png", "recipe_dieta_2200_cz_3_5_posiłków__p18_m1.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p18_m1.png", "recipe_dieta_2200_cz_2_5_posiłków__p35_m3.png": "/paczka_2/static/images/recipe_dieta_2200_cz_2_5_posiłków__p35_m3.png", "recipe_dieta_2400_6_posiłków__p30_m3.png": "/paczka_3/static/images/recipe_dieta_2400_6_posiłków__p30_m3.png", "recipe_dieta_2200_cz_3_5_posiłków__p45_m5.png": "/paczka_2/static/images/recipe_dieta_2200_cz_3_5_posiłków__p45_m5.png", "docx_zawijasy_feta.png": "/paczka_1/static/images/docx_zawijasy_feta.png", "recipe_dieta_2200_5_posiłków__p19_m3.png": "/paczka_1/static/images/recipe_dieta_2200_5_posiłków__p19_m3.png"};
 
     // Polish Stemmer helper for client-side search
     function polishStem(word) {
@@ -672,6 +760,7 @@
 
     // Initialize application
     document.addEventListener('DOMContentLoaded', async () => {
+      updateCreatorUI();
       await fetchRecipes();
       fetchShoppingList();
       fetchMealPlan();
@@ -681,7 +770,6 @@
     function switchTab(tab) {
       state.activeTab = tab;
       
-      // Toggle views
       ['catalog', 'planner', 'shopping', 'add'].forEach(t => {
         const el = document.getElementById(`tab-${t}`);
         if (el) el.classList.toggle('hidden', t !== tab);
@@ -708,7 +796,6 @@
       }
     }
 
-    // Toggle advanced filters
     function toggleFilterPanel() {
       const panel = document.getElementById('filter-panel');
       panel.classList.toggle('hidden');
@@ -755,18 +842,6 @@
     function setDietFilter(diet) {
       state.filters.diet = diet;
       document.getElementById('diet-select').value = diet;
-      fetchRecipes();
-    }
-
-    function toggleTagFilter(tag) {
-      state.filters.tag = state.filters.tag === tag ? null : tag;
-      document.querySelectorAll('.tag-chip').forEach(btn => {
-        if (btn.getAttribute('data-tag') === state.filters.tag) {
-          btn.className = 'tag-chip px-2.5 py-1 rounded-lg bg-brand-600 text-white text-xs font-bold';
-        } else {
-          btn.className = 'tag-chip px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-medium';
-        }
-      });
       fetchRecipes();
     }
 
@@ -839,6 +914,11 @@
         if (!res.ok) res = await fetch('static/recipes.json');
         allStaticRecipes = await res.json();
         
+        // Filter out deleted recipes
+        if (state.deletedRecipeIds && state.deletedRecipeIds.size > 0) {
+          allStaticRecipes = allStaticRecipes.filter(r => !state.deletedRecipeIds.has(r.id));
+        }
+
         // Sync favorite state from localStorage
         const favs = JSON.parse(localStorage.getItem('baza_favs') || '[]');
         const favSet = new Set(favs);
@@ -852,7 +932,7 @@
 
     function applyFiltersClientSide() {
       if (!allStaticRecipes || allStaticRecipes.length === 0) return;
-      let list = [...allStaticRecipes];
+      let list = allStaticRecipes.filter(r => !state.deletedRecipeIds.has(r.id));
 
       if (state.filters.category && state.filters.category !== 'Wszystkie') {
         list = list.filter(r => r.category === state.filters.category);
@@ -936,12 +1016,14 @@
       try {
         const res = await fetch(`/api/recipes?${p.toString()}`);
         if (!res.ok) throw new Error(`API error ${res.status}`);
-        const data = await res.json();
+        let data = await res.json();
+        if (state.deletedRecipeIds && state.deletedRecipeIds.size > 0) {
+          data = data.filter(r => !state.deletedRecipeIds.has(r.id));
+        }
         state.recipes = data;
         document.getElementById('results-count').innerText = data.length;
         renderRecipeCards();
       } catch (err) {
-        console.log('Serwer API niedostępny, uruchamianie trybu Cloudflare Pages / Offline (recipes.json):', err);
         state.isStaticMode = true;
         await loadStaticData();
         applyFiltersClientSide();
@@ -959,7 +1041,7 @@
     }
 
     function getSubtypeBadge(sub) {
-      if (!sub) return '';
+      if (!sub || sub === 'null') return '';
       if (sub === 'Owsianki') return `<span class="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-200/60 shadow-xs">🥣 Owsianka</span>`;
       if (sub === 'Placuszki') return `<span class="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-orange-100 text-orange-900 border border-orange-200/60 shadow-xs">🥞 Placuszki</span>`;
       if (sub === 'Wrapy') return `<span class="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-emerald-100 text-emerald-900 border border-emerald-200/60 shadow-xs">🌯 Wrap</span>`;
@@ -968,9 +1050,19 @@
     }
 
     function formatImagePath(p) {
-      if (!p) return './placeholder.png';
+      if (!p) return 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="150" viewBox="0 0 200 150"><rect width="200" height="150" fill="%23f5f5f4"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="28" fill="%2310b981">🥗</text></svg>';
+      const fn = p.split('/').pop();
+      if (LIVE_IMAGE_MAP && LIVE_IMAGE_MAP[fn]) {
+        return '.' + LIVE_IMAGE_MAP[fn];
+      }
       if (p.startsWith('/static/')) return '.' + p;
       return p;
+    }
+
+    function handleImageError(img) {
+      img.onerror = null;
+      const title = img.alt || 'Przepis';
+      img.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"><rect width="400" height="300" fill="%23f1f5f9"/><text x="50%" y="45%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="42">🍲</text><text x="50%" y="65%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="bold" fill="%2364748b">' + encodeURIComponent(title) + '</text></svg>';
     }
 
     // Render Recipe Cards
@@ -990,7 +1082,7 @@
         container.innerHTML = state.recipes.map(r => `
           <div onclick="openRecipeModal(${r.id})" class="bg-white p-3.5 rounded-2xl border border-stone-200 hover:border-brand-500/50 hover:shadow-md transition-all cursor-pointer flex items-center gap-3">
             <div class="w-16 h-16 rounded-xl bg-stone-100 flex-shrink-0 overflow-hidden relative">
-              <img src="${formatImagePath(r.image_path)}" alt="${r.title}" class="w-full h-full object-cover">
+              <img src="${formatImagePath(r.image_path)}" alt="${r.title}" class="w-full h-full object-cover" onerror="handleImageError(this)">
             </div>
             <div class="flex-1 min-w-0">
               <div class="flex items-center gap-1.5 mb-1 flex-wrap">
@@ -1016,21 +1108,26 @@
       // Default Grid View
       container.className = 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6';
       container.innerHTML = state.recipes.map(r => `
-        <div onclick="openRecipeModal(${r.id})" class="group bg-white rounded-3xl border border-stone-200/80 hover:border-brand-500/40 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer overflow-hidden flex flex-col">
+        <div class="group bg-white rounded-3xl border border-stone-200/80 hover:border-brand-500/40 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer overflow-hidden flex flex-col justify-between">
           <!-- Card Image Container -->
-          <div class="relative aspect-4/3 bg-stone-100 overflow-hidden">
-            <img 
-              src="${formatImagePath(r.image_path)}" 
-              alt="${r.title}" 
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              loading="lazy"
-            />
+          <div class="relative w-full h-48 sm:h-52 bg-stone-100 overflow-hidden">
+            <img src="${formatImagePath(r.image_path)}" alt="${r.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" onerror="handleImageError(this)" />
             <!-- Favorite button -->
             <button 
               onclick="event.stopPropagation(); toggleFavorite(${r.id})" 
               class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 hover:bg-white text-stone-400 backdrop-blur-md shadow-sm flex items-center justify-center transition-all ${r.is_favorite ? 'text-red-500' : 'hover:text-red-500'}">
               <i class="fa-solid fa-heart ${r.is_favorite ? 'text-red-500' : ''}"></i>
             </button>
+
+            <!-- Creator Delete Icon (Only in Creator Mode) -->
+            ${state.isCreatorMode ? `
+              <button 
+                onclick="event.stopPropagation(); promptDeleteRecipe(${r.id})" 
+                class="absolute top-3 left-3 w-8 h-8 rounded-full bg-red-600 hover:bg-red-700 text-white shadow-md flex items-center justify-center transition-all hover:scale-110" 
+                title="Usuń ten przepis (Tryb Twórcy)">
+                <i class="fa-solid fa-trash-can text-xs"></i>
+              </button>
+            ` : ''}
 
             <!-- Category badge -->
             <div class="absolute bottom-3 left-3 flex gap-1.5 flex-wrap">
@@ -1041,28 +1138,41 @@
 
           <!-- Card Content -->
           <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
-            <div>
+            <div onclick="openRecipeModal(${r.id})">
               <div class="flex items-center justify-between text-xs text-stone-400 mb-1.5 font-medium">
                 <span class="truncate max-w-[170px]">${(r.diet_name || '').split('(')[0]}</span>
                 <span class="font-extrabold text-stone-900 text-sm">${r.calories} kcal</span>
               </div>
-              <h3 class="font-extrabold text-stone-900 text-sm sm:text-base leading-snug line-clamp-2 group-hover:text-brand-600 transition-colors">
+              <h3 class="font-extrabold text-stone-900 text-sm sm:text-base leading-snug line-clamp-2 group-hover:text-brand-600 transition-colors mb-3">
                 ${r.title}
               </h3>
             </div>
 
             <!-- Macros Bar -->
-            <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-xs">
-              <div class="text-stone-500">
-                <span class="font-bold text-stone-800">${r.protein}g</span> <span class="text-[10px] text-stone-400">B</span>
+            <div>
+              <div class="pt-3 border-t border-stone-100 flex items-center justify-between text-xs mb-3">
+                <div class="text-stone-500">
+                  <span class="font-bold text-stone-800">${r.protein}g</span> <span class="text-[10px] text-amber-600 font-bold">B</span>
+                </div>
+                <div class="text-stone-300">•</div>
+                <div class="text-stone-500">
+                  <span class="font-bold text-stone-800">${r.carbs}g</span> <span class="text-[10px] text-sky-600 font-bold">W</span>
+                </div>
+                <div class="text-stone-300">•</div>
+                <div class="text-stone-500">
+                  <span class="font-bold text-stone-800">${r.fat}g</span> <span class="text-[10px] text-emerald-600 font-bold">T</span>
+                </div>
               </div>
-              <div class="text-stone-300">•</div>
-              <div class="text-stone-500">
-                <span class="font-bold text-stone-800">${r.carbs}g</span> <span class="text-[10px] text-stone-400">W</span>
-              </div>
-              <div class="text-stone-300">•</div>
-              <div class="text-stone-500">
-                <span class="font-bold text-stone-800">${r.fat}g</span> <span class="text-[10px] text-stone-400">T</span>
+
+              <!-- Action Bar on Card -->
+              <div class="flex items-center gap-1.5">
+                <button onclick="event.stopPropagation(); openDayPicker(${r.id})" class="flex-1 py-2 px-2.5 rounded-xl bg-stone-50 hover:bg-brand-50 hover:text-brand-700 text-stone-700 font-bold text-xs border border-stone-200 transition-all flex items-center justify-center gap-1.5 shadow-2xs">
+                  <i class="fa-regular fa-calendar-plus text-brand-600"></i>
+                  <span>Dodaj do dnia</span>
+                </button>
+                <button onclick="event.stopPropagation(); openRecipeModal(${r.id})" class="py-2 px-3 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 font-semibold text-xs transition">
+                  Szczegóły
+                </button>
               </div>
             </div>
           </div>
@@ -1104,15 +1214,12 @@
         const res = await fetch(`/api/recipes/${id}/favorite`, { method: 'POST' });
         if (!res.ok) throw new Error('API failed');
         const data = await res.json();
-        
         const recipe = state.recipes.find(r => r.id === id);
         if (recipe) recipe.is_favorite = data.is_favorite;
-        
         if (state.currentRecipe && state.currentRecipe.id === id) {
           state.currentRecipe.is_favorite = data.is_favorite;
           updateModalFavBtn(data.is_favorite);
         }
-        
         if (state.filters.onlyFavorites === 1) {
           fetchRecipes();
         } else {
@@ -1134,10 +1241,10 @@
       const btn = document.getElementById('modal-fav-btn');
       if (isFav) {
         btn.innerHTML = '<i class="fa-solid fa-heart text-red-500"></i> <span class="text-red-500">Ulubiony</span>';
-        btn.className = 'px-4 py-2 rounded-xl border border-red-200 bg-red-50 text-red-600 text-xs font-bold transition flex items-center gap-1.5';
+        btn.className = 'px-3.5 py-2.5 rounded-xl border border-red-200 bg-red-50 text-red-600 text-xs font-bold transition flex items-center gap-1.5';
       } else {
         btn.innerHTML = '<i class="fa-regular fa-heart"></i> <span>Ulubione</span>';
-        btn.className = 'px-4 py-2 rounded-xl border border-stone-300 text-stone-700 hover:text-red-600 hover:border-red-200 text-xs font-bold transition flex items-center gap-1.5';
+        btn.className = 'px-3.5 py-2.5 rounded-xl border border-stone-300 text-stone-700 hover:text-red-600 hover:border-red-200 text-xs font-bold transition flex items-center gap-1.5';
       }
     }
 
@@ -1157,7 +1264,6 @@
         state.currentRecipe = r;
         state.currentPortions = r.portions || 1;
 
-        // Ensure arrays
         if (typeof r.ingredients === 'string') {
           try { r.ingredients = JSON.parse(r.ingredients); } catch(e) { r.ingredients = []; }
         }
@@ -1177,7 +1283,6 @@
           try { r.tags = JSON.parse(r.tags_json); } catch(e) { r.tags = []; }
         }
 
-        // Fill modal details
         document.getElementById('modal-title').innerText = r.title;
         document.getElementById('modal-cat').innerHTML = `${getCategoryBadge(r.category)} ${getSubtypeBadge(r.sub_type)}`;
         document.getElementById('modal-diet').innerText = r.diet_name;
@@ -1189,6 +1294,16 @@
 
         updateModalFavBtn(r.is_favorite);
         renderModalMacrosAndIngredients();
+
+        // Creator delete button in modal
+        const creatorDeleteBtn = document.getElementById('modal-creator-delete-btn');
+        if (creatorDeleteBtn) {
+          if (state.isCreatorMode) {
+            creatorDeleteBtn.classList.remove('hidden');
+          } else {
+            creatorDeleteBtn.classList.add('hidden');
+          }
+        }
 
         // Steps
         const stepsContainer = document.getElementById('modal-steps');
@@ -1241,7 +1356,6 @@
       const origPortions = r.portions || 1;
       const ratio = state.currentPortions / origPortions;
 
-      // Scale macros
       const scaledKcal = Math.round(r.calories * ratio);
       const scaledProt = Math.round(r.protein * ratio * 10) / 10;
       const scaledCarbs = Math.round(r.carbs * ratio * 10) / 10;
@@ -1252,7 +1366,6 @@
       document.getElementById('modal-carbs').innerText = `${scaledCarbs}g`;
       document.getElementById('modal-fat').innerText = `${scaledFat}g`;
 
-      // Ingredients
       const ings = r.ingredients || [];
       document.getElementById('modal-ing-count').innerText = `${ings.length} pozycji`;
       const ingContainer = document.getElementById('modal-ingredients');
@@ -1304,7 +1417,7 @@
           });
         });
         localStorage.setItem('baza_shopping', JSON.stringify(shopping));
-        alert(`Dodano ${ings.length} składników do Twojej listy zakupów!`);
+        showToast(`Dodano ${ings.length} składników do Twojej listy zakupów!`);
         fetchShoppingList();
         return;
       }
@@ -1314,59 +1427,11 @@
           method: 'POST'
         });
         const data = await res.json();
-        alert(`Dodano ${data.added_count} składników do Twojej listy zakupów!`);
+        showToast(`Dodano ${data.added_count} składników do listy zakupów!`);
         fetchShoppingList();
       } catch (err) {
         state.isStaticMode = true;
         addModalRecipeToShopping();
-      }
-    }
-
-    // Assign modal recipe to planner day
-    async function assignModalToPlan() {
-      if (!state.currentRecipe) return;
-      const dayIdx = parseInt(document.getElementById('modal-plan-day').value);
-      const slot = state.currentRecipe.category === 'Obiady' ? 'Obiad' : 
-                   state.currentRecipe.category === 'Przekąski' ? 'Przekąska' : 'Inne';
-      
-      if (state.isStaticMode) {
-        const plan = JSON.parse(localStorage.getItem('baza_mealplan') || '[]');
-        plan.push({
-          id: Date.now() + Math.random(),
-          day_index: dayIdx,
-          meal_slot: slot,
-          recipe_id: state.currentRecipe.id,
-          title: state.currentRecipe.title,
-          calories: state.currentRecipe.calories,
-          protein: state.currentRecipe.protein,
-          carbs: state.currentRecipe.carbs,
-          fat: state.currentRecipe.fat,
-          image_path: state.currentRecipe.image_path,
-          category: state.currentRecipe.category
-        });
-        localStorage.setItem('baza_mealplan', JSON.stringify(plan));
-        alert(`Dodano przepis do dnia: ${DAYS[dayIdx]} (${slot})`);
-        fetchMealPlan();
-        closeModal();
-        return;
-      }
-
-      try {
-        await fetch('/api/meal-plan', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            day_index: dayIdx,
-            meal_slot: slot,
-            recipe_id: state.currentRecipe.id
-          })
-        });
-        alert(`Dodano przepis do dnia: ${DAYS[dayIdx]} (${slot})`);
-        fetchMealPlan();
-        closeModal();
-      } catch (err) {
-        state.isStaticMode = true;
-        assignModalToPlan();
       }
     }
 
@@ -1397,6 +1462,231 @@
     }
 
     // ==========================================
+    // TOAST NOTIFICATIONS
+    // ==========================================
+    function showToast(message) {
+      const toast = document.getElementById('app-toast');
+      if (!toast) return;
+      toast.innerHTML = `<i class="fa-solid fa-circle-check text-brand-400 text-base"></i> <span>${message}</span>`;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 3000);
+    }
+
+    // ==========================================
+    // QUICK DAY PICKER (1-KLIK)
+    // ==========================================
+    function openDayPicker(recipeId) {
+      const r = (allStaticRecipes || []).find(x => x.id === recipeId) || state.recipes.find(x => x.id === recipeId);
+      if (!r) return;
+      state.selectedRecipeForPlan = r;
+      document.getElementById('picker-recipe-title').innerText = r.title;
+
+      const container = document.getElementById('picker-days-container');
+      container.innerHTML = DAYS.map((dayName, idx) => `
+        <button type="button" onclick="assignRecipeToDayDirectly(${idx})" class="w-full p-3 rounded-2xl bg-stone-50 hover:bg-brand-50 hover:border-brand-500 border border-stone-200/80 font-bold text-xs sm:text-sm text-stone-800 flex items-center justify-between transition-all group">
+          <div class="flex items-center gap-2.5">
+            <span class="w-7 h-7 rounded-lg bg-stone-200 group-hover:bg-brand-600 group-hover:text-white flex items-center justify-center text-xs font-black transition-colors">${idx + 1}</span>
+            <span class="group-hover:text-brand-900">${dayName}</span>
+          </div>
+          <i class="fa-solid fa-arrow-right text-stone-300 group-hover:text-brand-600 transition-transform group-hover:translate-x-1"></i>
+        </button>
+      `).join('');
+
+      document.getElementById('day-picker-modal').classList.remove('hidden');
+    }
+
+    function openDayPickerFromModal() {
+      if (!state.currentRecipe) return;
+      openDayPicker(state.currentRecipe.id);
+    }
+
+    function closeDayPicker() {
+      document.getElementById('day-picker-modal').classList.add('hidden');
+    }
+
+    async function assignRecipeToDayDirectly(dayIdx) {
+      if (!state.selectedRecipeForPlan) return;
+      const r = state.selectedRecipeForPlan;
+      const dayName = DAYS[dayIdx];
+
+      if (state.isStaticMode) {
+        const plan = JSON.parse(localStorage.getItem('baza_mealplan') || '[]');
+        plan.push({
+          id: Date.now() + Math.random(),
+          day_index: dayIdx,
+          meal_slot: r.category || 'Posiłek',
+          recipe_id: r.id,
+          title: r.title,
+          calories: r.calories,
+          protein: r.protein,
+          carbs: r.carbs,
+          fat: r.fat,
+          image_path: r.image_path,
+          category: r.category
+        });
+        localStorage.setItem('baza_mealplan', JSON.stringify(plan));
+        state.mealPlan = plan;
+      } else {
+        try {
+          await fetch('/api/meal-plan', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              day_index: dayIdx,
+              meal_slot: r.category || 'Posiłek',
+              recipe_id: r.id
+            })
+          });
+          const res = await fetch('/api/meal-plan');
+          state.mealPlan = await res.json();
+        } catch(err) {
+          state.isStaticMode = true;
+          assignRecipeToDayDirectly(dayIdx);
+          return;
+        }
+      }
+
+      closeDayPicker();
+      showToast(`Dodano "${r.title}" do: ${dayName}!`);
+      renderPlannerBoard();
+    }
+
+    // ==========================================
+    // CREATOR MODE (PIN: 0000)
+    // ==========================================
+    function handleCreatorButtonClick() {
+      if (state.isCreatorMode) {
+        openCreatorStatusModal();
+      } else {
+        openCreatorPinModal();
+      }
+    }
+
+    function openCreatorPinModal() {
+      document.getElementById('creator-pin-input').value = '';
+      document.getElementById('creator-pin-error').classList.add('hidden');
+      document.getElementById('creator-pin-modal').classList.remove('hidden');
+      setTimeout(() => document.getElementById('creator-pin-input').focus(), 150);
+    }
+
+    function closeCreatorPinModal() {
+      document.getElementById('creator-pin-modal').classList.add('hidden');
+    }
+
+    function verifyCreatorPin() {
+      const input = document.getElementById('creator-pin-input').value.trim();
+      const err = document.getElementById('creator-pin-error');
+      if (input === CREATOR_PIN) {
+        state.isCreatorMode = true;
+        localStorage.setItem('creator_mode_active', 'true');
+        closeCreatorPinModal();
+        updateCreatorUI();
+        showToast('Witaj Twórco! Tryb zarządzania bazą został odblokowany.');
+        renderRecipeCards();
+      } else {
+        err.innerText = 'Nieprawidłowy kod PIN. Spróbuj ponownie.';
+        err.classList.remove('hidden');
+      }
+    }
+
+    function openCreatorStatusModal() {
+      const activeCount = (allStaticRecipes || []).length;
+      const deletedCount = state.deletedRecipeIds.size;
+      document.getElementById('creator-active-count').innerText = activeCount;
+      document.getElementById('creator-deleted-count').innerText = deletedCount;
+      document.getElementById('creator-status-modal').classList.remove('hidden');
+    }
+
+    function closeCreatorStatusModal() {
+      document.getElementById('creator-status-modal').classList.add('hidden');
+    }
+
+    function exitCreatorMode() {
+      state.isCreatorMode = false;
+      localStorage.removeItem('creator_mode_active');
+      closeCreatorStatusModal();
+      updateCreatorUI();
+      showToast('Zablokowano Tryb Twórcy.');
+      renderRecipeCards();
+    }
+
+    function updateCreatorUI() {
+      const btn = document.getElementById('creator-mode-btn');
+      const label = document.getElementById('creator-btn-label');
+      if (!btn) return;
+      if (state.isCreatorMode) {
+        btn.className = 'px-2.5 py-2 rounded-xl bg-amber-500 text-white shadow-sm transition-all text-xs font-extrabold flex items-center gap-1.5';
+        if (label) {
+          label.innerText = 'Twórca (Aktywny)';
+          label.className = 'inline text-xs font-bold';
+        }
+      } else {
+        btn.className = 'px-2.5 py-2 rounded-xl border border-stone-200 text-stone-600 hover:text-amber-600 hover:border-amber-300 hover:bg-amber-50/50 transition-all text-xs font-bold flex items-center gap-1.5';
+        if (label) {
+          label.innerText = 'Twórca';
+          label.className = 'hidden sm:inline';
+        }
+      }
+    }
+
+    function promptDeleteRecipe(id) {
+      if (!state.isCreatorMode) return;
+      const recipe = (allStaticRecipes || []).find(r => r.id === id) || state.recipes.find(r => r.id === id);
+      const title = recipe ? recipe.title : 'ten przepis';
+      if (!confirm(`Czy na pewno chcesz bezpowrotnie usunąć przepis:\n\n"${title}"\n\nz bazy danych?`)) {
+        return;
+      }
+      executeDeleteRecipe(id, title);
+    }
+
+    function deleteCurrentModalRecipe() {
+      if (!state.currentRecipe) return;
+      promptDeleteRecipe(state.currentRecipe.id);
+    }
+
+    async function executeDeleteRecipe(id, title) {
+      state.deletedRecipeIds.add(id);
+      localStorage.setItem('deleted_recipe_ids', JSON.stringify([...state.deletedRecipeIds]));
+
+      allStaticRecipes = allStaticRecipes.filter(r => r.id !== id);
+      state.recipes = state.recipes.filter(r => r.id !== id);
+      state.mealPlan = state.mealPlan.filter(m => m.recipe_id !== id);
+      localStorage.setItem('baza_mealplan', JSON.stringify(state.mealPlan));
+
+      try {
+        await fetch(`/api/recipes/${id}`, {
+          method: 'DELETE',
+          headers: { 'X-Creator-PIN': CREATOR_PIN }
+        });
+      } catch(e) {}
+
+      closeModal();
+      showToast(`Przepis "${title}" został usunięty z bazy.`);
+      document.getElementById('results-count').innerText = state.recipes.length;
+      renderRecipeCards();
+      renderPlannerBoard();
+    }
+
+    function downloadCleanRecipesJson() {
+      const cleanList = allStaticRecipes.filter(r => !state.deletedRecipeIds.has(r.id));
+      const blob = new Blob([JSON.stringify(cleanList, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'recipes.json';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      showToast(`Pobrano czysty plik recipes.json (${cleanList.length} przepisów)!`);
+    }
+
+    // ==========================================
     // SHOPPING LIST
     // ==========================================
     async function fetchShoppingList() {
@@ -1420,6 +1710,7 @@
 
     function updateShoppingBadge() {
       const badge = document.getElementById('shopping-badge');
+      if (!badge) return;
       const unchecked = (state.shoppingList || []).filter(i => !i.checked).length;
       if (unchecked > 0) {
         badge.innerText = unchecked;
@@ -1432,13 +1723,14 @@
     function renderShoppingList() {
       const container = document.getElementById('shopping-items-list');
       const empty = document.getElementById('shopping-empty');
+      if (!container) return;
       
       if (!state.shoppingList || state.shoppingList.length === 0) {
         container.innerHTML = '';
-        empty.classList.remove('hidden');
+        if (empty) empty.classList.remove('hidden');
         return;
       }
-      empty.classList.add('hidden');
+      if (empty) empty.classList.add('hidden');
 
       container.innerHTML = state.shoppingList.map(item => `
         <div class="flex items-center justify-between p-3 rounded-xl border ${item.checked ? 'bg-stone-50 border-stone-200/60 opacity-60' : 'bg-white border-stone-200'} transition-all">
@@ -1551,12 +1843,12 @@
       const lines = state.shoppingList.map(i => `${i.checked ? '[x]' : '[ ]'} ${i.name} ${i.amount ? `(${i.amount})` : ''}`);
       const text = `🛒 LISTA ZAKUPÓW:\n\n` + lines.join('\n');
       navigator.clipboard.writeText(text).then(() => {
-        alert('Skopiowano listę zakupów do schowka!');
+        showToast('Skopiowano listę zakupów do schowka!');
       });
     }
 
     // ==========================================
-    // MEAL PLANNER
+    // MEAL PLANNER (JADŁOSPIS)
     // ==========================================
     async function fetchMealPlan() {
       if (state.isStaticMode) {
@@ -1591,7 +1883,7 @@
         return `
           <div class="bg-white rounded-3xl border border-stone-200 shadow-sm flex flex-col overflow-hidden">
             <!-- Day Header -->
-            <div class="p-4 border-b border-stone-100 bg-stone-50">
+            <div class="p-3.5 border-b border-stone-100 bg-stone-50">
               <h3 class="font-extrabold text-sm text-stone-900">${dayName}</h3>
               <div class="flex items-center justify-between text-xs text-stone-400 mt-1 font-semibold">
                 <span class="${dayKcal > 0 ? 'text-brand-600 font-extrabold' : ''}">${dayKcal} kcal</span>
@@ -1599,18 +1891,21 @@
               </div>
             </div>
 
-            <!-- Day Slots -->
-            <div class="p-3 space-y-2 flex-1 min-h-[180px]">
+            <!-- Day Meals List (Clean & Direct) -->
+            <div class="p-2.5 space-y-2 flex-1 min-h-[160px]">
               ${dayMeals.length === 0 ? `
                 <div class="h-full flex flex-col items-center justify-center text-center py-6 text-stone-300">
                   <i class="fa-regular fa-calendar-plus text-xl mb-1"></i>
                   <span class="text-[11px] font-semibold">Brak dań</span>
                 </div>
               ` : dayMeals.map(meal => `
-                <div class="bg-stone-50 p-2 rounded-xl border border-stone-200/80 hover:border-brand-500 transition group relative">
-                  <div class="text-[10px] font-bold uppercase text-brand-600 mb-0.5">${meal.meal_slot}</div>
-                  <div class="text-xs font-bold text-stone-800 line-clamp-1">${meal.title}</div>
-                  <div class="text-[10px] text-stone-400 mt-0.5">${meal.calories} kcal</div>
+                <div class="bg-stone-50 p-2.5 rounded-xl border border-stone-200/80 hover:border-brand-500 transition group relative">
+                  <div class="text-xs font-bold text-stone-800 line-clamp-1 pr-4">${meal.title}</div>
+                  <div class="flex items-center gap-1.5 text-[10px] text-stone-400 mt-1 font-medium">
+                    <span class="font-bold text-stone-700">${meal.calories} kcal</span>
+                    <span>•</span>
+                    <span>${meal.protein}g B</span>
+                  </div>
                   <button onclick="deletePlanEntry('${meal.id}')" class="absolute top-2 right-2 text-stone-300 hover:text-red-500 text-xs transition" title="Usuń z dnia">
                     <i class="fa-solid fa-xmark"></i>
                   </button>
@@ -1658,7 +1953,7 @@
           }
         });
         localStorage.setItem('baza_shopping', JSON.stringify(shopping));
-        alert(`Dodano ${totalAdded} składników z planu tygodnia do listy zakupów!`);
+        showToast(`Dodano ${totalAdded} składników z jadłospisu do listy zakupów!`);
         fetchShoppingList();
         switchTab('shopping');
         return;
@@ -1667,7 +1962,7 @@
       try {
         const res = await fetch('/api/meal-plan/generate-shopping-list', { method: 'POST' });
         const data = await res.json();
-        alert(data.message);
+        showToast(data.message);
         fetchShoppingList();
         switchTab('shopping');
       } catch (err) {
@@ -1730,7 +2025,7 @@
 
       if (state.isStaticMode) {
         allStaticRecipes.unshift(payload);
-        alert('Przepis został pomyślnie dodany do bazy!');
+        showToast('Przepis został pomyślnie dodany do bazy!');
         document.getElementById('add-recipe-form').reset();
         applyFiltersClientSide();
         switchTab('catalog');
@@ -1744,14 +2039,14 @@
           body: JSON.stringify(payload)
         });
         const data = await res.json();
-        alert('Przepis został pomyślnie dodany do bazy!');
+        showToast('Przepis został pomyślnie dodany do bazy!');
         document.getElementById('add-recipe-form').reset();
         fetchRecipes();
         switchTab('catalog');
       } catch (err) {
         state.isStaticMode = true;
         allStaticRecipes.unshift(payload);
-        alert('Przepis został pomyślnie dodany do bazy!');
+        showToast('Przepis został pomyślnie dodany do bazy!');
         document.getElementById('add-recipe-form').reset();
         applyFiltersClientSide();
         switchTab('catalog');
