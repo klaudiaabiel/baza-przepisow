@@ -84,13 +84,12 @@
       <div class="flex items-center justify-between h-16">
         
         <!-- Logo -->
-        <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('catalog')">
-          <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-brand-600 to-emerald-400 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
+        <div class="flex items-center space-x-3 cursor-pointer group" onclick="handleLogoClick()" title="Powrót do strony głównej">
+          <div class="w-10 h-10 rounded-2xl bg-brand-600 group-hover:bg-brand-700 transition flex items-center justify-center text-white shadow-md shadow-brand-600/20">
             <i class="fa-solid fa-utensils text-lg"></i>
           </div>
           <div>
-            <span class="font-extrabold text-xl tracking-tight text-stone-900">Baza<span class="text-brand-600">Przepisów</span></span>
-            <span class="hidden md:inline-block text-xs font-semibold px-2 py-0.5 ml-2 bg-emerald-100 text-brand-800 rounded-full">257 dań</span>
+            <span class="font-extrabold text-xl tracking-tight text-stone-900 group-hover:text-brand-600 transition">Baza<span class="text-brand-600">Przepisów</span></span>
           </div>
         </div>
 
@@ -142,39 +141,39 @@
     <section id="tab-catalog" class="space-y-6">
       
       <!-- HERO SEARCH & FILTERS BANNER -->
-      <div class="bg-gradient-to-br from-stone-900 via-stone-800 to-stone-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
-        <div class="absolute -right-10 -bottom-10 opacity-10 pointer-events-none">
-          <i class="fa-solid fa-bowl-food text-[240px]"></i>
+      <div class="bg-[#f7f5f0] border border-stone-200/90 rounded-3xl p-6 sm:p-8 text-stone-900 shadow-sm relative overflow-hidden">
+        <div class="absolute -right-8 -bottom-8 opacity-5 text-stone-900 pointer-events-none">
+          <i class="fa-solid fa-bowl-food text-[220px]"></i>
         </div>
 
         <div class="relative z-10 max-w-3xl">
-          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-brand-500/20 text-brand-300 border border-brand-500/30 mb-3">
-            <i class="fa-solid fa-sparkles text-[10px]"></i> Centrum Przepisów & Diet
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-extrabold bg-brand-100/80 text-brand-800 mb-2.5">
+            <i class="fa-solid fa-sparkles text-[10px]"></i> Baza Zbilansowanych Przepisów
           </span>
-          <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-white mb-2">
-            Co masz ochotę dziś zjeść?
+          <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-stone-900 mb-2">
+            Co dzisiaj ugotujemy?
           </h1>
-          <p class="text-stone-300 text-sm sm:text-base mb-6">
-            Przeszukuj ponad <span class="font-bold text-white">250 sprawdzonych przepisów</span> z dokładnymi gramaturami, makro i zdjęciami.
+          <p class="text-stone-500 text-xs sm:text-sm mb-5 font-medium">
+            Przeszukuj zbilansowane posiłki z dokładnymi gramaturami, makro i czasem przygotowania.
           </p>
 
-          <!-- Search Input -->
-          <div class="relative flex items-center">
-            <div class="absolute left-4 text-stone-400">
-              <i class="fa-solid fa-magnifying-glass text-lg"></i>
+          <!-- Search Input Box -->
+          <div class="relative flex items-center bg-white p-1 rounded-2xl border border-stone-300/80 shadow-xs focus-within:border-brand-500 focus-within:ring-2 focus-within:ring-brand-200 transition-all">
+            <div class="pl-3.5 pr-2 text-stone-400">
+              <i class="fa-solid fa-magnifying-glass text-base"></i>
             </div>
             <input 
               type="text" 
               id="search-input" 
-              placeholder="Wpisz nazwę dania lub składnik (np. kurczak, banan, sernik, feta)..." 
-              class="w-full pl-12 pr-28 py-3.5 sm:py-4 bg-white/10 hover:bg-white/15 focus:bg-white text-stone-100 focus:text-stone-900 placeholder-stone-400 rounded-2xl border border-white/20 focus:border-brand-500 outline-none backdrop-blur-sm transition-all shadow-inner text-sm sm:text-base font-medium"
+              placeholder="Szukaj dania lub składnika (np. banan, owsianka, łosoś)..." 
+              class="w-full py-2.5 sm:py-3 bg-transparent text-stone-900 placeholder-stone-400 outline-none text-xs sm:text-sm font-semibold"
               oninput="debounceSearch()"
             />
             <button 
               type="button" 
               id="search-clear-btn" 
               onclick="clearSearchInput()" 
-              class="hidden absolute right-24 text-stone-400 hover:text-stone-700 bg-white/70 hover:bg-white p-1.5 rounded-full transition shadow-xs" 
+              class="hidden mr-2 text-stone-400 hover:text-stone-700 bg-stone-100 hover:bg-stone-200 p-1.5 rounded-full transition" 
               title="Wyczyść pole wyszukiwania">
               <i class="fa-solid fa-circle-xmark text-sm"></i>
             </button>
@@ -182,38 +181,40 @@
               type="button"
               onclick="openFilterDrawer()" 
               id="filter-toggle-btn"
-              class="absolute right-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-white/20 hover:bg-white/30 text-white text-xs sm:text-sm font-semibold flex items-center gap-2 transition-all shadow-sm">
-              <i class="fa-solid fa-sliders"></i>
+              class="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs sm:text-sm font-bold flex items-center gap-2 transition shadow-xs shrink-0">
+              <i class="fa-solid fa-sliders text-xs"></i>
               <span class="hidden sm:inline">Filtry</span>
-              <span id="active-filters-badge" class="hidden bg-emerald-400 text-stone-900 text-[10px] font-black px-1.5 py-0.5 rounded-full ml-0.5">0</span>
+              <span id="active-filters-badge" class="hidden bg-white text-brand-700 text-[10px] font-black px-1.5 py-0.2 rounded-full">0</span>
             </button>
           </div>
         </div>
 
-        <!-- QUICK CATEGORY & PREP TIME PILLS (11 KATEGORII ZE SCREENA) -->
-        <div class="relative z-10 flex flex-col gap-2 mt-5">
-          <!-- Row 1: The 11 Categories -->
-          <div class="flex items-center gap-1.5 overflow-x-auto pb-1 custom-scrollbar text-xs font-semibold" id="hero-category-pills">
-            <!-- Dynamically populated and synced by JS -->
-          </div>
-
-          <!-- Row 2: Quick Prep Time Chips & Favorite -->
+        <!-- QUICK FILTERS: TIME & FAVORITE FIRST, THEN 11 CATEGORIES BELOW -->
+        <div class="relative z-10 flex flex-col gap-3 mt-5 pt-4 border-t border-stone-200/60">
+          
+          <!-- Row 1: Quick Prep Time Chips (Multi-Select) & Favorites Toggle -->
           <div class="flex items-center gap-1.5 overflow-x-auto pb-0.5 custom-scrollbar text-xs font-semibold">
-            <span class="text-[11px] text-stone-400 font-bold uppercase mr-1 whitespace-nowrap">Czas:</span>
-            <button type="button" onclick="setQuickTimeFilter(15)" id="hero-time-15" class="px-3 py-1 rounded-xl bg-white/10 hover:bg-white/20 text-stone-200 transition text-[11px] whitespace-nowrap">
+            <span class="text-[11px] text-stone-400 font-bold uppercase mr-1 whitespace-nowrap">Czas przygotowania:</span>
+            <button type="button" onclick="setQuickTimeFilter(15)" id="hero-time-15" class="px-3 py-1.5 rounded-xl bg-stone-200/70 hover:bg-stone-300/70 text-stone-700 transition text-xs whitespace-nowrap font-semibold">
               ⏱️ do 15 min
             </button>
-            <button type="button" onclick="setQuickTimeFilter(30)" id="hero-time-30" class="px-3 py-1 rounded-xl bg-white/10 hover:bg-white/20 text-stone-200 transition text-[11px] whitespace-nowrap">
+            <button type="button" onclick="setQuickTimeFilter(30)" id="hero-time-30" class="px-3 py-1.5 rounded-xl bg-stone-200/70 hover:bg-stone-300/70 text-stone-700 transition text-xs whitespace-nowrap font-semibold">
               ⏱️ do 30 min
             </button>
-            <button type="button" onclick="setQuickTimeFilter(60)" id="hero-time-60" class="px-3 py-1 rounded-xl bg-white/10 hover:bg-white/20 text-stone-200 transition text-[11px] whitespace-nowrap">
+            <button type="button" onclick="setQuickTimeFilter(60)" id="hero-time-60" class="px-3 py-1.5 rounded-xl bg-stone-200/70 hover:bg-stone-300/70 text-stone-700 transition text-xs whitespace-nowrap font-semibold">
               ⏱️ do 60 min
             </button>
-            <button type="button" onclick="toggleFavoritesOnly()" id="hero-fav-btn" class="px-3 py-1 rounded-xl bg-white/10 hover:bg-white/20 text-stone-200 transition text-[11px] whitespace-nowrap flex items-center gap-1 ml-auto">
+            <button type="button" onclick="toggleFavoritesOnly()" id="hero-fav-btn" class="px-3 py-1.5 rounded-xl bg-stone-200/70 hover:bg-stone-300/70 text-stone-700 transition text-xs whitespace-nowrap font-semibold flex items-center gap-1.5 ml-auto">
               <i class="fa-solid fa-heart text-stone-400"></i>
               <span>Tylko ulubione</span>
             </button>
           </div>
+
+          <!-- Row 2: Categories (11 Oficialnych Kategorii z Licznikami) -->
+          <div class="flex items-center gap-1.5 overflow-x-auto pb-1 custom-scrollbar text-xs font-semibold" id="hero-category-pills">
+            <!-- Dynamically populated and synced by JS -->
+          </div>
+
         </div>
       </div>
 
@@ -568,13 +569,13 @@
                 </div>
                 <div class="h-6 w-px bg-stone-200"></div>
                 <div class="text-xs">
-                  <span class="text-stone-400">B:</span> <strong id="modal-prot" class="text-stone-800">0g</strong>
+                  <span class="text-stone-400 font-bold">B:</span> <strong id="modal-prot" class="text-stone-800">0g</strong>
                 </div>
                 <div class="text-xs">
-                  <span class="text-stone-400">W:</span> <strong id="modal-carbs" class="text-stone-800">0g</strong>
+                  <span class="text-stone-400 font-bold">T:</span> <strong id="modal-fat" class="text-stone-800">0g</strong>
                 </div>
                 <div class="text-xs">
-                  <span class="text-stone-400">T:</span> <strong id="modal-fat" class="text-stone-800">0g</strong>
+                  <span class="text-stone-400 font-bold">W:</span> <strong id="modal-carbs" class="text-stone-800">0g</strong>
                 </div>
               </div>
             </div>
@@ -990,6 +991,34 @@
   </div>
 
   <script>
+    // Clean recipe titles from technical badges like [Urodzinowa paczka]
+    function cleanRecipeTitle(title) {
+      if (!title) return '';
+      return String(title)
+        .replace(/\[\s*urodzinowa paczka\s*\]/gi, '')
+        .replace(/\(\s*urodzinowa paczka\s*\)/gi, '')
+        .replace(/\s{2,}/g, ' ')
+        .trim();
+    }
+
+    function handleLogoClick() {
+      switchTab('catalog');
+      if (state.activeFilters) {
+        state.activeFilters.categories = [];
+        state.activeFilters.prepTimes = [];
+        state.activeFilters.ingredients = [];
+      }
+      state.filters.q = '';
+      const searchInput = document.getElementById('search-input');
+      if (searchInput) searchInput.value = '';
+      const clearBtn = document.getElementById('search-clear-btn');
+      if (clearBtn) clearBtn.classList.add('hidden');
+      applyFiltersClientSide();
+      renderHeroCategoryPills();
+      updateHeroTimeChipsUI();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
     // State management
     const CREATOR_PIN = "0000";
     let state = {
@@ -1383,8 +1412,13 @@
         list = list.filter(r => state.activeFilters.categories.includes(classifyRecipe(r)));
       }
 
-      // Preparation Time Filter
-      if (state.activeFilters.prepTimeMax) {
+      // Preparation Time Filter (Multi-select)
+      if (state.activeFilters.prepTimes && state.activeFilters.prepTimes.length > 0) {
+        list = list.filter(r => {
+          const prep = getRecipePrepMinutes(r);
+          return state.activeFilters.prepTimes.some(m => prep <= m);
+        });
+      } else if (state.activeFilters.prepTimeMax) {
         list = list.filter(r => getRecipePrepMinutes(r) <= state.activeFilters.prepTimeMax);
       }
 
@@ -1453,8 +1487,8 @@
       }
 
       state.recipes = list;
-      const countEl = document.getElementById('recipes-count');
-      if (countEl) countEl.innerText = `${list.length} dań`;
+      const countEl = document.getElementById('results-count') || document.getElementById('recipes-count');
+      if (countEl) countEl.innerText = list.length;
       renderRecipeCards();
       updateActiveFiltersBadge();
     }
@@ -1537,23 +1571,32 @@
 
     // Render Recipe Cards
     function setQuickTimeFilter(mins) {
-      if (state.activeFilters.prepTimeMax === mins) {
-        state.activeFilters.prepTimeMax = null;
-      } else {
-        state.activeFilters.prepTimeMax = mins;
+      if (!state.activeFilters.prepTimes) {
+        state.activeFilters.prepTimes = [];
       }
+      const idx = state.activeFilters.prepTimes.indexOf(mins);
+      if (idx > -1) {
+        state.activeFilters.prepTimes.splice(idx, 1);
+      } else {
+        state.activeFilters.prepTimes.push(mins);
+      }
+      updateHeroTimeChipsUI();
+      state.visibleCount = 24;
+      applyFiltersClientSide();
+    }
+
+    function updateHeroTimeChipsUI() {
+      const selected = state.activeFilters.prepTimes || [];
       [15, 30, 60].forEach(m => {
         const btn = document.getElementById(`hero-time-${m}`);
         if (btn) {
-          if (state.activeFilters.prepTimeMax === m) {
-            btn.className = 'px-3 py-1 rounded-xl bg-brand-600 text-white font-bold transition text-[11px] whitespace-nowrap shadow-sm';
+          if (selected.includes(m)) {
+            btn.className = 'px-3 py-1.5 rounded-xl bg-brand-600 text-white font-bold transition text-xs whitespace-nowrap shadow-xs ring-2 ring-brand-300';
           } else {
-            btn.className = 'px-3 py-1 rounded-xl bg-white/10 hover:bg-white/20 text-stone-200 transition text-[11px] whitespace-nowrap';
+            btn.className = 'px-3 py-1.5 rounded-xl bg-stone-200/70 hover:bg-stone-300/70 text-stone-700 transition text-xs whitespace-nowrap font-semibold';
           }
         }
       });
-      state.visibleCount = 24;
-      applyFiltersClientSide();
     }
 
     function renderHeroCategoryPills() {
@@ -1579,7 +1622,7 @@
           <button 
             type="button" 
             onclick="toggleHeroCategoryFilter('${cat}')" 
-            class="px-3.5 py-1.5 rounded-xl whitespace-nowrap transition-all text-xs font-bold ${isActive ? 'bg-white text-stone-900 shadow-sm' : 'bg-white/10 hover:bg-white/20 text-stone-200'}">
+            class="px-3.5 py-1.5 rounded-xl whitespace-nowrap transition-all text-xs font-bold ${isActive ? 'bg-brand-600 text-white shadow-xs ring-2 ring-brand-300' : 'bg-stone-200/80 hover:bg-stone-300 text-stone-800 font-semibold'}">
             ${cat} (${count})
           </button>
         `;
@@ -1619,6 +1662,23 @@
       renderRecipeCards();
     }
 
+    function setupInfiniteScrollObserver() {
+      if (typeof IntersectionObserver === 'undefined') return;
+      const trigger = document.getElementById('infinite-scroll-trigger');
+      if (!trigger) return;
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            observer.disconnect();
+            loadMoreRecipes();
+          }
+        });
+      }, { rootMargin: '200px' });
+
+      observer.observe(trigger);
+    }
+
     function renderRecipeCards() {
       const container = document.getElementById('recipes-grid');
       const empty = document.getElementById('empty-state');
@@ -1626,98 +1686,161 @@
       if (!state.recipes || state.recipes.length === 0) {
         container.innerHTML = '';
         empty.classList.remove('hidden');
+        const countEl = document.getElementById('results-count') || document.getElementById('recipes-count');
+        if (countEl) countEl.innerText = '0';
         return;
       }
       empty.classList.add('hidden');
 
       const totalRecipes = state.recipes.length;
+      const countEl = document.getElementById('results-count') || document.getElementById('recipes-count');
+      if (countEl) countEl.innerText = totalRecipes;
+
       const visibleCount = state.visibleCount || 24;
       const visibleList = state.recipes.slice(0, visibleCount);
 
-      // Default Grid View (Warm Editorial Styling with Fixed 4:3 Image Aspect Ratio)
+      // Branch 1: Compact List View (Punkt 9)
+      if (state.cardView === 'compact') {
+        container.className = 'flex flex-col gap-3';
+        
+        const compactHtml = visibleList.map(r => {
+          const cleanTitle = cleanRecipeTitle(r.title);
+          return `
+            <div onclick="openRecipeModal(${r.id})" class="group bg-white rounded-2xl border border-stone-200/90 hover:border-brand-500 hover:shadow-md transition-all p-3 flex items-center justify-between gap-3 sm:gap-4 cursor-pointer">
+              <div class="flex items-center gap-3 sm:gap-4 min-w-0">
+                <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden bg-stone-100 shrink-0 border border-stone-100 relative">
+                  <img src="${formatImagePath(r.image_path)}" alt="${cleanTitle}" class="w-full h-full object-cover group-hover:scale-105 transition" loading="lazy" onerror="handleImageError(this, '${cleanTitle}')" />
+                </div>
+                <div class="min-w-0">
+                  <div class="flex items-center gap-2 mb-1">
+                    ${getCategoryBadge(r)}
+                    <span class="text-[11px] text-stone-400 font-semibold hidden sm:inline">⏱️ ${getRecipePrepMinutes(r)} min</span>
+                  </div>
+                  <h3 class="font-extrabold text-stone-900 text-sm sm:text-base truncate group-hover:text-brand-600 transition" title="${cleanTitle}">
+                    ${cleanTitle}
+                  </h3>
+                  <!-- Unified Macros: Kcal • B • T • W -->
+                  <div class="flex items-center gap-2 text-xs font-semibold text-stone-500 mt-1">
+                    <span class="font-black text-stone-900">${r.calories} kcal</span>
+                    <span class="text-stone-300">•</span>
+                    <span><strong class="text-stone-800">${r.protein}g</strong> <span class="text-[10px] text-amber-600 font-bold">B</span></span>
+                    <span class="text-stone-300">•</span>
+                    <span><strong class="text-stone-800">${r.fat}g</strong> <span class="text-[10px] text-emerald-600 font-bold">T</span></span>
+                    <span class="text-stone-300">•</span>
+                    <span><strong class="text-stone-800">${r.carbs}g</strong> <span class="text-[10px] text-sky-600 font-bold">W</span></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-2 shrink-0" onclick="event.stopPropagation()">
+                <button type="button" onclick="openDayPicker(${r.id})" class="py-2 px-3 rounded-xl bg-stone-50 hover:bg-brand-50 hover:text-brand-700 text-stone-700 font-bold text-xs border border-stone-200 transition flex items-center gap-1.5 shadow-2xs">
+                  <i class="fa-regular fa-calendar-plus text-brand-600"></i>
+                  <span class="hidden sm:inline">Dodaj do dnia</span>
+                </button>
+                <button type="button" onclick="openRecipeModal(${r.id})" class="py-2 px-3 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 font-semibold text-xs transition">
+                  <i class="fa-solid fa-chevron-right text-xs"></i>
+                </button>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        const loadMoreHtml = (visibleCount < totalRecipes) ? `
+          <div class="py-6 flex flex-col items-center justify-center gap-2" id="infinite-scroll-trigger">
+            <button type="button" onclick="loadMoreRecipes()" class="px-6 py-2.5 rounded-2xl bg-white hover:bg-stone-50 border border-stone-200 text-stone-800 text-xs font-bold shadow-xs transition flex items-center gap-2 group">
+              <i class="fa-solid fa-arrow-down text-brand-600 group-hover:translate-y-0.5 transition-transform"></i>
+              <span>Pokaż więcej dań (Wyświetlono ${visibleList.length} z ${totalRecipes})</span>
+            </button>
+          </div>
+        ` : '';
+
+        container.innerHTML = compactHtml + loadMoreHtml;
+        setupInfiniteScrollObserver();
+        return;
+      }
+
+      // Branch 2: Default Grid View (Warm Editorial Styling with 4:3 Aspect Ratio)
       container.className = 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6';
       
-      const cardsHtml = visibleList.map(r => `
-        <div class="group bg-white rounded-3xl border border-stone-200/80 hover:border-brand-500/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer overflow-hidden flex flex-col justify-between shadow-xs">
-          <!-- Card Image Container (Aspect Ratio 4:3) -->
-          <div class="relative w-full aspect-[4/3] bg-stone-100 overflow-hidden">
-            <img src="${formatImagePath(r.image_path)}" alt="${r.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" onerror="handleImageError(this, '${r.title}')" />
-            
-            <!-- Favorite button -->
-            <button 
-              type="button"
-              onclick="event.stopPropagation(); toggleFavorite(${r.id})" 
-              class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 hover:bg-white text-stone-400 backdrop-blur-md shadow-sm flex items-center justify-center transition-all ${r.is_favorite ? 'text-red-500' : 'hover:text-red-500'}">
-              <i class="fa-solid fa-heart ${r.is_favorite ? 'text-red-500' : ''}"></i>
-            </button>
-
-            <!-- Creator Delete Icon (Only in Creator Mode) -->
-            ${state.isCreatorMode ? `
+      const cardsHtml = visibleList.map(r => {
+        const cleanTitle = cleanRecipeTitle(r.title);
+        return `
+          <div class="group bg-white rounded-3xl border border-stone-200/80 hover:border-brand-500/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer overflow-hidden flex flex-col justify-between shadow-xs">
+            <!-- Card Image Container (Aspect Ratio 4:3, no diet label on image) -->
+            <div class="relative w-full aspect-[4/3] bg-stone-100 overflow-hidden">
+              <img src="${formatImagePath(r.image_path)}" alt="${cleanTitle}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" onerror="handleImageError(this, '${cleanTitle}')" />
+              
+              <!-- Favorite button -->
               <button 
                 type="button"
-                onclick="event.stopPropagation(); promptDeleteRecipe(${r.id})" 
-                class="absolute top-3 left-3 w-8 h-8 rounded-full bg-red-600 hover:bg-red-700 text-white shadow-md flex items-center justify-center transition-all hover:scale-110" 
-                title="Usuń ten przepis (Tryb Twórcy)">
-                <i class="fa-solid fa-trash-can text-xs"></i>
+                onclick="event.stopPropagation(); toggleFavorite(${r.id})" 
+                class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 hover:bg-white text-stone-400 backdrop-blur-md shadow-sm flex items-center justify-center transition-all ${r.is_favorite ? 'text-red-500' : 'hover:text-red-500'}">
+                <i class="fa-solid fa-heart ${r.is_favorite ? 'text-red-500' : ''}"></i>
               </button>
-            ` : ''}
 
-            <!-- Category badge (11 Kategorii) -->
-            <div class="absolute bottom-3 left-3 flex gap-1.5 flex-wrap">
-              ${getCategoryBadge(r)}
+              <!-- Creator Delete Icon (Only in Creator Mode) -->
+              ${state.isCreatorMode ? `
+                <button 
+                  type="button"
+                  onclick="event.stopPropagation(); promptDeleteRecipe(${r.id})" 
+                  class="absolute top-3 left-3 w-8 h-8 rounded-full bg-red-600 hover:bg-red-700 text-white shadow-md flex items-center justify-center transition-all hover:scale-110" 
+                  title="Usuń ten przepis (Tryb Twórcy)">
+                  <i class="fa-solid fa-trash-can text-xs"></i>
+                </button>
+              ` : ''}
+
+              <!-- Category badge (11 Kategorii) -->
+              <div class="absolute bottom-3 left-3 flex gap-1.5 flex-wrap">
+                ${getCategoryBadge(r)}
+              </div>
+            </div>
+
+            <!-- Card Content (Clean, without source diet label) -->
+            <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+              <div onclick="openRecipeModal(${r.id})">
+                <div class="flex items-center justify-between text-xs mb-1.5 font-medium">
+                  <span class="text-xs font-semibold text-stone-400">⏱️ ${getRecipePrepMinutes(r)} min</span>
+                  <span class="font-extrabold text-stone-900 text-sm">${r.calories} kcal</span>
+                </div>
+                
+                <!-- Equal-Height Clean Title (Max 2 lines) -->
+                <h3 class="font-extrabold text-stone-900 text-sm sm:text-base leading-snug line-clamp-2 h-11 group-hover:text-brand-600 transition-colors mb-3" title="${cleanTitle}">
+                  ${cleanTitle}
+                </h3>
+              </div>
+
+              <!-- Macros Bar (Unified Order: B • T • W) -->
+              <div>
+                <div class="pt-3 border-t border-stone-100 flex items-center justify-between text-xs mb-3 font-semibold">
+                  <div class="text-stone-500">
+                    <span class="font-extrabold text-stone-800">${r.protein}g</span> <span class="text-[10px] text-amber-600 font-bold">B</span>
+                  </div>
+                  <div class="text-stone-300">•</div>
+                  <div class="text-stone-500">
+                    <span class="font-extrabold text-stone-800">${r.fat}g</span> <span class="text-[10px] text-emerald-600 font-bold">T</span>
+                  </div>
+                  <div class="text-stone-300">•</div>
+                  <div class="text-stone-500">
+                    <span class="font-extrabold text-stone-800">${r.carbs}g</span> <span class="text-[10px] text-sky-600 font-bold">W</span>
+                  </div>
+                </div>
+
+                <!-- Action Bar on Card -->
+                <div class="flex items-center gap-1.5">
+                  <button onclick="event.stopPropagation(); openDayPicker(${r.id})" class="flex-1 py-2 px-2.5 rounded-xl bg-stone-50 hover:bg-brand-50 hover:text-brand-700 text-stone-700 font-bold text-xs border border-stone-200 transition-all flex items-center justify-center gap-1.5 shadow-2xs">
+                    <i class="fa-regular fa-calendar-plus text-brand-600"></i>
+                    <span>Dodaj do dnia</span>
+                  </button>
+                  <button onclick="event.stopPropagation(); openRecipeModal(${r.id})" class="py-2 px-3 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 font-semibold text-xs transition">
+                    Szczegóły
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
+        `;
+      }).join('');
 
-          <!-- Card Content -->
-          <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
-            <div onclick="openRecipeModal(${r.id})">
-              <div class="flex items-center justify-between text-xs text-stone-400 mb-1.5 font-medium">
-                <span class="truncate max-w-[170px]">${(r.diet_name || '').split('(')[0]}</span>
-                <span class="font-extrabold text-stone-900 text-sm">${r.calories} kcal</span>
-              </div>
-              
-              <!-- Equal-Height Title (Max 2 lines) -->
-              <h3 class="font-extrabold text-stone-900 text-sm sm:text-base leading-snug line-clamp-2 h-11 group-hover:text-brand-600 transition-colors mb-3" title="${r.title}">
-                ${r.title}
-              </h3>
-            </div>
-
-            <!-- Macros Bar -->
-            <div>
-              <div class="pt-3 border-t border-stone-100 flex items-center justify-between text-xs mb-3 font-semibold">
-                <div class="text-stone-500">
-                  <span class="font-extrabold text-stone-800">${r.protein}g</span> <span class="text-[10px] text-amber-600 font-bold">B</span>
-                </div>
-                <div class="text-stone-300">•</div>
-                <div class="text-stone-500">
-                  <span class="font-extrabold text-stone-800">${r.carbs}g</span> <span class="text-[10px] text-sky-600 font-bold">W</span>
-                </div>
-                <div class="text-stone-300">•</div>
-                <div class="text-stone-500">
-                  <span class="font-extrabold text-stone-800">${r.fat}g</span> <span class="text-[10px] text-emerald-600 font-bold">T</span>
-                </div>
-                <div class="text-stone-300">•</div>
-                <div class="text-stone-400 text-[11px]">
-                  ⏱️ ${getRecipePrepMinutes(r)}m
-                </div>
-              </div>
-
-              <!-- Action Bar on Card -->
-              <div class="flex items-center gap-1.5">
-                <button onclick="event.stopPropagation(); openDayPicker(${r.id})" class="flex-1 py-2 px-2.5 rounded-xl bg-stone-50 hover:bg-brand-50 hover:text-brand-700 text-stone-700 font-bold text-xs border border-stone-200 transition-all flex items-center justify-center gap-1.5 shadow-2xs">
-                  <i class="fa-regular fa-calendar-plus text-brand-600"></i>
-                  <span>Dodaj do dnia</span>
-                </button>
-                <button onclick="event.stopPropagation(); openRecipeModal(${r.id})" class="py-2 px-3 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 font-semibold text-xs transition">
-                  Szczegóły
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      `).join('');
-
-      // Add "Load More" indicator if there are more recipes
       const loadMoreHtml = (visibleCount < totalRecipes) ? `
         <div class="col-span-full py-8 flex flex-col items-center justify-center gap-2" id="infinite-scroll-trigger">
           <button type="button" onclick="loadMoreRecipes()" class="px-6 py-3 rounded-2xl bg-white hover:bg-stone-50 border border-stone-200 text-stone-800 text-xs font-bold shadow-sm transition flex items-center gap-2 group">
@@ -1729,98 +1852,9 @@
       ` : '';
 
       container.innerHTML = cardsHtml + loadMoreHtml;
-
-      // Update clear button visibility on search input
-      const searchVal = document.getElementById('search-input')?.value || '';
-      const clearBtn = document.getElementById('search-clear-btn');
-      if (clearBtn) {
-        clearBtn.classList.toggle('hidden', searchVal.trim().length === 0);
-      }
-
-      // Setup IntersectionObserver for auto loading on scroll
-      if (window.IntersectionObserver) {
-        const trigger = document.getElementById('infinite-scroll-trigger');
-        if (trigger) {
-          const observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting) {
-              loadMoreRecipes();
-              observer.disconnect();
-            }
-          }, { rootMargin: '250px' });
-          observer.observe(trigger);
-        }
-      }
+      setupInfiniteScrollObserver();
     }
 
-    // Toggle Favorite
-    async function toggleFavorite(id) {
-      if (state.isStaticMode) {
-        const favs = JSON.parse(localStorage.getItem('baza_favs') || '[]');
-        const idx = favs.indexOf(id);
-        let isFav = false;
-        if (idx >= 0) {
-          favs.splice(idx, 1);
-        } else {
-          favs.push(id);
-          isFav = true;
-        }
-        localStorage.setItem('baza_favs', JSON.stringify(favs));
-        
-        const r = allStaticRecipes.find(x => String(x.id) === String(id));
-        if (r) r.is_favorite = isFav ? 1 : 0;
-        const rInState = state.recipes.find(x => x.id === id);
-        if (rInState) rInState.is_favorite = isFav ? 1 : 0;
-        if (state.currentRecipe && state.currentRecipe.id === id) {
-          state.currentRecipe.is_favorite = isFav ? 1 : 0;
-          updateModalFavBtn(isFav ? 1 : 0);
-        }
-        if (state.filters.onlyFavorites === 1) {
-          applyFiltersClientSide();
-        } else {
-          renderRecipeCards();
-        }
-        return;
-      }
-
-      try {
-        const res = await fetch(`/api/recipes/${id}/favorite`, { method: 'POST' });
-        if (!res.ok) throw new Error('API failed');
-        const data = await res.json();
-        const recipe = state.recipes.find(r => r.id === id);
-        if (recipe) recipe.is_favorite = data.is_favorite;
-        if (state.currentRecipe && state.currentRecipe.id === id) {
-          state.currentRecipe.is_favorite = data.is_favorite;
-          updateModalFavBtn(data.is_favorite);
-        }
-        if (state.filters.onlyFavorites === 1) {
-          fetchRecipes();
-        } else {
-          renderRecipeCards();
-        }
-      } catch (err) {
-        state.isStaticMode = true;
-        toggleFavorite(id);
-      }
-    }
-
-    function toggleModalFavorite() {
-      if (state.currentRecipe) {
-        toggleFavorite(state.currentRecipe.id);
-      }
-    }
-
-    function updateModalFavBtn(isFav) {
-      const btn = document.getElementById('modal-fav-btn');
-      if (isFav) {
-        btn.innerHTML = '<i class="fa-solid fa-heart text-red-500"></i> <span class="text-red-500">Ulubiony</span>';
-        btn.className = 'px-3.5 py-2.5 rounded-xl border border-red-200 bg-red-50 text-red-600 text-xs font-bold transition flex items-center gap-1.5';
-      } else {
-        btn.innerHTML = '<i class="fa-regular fa-heart"></i> <span>Ulubione</span>';
-        btn.className = 'px-3.5 py-2.5 rounded-xl border border-stone-300 text-stone-700 hover:text-red-600 hover:border-red-200 text-xs font-bold transition flex items-center gap-1.5';
-      }
-    }
-
-    // Open Modal
     async function openRecipeModal(id) {
       try {
         let r;
@@ -1855,7 +1889,7 @@
           try { r.tags = JSON.parse(r.tags_json); } catch(e) { r.tags = []; }
         }
 
-        document.getElementById('modal-title').innerText = r.title;
+        document.getElementById('modal-title').innerText = cleanRecipeTitle(r.title);
         document.getElementById('modal-cat').innerHTML = `${getCategoryBadge(r.category)} ${getSubtypeBadge(r.sub_type)}`;
         document.getElementById('modal-diet').innerText = r.diet_name;
         document.getElementById('modal-time').innerHTML = `<i class="fa-regular fa-clock mr-1"></i>${r.prep_time || '15 min'}`;
@@ -2526,7 +2560,7 @@
                   <div class="flex items-center gap-1.5 mb-0.5">
                     <span class="text-[9px] font-extrabold text-brand-700 bg-brand-50 border border-brand-200/60 px-1.5 py-0.2 rounded-md">${slotLabel}</span>
                   </div>
-                  <div class="text-xs font-bold text-stone-900 truncate group-hover:text-brand-700 transition" title="${meal.title}">${meal.title}</div>
+                  <div class="text-xs font-bold text-stone-900 truncate group-hover:text-brand-700 transition" title="${cleanRecipeTitle(meal.title)}">${cleanRecipeTitle(meal.title)}</div>
                   <div class="flex items-center gap-1.5 text-[10px] text-stone-400 mt-0.5 font-semibold">
                     <span class="text-stone-800 font-extrabold">${meal.calories} kcal</span>
                     <span>•</span>
