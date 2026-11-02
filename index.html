@@ -1448,22 +1448,27 @@
       }
     }
 
-    function getCategoryBadge(cat) {
-      if (cat === 'Obiady') {
-        return `<span class="px-2.5 py-1 rounded-xl text-[11px] font-extrabold bg-amber-500 text-white shadow-xs">🍛 Obiady</span>`;
-      } else if (cat === 'Przekąski') {
-        return `<span class="px-2.5 py-1 rounded-xl text-[11px] font-extrabold bg-indigo-600 text-white shadow-xs">🍎 Przekąski (&le;300 kcal)</span>`;
-      } else {
-        return `<span class="px-2.5 py-1 rounded-xl text-[11px] font-extrabold bg-emerald-600 text-white shadow-xs">🥣 Inne (~400 kcal)</span>`;
-      }
+    function getCategoryBadge(catOrRecipe) {
+      let cat = typeof catOrRecipe === 'object' && catOrRecipe !== null ? classifyRecipe(catOrRecipe) : catOrRecipe;
+      const icons = {
+        'Owsianki, puddingi': '🥣',
+        'Jogurty, serki': '🥛',
+        'Ciasta, ciasteczka, muffinki': '🧁',
+        'Kanapki, tosty': '🥪',
+        'Naleśniki, placki': '🥞',
+        'Jajecznice, szakszuki, omlety': '🍳',
+        'Tortille, wrapy': '🌯',
+        'Makarony': '🍝',
+        'Zdrowe fast foody': '🍔',
+        'Gotowce': '⚡',
+        'Zdrowe desery': '🍓'
+      };
+      const icon = icons[cat] || '🍽️';
+      return `<span class="px-2.5 py-1 rounded-xl text-[11px] font-extrabold bg-stone-900/80 text-white backdrop-blur-md shadow-xs">${icon} ${cat}</span>`;
     }
 
     function getSubtypeBadge(sub) {
       if (!sub || sub === 'null') return '';
-      if (sub === 'Owsianki') return `<span class="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-200/60 shadow-xs">🥣 Owsianka</span>`;
-      if (sub === 'Placuszki') return `<span class="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-orange-100 text-orange-900 border border-orange-200/60 shadow-xs">🥞 Placuszki</span>`;
-      if (sub === 'Wrapy') return `<span class="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-emerald-100 text-emerald-900 border border-emerald-200/60 shadow-xs">🌯 Wrap</span>`;
-      if (sub === 'Kanapki') return `<span class="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-sky-100 text-sky-900 border border-sky-200/60 shadow-xs">🥪 Kanapka</span>`;
       return '';
     }
 
@@ -1612,7 +1617,7 @@
         }
         localStorage.setItem('baza_favs', JSON.stringify(favs));
         
-        const r = allStaticRecipes.find(x => x.id === id);
+        const r = allStaticRecipes.find(x => String(x.id) === String(id));
         if (r) r.is_favorite = isFav ? 1 : 0;
         const rInState = state.recipes.find(x => x.id === id);
         if (rInState) rInState.is_favorite = isFav ? 1 : 0;
@@ -2308,18 +2313,26 @@
           const slotLabel = slotNames[slotIdx] || `Posiłek ${slotIdx + 1}`;
 
           if (meal) {
+            const recipeObj = (allStaticRecipes || []).find(x => String(x.id) === String(meal.recipe_id));
+            const imgPath = meal.image_path || (recipeObj ? recipeObj.image_path : '');
+
             slotsHtml += `
-              <div class="bg-stone-50 p-2.5 rounded-2xl border border-stone-200/80 hover:border-brand-500 transition group relative">
-                <div class="flex items-center gap-2 mb-1">
-                  <span class="text-[10px] font-extrabold text-brand-700 bg-brand-100/70 px-2 py-0.5 rounded-full">${slotLabel}</span>
+              <div onclick="openRecipeModal(${meal.recipe_id})" class="bg-white hover:bg-stone-50/90 p-2.5 rounded-2xl border border-stone-200/90 hover:border-brand-500 hover:shadow-sm transition cursor-pointer group relative flex gap-2.5 items-center">
+                <div class="w-12 h-12 rounded-xl overflow-hidden bg-stone-100 shrink-0 border border-stone-100">
+                  <img src="${formatImagePath(imgPath)}" alt="${meal.title}" onerror="handleImageError(this, '${meal.title}')" class="w-full h-full object-cover group-hover:scale-105 transition" />
                 </div>
-                <div class="text-xs font-bold text-stone-900 line-clamp-1 pr-5">${meal.title}</div>
-                <div class="flex items-center gap-2 text-[10px] text-stone-500 mt-1 font-semibold">
-                  <span class="text-stone-800 font-extrabold">${meal.calories} kcal</span>
-                  <span>•</span>
-                  <span>${meal.protein}g B</span>
+                <div class="flex-1 min-w-0 pr-6">
+                  <div class="flex items-center gap-1.5 mb-0.5">
+                    <span class="text-[9px] font-extrabold text-brand-700 bg-brand-50 border border-brand-200/60 px-1.5 py-0.2 rounded-md">${slotLabel}</span>
+                  </div>
+                  <div class="text-xs font-bold text-stone-900 truncate group-hover:text-brand-700 transition" title="${meal.title}">${meal.title}</div>
+                  <div class="flex items-center gap-1.5 text-[10px] text-stone-400 mt-0.5 font-semibold">
+                    <span class="text-stone-800 font-extrabold">${meal.calories} kcal</span>
+                    <span>•</span>
+                    <span>${meal.protein}g B</span>
+                  </div>
                 </div>
-                <button onclick="deletePlanEntry('${meal.id}')" class="absolute top-2.5 right-2.5 text-stone-300 hover:text-red-500 text-xs transition p-1" title="Usuń z dnia">
+                <button type="button" onclick="event.stopPropagation(); deletePlanEntry('${meal.id}')" class="absolute top-2 right-2 w-6 h-6 rounded-lg text-stone-300 hover:text-red-500 hover:bg-red-50 flex items-center justify-center text-xs transition" title="Usuń z dnia">
                   <i class="fa-solid fa-xmark"></i>
                 </button>
               </div>
@@ -2339,18 +2352,15 @@
 
         return `
           <div class="bg-white rounded-3xl border border-stone-200 shadow-sm flex flex-col overflow-hidden">
-            <!-- Day Header -->
-            <div class="p-3.5 border-b border-stone-100 bg-stone-50">
+            <!-- Day Header (Clean & Minimalist, without redundant 'Dodaj' button) -->
+            <div class="p-3.5 border-b border-stone-100 bg-stone-50/80">
               <div class="flex items-center justify-between">
                 <h3 class="font-extrabold text-sm text-stone-900">${dayName}</h3>
-                <button onclick="openPlannerDishPicker(${dayIdx})" class="text-xs font-extrabold text-brand-600 hover:text-brand-700 hover:bg-brand-50 px-2 py-1 rounded-lg transition flex items-center gap-1" title="Dodaj danie do dnia">
-                  <i class="fa-solid fa-plus text-[10px]"></i>
-                  <span>Dodaj</span>
-                </button>
+                <span class="text-xs font-extrabold ${dayKcal > 0 ? 'text-brand-700 bg-brand-50 border border-brand-200/60 px-2 py-0.5 rounded-full' : 'text-stone-400 font-semibold'}">${dayKcal} kcal</span>
               </div>
-              <div class="flex items-center justify-between text-xs text-stone-400 mt-1 font-semibold">
-                <span class="${dayKcal > 0 ? 'text-brand-600 font-extrabold' : ''}">${dayKcal} kcal</span>
-                <span>${dayProt}g B</span>
+              <div class="flex items-center justify-between text-[11px] text-stone-400 mt-1 font-semibold">
+                <span>${dayMeals.length} / ${count} zaplanowane</span>
+                <span>${dayProt}g białka</span>
               </div>
             </div>
 
