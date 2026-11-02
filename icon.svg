@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#059669" />
+      <stop offset="100%" stop-color="#064e3b" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <g filter="url(#shadow)" fill="#ffffff" transform="translate(64, 64) scale(0.75)">
+    <!-- Recipe Book / Chef Icon -->
+    <path d="M448 368V96c0-35.3-28.7-64-64-64H128C92.7 32 64 60.7 64 96v272c0 35.3 28.7 64 64 64h256c35.3 0 64-28.7 64-64zM128 80h256c8.8 0 16 7.2 16 16v208H112V96c0-8.8 7.2-16 16-16zm256 304H128c-8.8 0-16-7.2-16-16v-16h288v16c0 8.8-7.2 16-16 16z" fill="#f8fafc" opacity="0.95"/>
+    <path d="M256 128c-26.5 0-48 21.5-48 48 0 18.5 10.5 34.6 26 42.6-3.8 2.6-6 7-6 11.6v21.8h56v-21.8c0-4.6-2.2-9-6-11.6 15.5-8 26-24.1 26-42.6 0-26.5-21.5-48-48-48z" fill="#34d399"/>
+  </g>
+</svg>
