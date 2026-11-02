@@ -1,15 +1,25 @@
-// Baza Przepisów Service Worker (Cloudflare Pages 100% Offline Support)
-const CACHE_NAME = 'baza-przepisow-v2';
+// Baza Przepisów Service Worker (100% Offline PWA Support)
+const CACHE_NAME = 'baza-przepisow-v3';
 
 const PRECACHE_ASSETS = [
   '/',
   '/index.html',
+  '/css/app.min.css',
   '/recipes.json',
   '/manifest.json',
-  '/icon.svg',
+  '/images/placeholder.svg',
   '/icon-192.png',
   '/icon-512.png',
-  '/placeholder.png'
+  '/icon.svg',
+  '/js/app.js',
+  '/js/store.js',
+  '/js/catalog.js',
+  '/js/planner.js',
+  '/js/shopping.js',
+  '/js/modal.js',
+  '/js/creator.js',
+  '/js/utils/dom.js',
+  '/js/utils/stemmer.js'
 ];
 
 self.addEventListener('install', event => {
@@ -38,36 +48,44 @@ self.addEventListener('fetch', event => {
 
   const url = new URL(req.url);
 
-  // HTML Navigation: Network-first, fallback to cache
+  // 1. Navigation requests (HTML): Network first, fallback to cached index.html
   if (req.mode === 'navigate') {
     event.respondWith(
-      fetch(req).catch(() => {
-        return caches.match('/index.html') || caches.match('/');
+      fetch(req).catch(() => caches.match('/index.html'))
+    );
+    return;
+  }
+
+  // 2. Images: Stale-While-Revalidate with placeholder fallback
+  if (req.destination === 'image' || url.pathname.endsWith('.webp') || url.pathname.endsWith('.png') || url.pathname.endsWith('.svg')) {
+    event.respondWith(
+      caches.match(req).then(cached => {
+        const fetchPromise = fetch(req).then(networkResponse => {
+          if (networkResponse && networkResponse.status === 200) {
+            const clone = networkResponse.clone();
+            caches.open(CACHE_NAME).then(cache => cache.put(req, clone));
+          }
+          return networkResponse;
+        }).catch(() => {
+          return cached || caches.match('/images/placeholder.svg');
+        });
+
+        return cached || fetchPromise;
       })
     );
     return;
   }
 
-  // Recipes, static images & CDNs: Stale-While-Revalidate / Cache-First
+  // 3. Static scripts, styles, data: Cache first, network fallback
   event.respondWith(
     caches.match(req).then(cached => {
-      const fetchPromise = fetch(req).then(networkResponse => {
+      return cached || fetch(req).then(networkResponse => {
         if (networkResponse && networkResponse.status === 200) {
           const clone = networkResponse.clone();
-          caches.open(CACHE_NAME).then(cache => {
-            cache.put(req, clone);
-          });
+          caches.open(CACHE_NAME).then(cache => cache.put(req, clone));
         }
         return networkResponse;
-      }).catch(err => {
-        // Return cached or fallback placeholder if image
-        if (req.destination === 'image') {
-          return caches.match('/placeholder.png');
-        }
-        throw err;
       });
-
-      return cached || fetchPromise;
     })
   );
 });
