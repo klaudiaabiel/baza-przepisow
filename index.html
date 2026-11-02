@@ -1063,7 +1063,12 @@
     // State management
     const CREATOR_PIN = "0000";
     let state = {
-      isStaticMode: false,
+      isStaticMode: (typeof window !== 'undefined' && (
+        window?.location?.protocol === 'file:' || 
+        (window?.location?.hostname && window.location.hostname.includes('pages.dev')) || 
+        (window?.location?.hostname && window.location.hostname.includes('github.io')) || 
+        (window?.location && !window.location.port)
+      )),
       isCreatorMode: localStorage.getItem('creator_mode_active') === 'true',
       deletedRecipeIds: new Set(JSON.parse(localStorage.getItem('deleted_recipe_ids') || '[]')),
       selectedRecipeForPlan: null,
@@ -1432,6 +1437,7 @@
       // 2. Fetch fresh data in background or if no cache
       try {
         let res = await fetch('recipes.json');
+        if (!res.ok) res = await fetch('/recipes.json');
         if (!res.ok) res = await fetch('/static/recipes.json');
         if (!res.ok) res = await fetch('static/recipes.json');
         if (res.ok) {
@@ -1912,14 +1918,25 @@
 
     async function openRecipeModal(id) {
       try {
-        let r;
-        if (state.isStaticMode) {
-          r = allStaticRecipes.find(x => x.id === id);
-          if (!r) throw new Error('Recipe not found in static list');
-        } else {
-          const res = await fetch(`/api/recipes/${id}`);
-          if (!res.ok) throw new Error('API failed');
-          r = await res.json();
+        let r = (allStaticRecipes || []).find(x => String(x.id) === String(id)) ||
+                (state.recipes || []).find(x => String(x.id) === String(id));
+
+        if (!r && !state.isStaticMode) {
+          try {
+            const res = await fetch(`/api/recipes/${id}`);
+            if (res.ok) r = await res.json();
+          } catch (e) {}
+        }
+
+        if (!r && (!allStaticRecipes || allStaticRecipes.length === 0)) {
+          await loadStaticData();
+          r = (allStaticRecipes || []).find(x => String(x.id) === String(id));
+        }
+
+        if (!r) {
+          console.warn('Recipe not found for ID:', id);
+          showToast('Nie znaleziono szczegółów tego dania.');
+          return;
         }
 
         state.currentRecipe = r;
@@ -1997,6 +2014,29 @@
       }
     }
 
+    
+    function updateModalFavBtn(isFav) {
+      const btn = document.getElementById('modal-fav-btn');
+      if (!btn) return;
+      if (isFav) {
+        btn.innerHTML = '<i class="fa-solid fa-heart text-red-500"></i><span>Ulubione</span>';
+        btn.className = 'px-3.5 py-2.5 rounded-xl border border-red-200 bg-red-50 text-red-600 text-xs font-bold transition flex items-center gap-1.5 shadow-2xs';
+      } else {
+        btn.innerHTML = '<i class="fa-regular fa-heart"></i><span>Ulubione</span>';
+        btn.className = 'px-3.5 py-2.5 rounded-xl border border-stone-300 text-stone-700 hover:text-red-600 hover:border-red-200 text-xs font-bold transition flex items-center gap-1.5';
+      }
+    }
+
+    function toggleModalFavorite() {
+      if (!state.currentRecipe) return;
+      const r = state.currentRecipe;
+      r.is_favorite = !r.is_favorite;
+      updateModalFavBtn(r.is_favorite);
+      const item = (allStaticRecipes || []).find(x => String(x.id) === String(r.id));
+      if (item) item.is_favorite = r.is_favorite;
+      showToast(r.is_favorite ? `❤️ Dodano "${cleanRecipeTitle(r.title)}" do ulubionych!` : `Usunięto z ulubionych.`);
+    }
+
     function closeModal() {
       document.getElementById('recipe-modal').classList.add('hidden');
       if (wakeLock !== null) {
@@ -2062,31 +2102,65 @@
     // Add modal recipe to shopping list
     async function addModalRecipeToShopping() {
       if (!state.currentRecipe) return;
-      if (state.isStaticMode) {
-        const r = state.currentRecipe;
-        const origPortions = r.portions || 1;
-        const ratio = state.currentPortions / origPortions;
-        const ings = r.ingredients || [];
-        const shopping = JSON.parse(localStorage.getItem('baza_shopping') || '[]');
-        
-        ings.forEach(ing => {
-          let displayAmount = ing.amount || '';
-          if (ratio !== 1 && ing.weight_g > 0) {
-            displayAmount = `${Math.round(ing.weight_g * ratio * 10) / 10} g`;
+      const r = state.currentRecipe;
+      const origPortions = r.portions || 1;
+      const ratio = state.currentPortions / origPortions;
+      let ings = r.ingredients || [];
+      if (typeof ings === 'string') {
+        try { ings = JSON.parse(ings); } catch(e) { ings = []; }
+      }
+
+      if (!state.shoppingList) {
+        state.shoppingList = JSON.parse(localStorage.getItem('baza_shopping') || '[]');
+      }
+
+      ings.forEach(ing => {
+        const rawName = (ing.name || ing.raw || '').trim();
+        if (!rawName) return;
+
+        let amountStr = ing.amount || '';
+        if (ratio !== 1 && ing.weight_g > 0) {
+          amountStr = `${Math.round(ing.weight_g * ratio * 10) / 10} g`;
+        }
+
+        const parsed = parseIngredientAmount(amountStr);
+        const parsedKey = normalizeIngredientKey(rawName);
+
+        let existing = state.shoppingList.find(item => {
+          const itemKey = normalizeIngredientKey(item.name);
+          return itemKey === parsedKey || itemKey.includes(parsedKey) || parsedKey.includes(itemKey);
+        });
+
+        if (existing) {
+          const existParsed = parseIngredientAmount(existing.amount);
+          const mergedItem = {
+            totalCount: (existParsed.count || 0) + (parsed.count || 0),
+            countUnit: existParsed.countUnit || parsed.countUnit || '',
+            totalGrams: (existParsed.grams || 0) + (parsed.grams || 0),
+            totalMl: (existParsed.ml || 0) + (parsed.ml || 0),
+            rawAmounts: []
+          };
+          existing.amount = combineAmounts(mergedItem);
+          if (!existing.recipe_title.includes(r.title)) {
+            existing.recipe_title = existing.recipe_title ? `${existing.recipe_title}, ${r.title}` : r.title;
           }
-          shopping.push({
+        } else {
+          state.shoppingList.push({
             id: Date.now() + Math.random(),
-            name: ing.name || ing.raw,
-            amount: displayAmount,
+            name: rawName.charAt(0).toUpperCase() + rawName.slice(1),
+            amount: amountStr,
+            department: getIngredientDepartment(rawName),
             recipe_title: r.title,
             checked: false
           });
-        });
-        localStorage.setItem('baza_shopping', JSON.stringify(shopping));
-        showToast(`Dodano ${ings.length} składników do Twojej listy zakupów!`);
-        fetchShoppingList();
-        return;
-      }
+        }
+      });
+
+      localStorage.setItem('baza_shopping', JSON.stringify(state.shoppingList));
+      showToast(`✓ Zsumowano składniki przepisu "${r.title}" w liście zakupów! 🛒`);
+      updateShoppingBadge();
+      renderShoppingList();
+      return;
 
       try {
         const res = await fetch(`/api/shopping-list/add-recipe/${state.currentRecipe.id}?portions=${state.currentPortions}`, {
@@ -2601,32 +2675,38 @@
       });
 
       if (existingItem) {
-        const existingAmt = parseAmountStr(existingItem.amount);
-        if (existingAmt.unit === parsed.unit) {
-          const sum = Math.round((existingAmt.num + parsed.num) * 10) / 10;
-          existingItem.amount = `${sum} ${parsed.unit}`.trim();
-        } else if (existingAmt.unit === 'g' && parsed.unit === 'kg') {
-          const sum = Math.round((existingAmt.num + parsed.num * 1000) * 10) / 10;
-          existingItem.amount = `${sum} g`;
-        } else if (existingAmt.unit === 'kg' && parsed.unit === 'g') {
-          const sum = Math.round((existingAmt.num + parsed.num / 1000) * 100) / 100;
-          existingItem.amount = `${sum} kg`;
-        } else if (existingAmt.unit === 'ml' && parsed.unit === 'l') {
-          const sum = Math.round((existingAmt.num + parsed.num * 1000) * 10) / 10;
-          existingItem.amount = `${sum} ml`;
-        } else if (existingAmt.unit === 'l' && parsed.unit === 'ml') {
-          const sum = Math.round((existingAmt.num + parsed.num / 1000) * 100) / 100;
-          existingItem.amount = `${sum} l`;
-        } else {
-          existingItem.amount = `${existingItem.amount} + ${parsed.num} ${parsed.unit}`.trim();
-        }
+        const existParsed = parseIngredientAmount(existingItem.amount);
+        const addParsed = parseIngredientAmount(`${parsed.num} ${parsed.unit}`);
+        
+        let mergedUnit = existParsed.countUnit || addParsed.countUnit || '';
+        let mergedCount = (existParsed.count || 0) + (addParsed.count || 0);
+        let mergedGrams = (existParsed.grams || 0) + (addParsed.grams || 0);
+        let mergedMl = (existParsed.ml || 0) + (addParsed.ml || 0);
+
+        const mergedItem = {
+          totalCount: mergedCount,
+          countUnit: mergedUnit,
+          totalGrams: mergedGrams,
+          totalMl: mergedMl,
+          rawAmounts: []
+        };
+        existingItem.amount = combineAmounts(mergedItem);
         showToast(`✓ Zsumowano ${existingItem.name}: ${existingItem.amount}!`);
       } else {
         const dept = getIngredientDepartment(parsed.name);
+        const singleParsed = parseIngredientAmount(`${parsed.num} ${parsed.unit}`);
+        const formattedAmt = combineAmounts({
+          totalCount: singleParsed.count,
+          countUnit: singleParsed.countUnit,
+          totalGrams: singleParsed.grams,
+          totalMl: singleParsed.ml,
+          rawAmounts: []
+        });
+
         const newItem = {
           id: Date.now() + Math.random(),
           name: parsed.name,
-          amount: `${parsed.num} ${parsed.unit}`.trim(),
+          amount: formattedAmt,
           department: dept,
           recipe_title: 'Własny produkt',
           checked: false
@@ -3284,7 +3364,7 @@
     }
 
     async function generateShoppingListFromPlan() {
-      if (state.isStaticMode) {
+      if (state.isStaticMode || true) {
         if (!state.mealPlan || state.mealPlan.length === 0) {
           showToast('Jadłospis jest pusty! Dodaj najpierw posiłki do dni.');
           return;
@@ -3304,15 +3384,17 @@
               const rawName = (ing.name || ing.raw || '').trim();
               if (!rawName) return;
 
-              const key = rawName.toLowerCase();
+              const key = normalizeIngredientKey(rawName);
               const dept = getIngredientDepartment(rawName);
 
               if (!aggregated[key]) {
                 aggregated[key] = {
                   name: rawName.charAt(0).toUpperCase() + rawName.slice(1),
                   department: dept,
-                  amountNum: 0,
-                  amountUnit: '',
+                  totalCount: 0,
+                  countUnit: '',
+                  totalGrams: 0,
+                  totalMl: 0,
                   rawAmounts: [],
                   recipes: [r.title],
                   checked: false
@@ -3323,20 +3405,16 @@
                 }
               }
 
-              // Extract quantity & unit
-              const amtStr = (ing.amount || '').trim();
-              const match = amtStr.match(/^([\d.,]+)\s*(g|kg|ml|l|szt\.?|łyżk[ia]?|łyżeczk[ia]?|opak\.?|puszk[ia]?)?$/i);
-              if (match) {
-                const val = parseFloat(match[1].replace(',', '.'));
-                const unit = (match[2] || '').toLowerCase();
-                if (aggregated[key].amountUnit === '' || aggregated[key].amountUnit === unit) {
-                  aggregated[key].amountNum += val;
-                  aggregated[key].amountUnit = unit;
-                } else {
-                  aggregated[key].rawAmounts.push(amtStr);
-                }
-              } else if (amtStr) {
-                aggregated[key].rawAmounts.push(amtStr);
+              // Smart parsing and summation:
+              const parsed = parseIngredientAmount(ing.amount);
+              if (parsed.count > 0) {
+                aggregated[key].totalCount += parsed.count;
+                if (!aggregated[key].countUnit) aggregated[key].countUnit = parsed.countUnit;
+              }
+              if (parsed.grams > 0) aggregated[key].totalGrams += parsed.grams;
+              if (parsed.ml > 0) aggregated[key].totalMl += parsed.ml;
+              if (parsed.count === 0 && parsed.grams === 0 && parsed.ml === 0 && ing.amount) {
+                aggregated[key].rawAmounts.push(ing.amount);
               }
               totalItemsCount++;
             });
@@ -3344,16 +3422,7 @@
         });
 
         const newShoppingList = Object.values(aggregated).map(item => {
-          let finalAmount = '';
-          if (item.amountNum > 0) {
-            const rounded = Math.round(item.amountNum * 10) / 10;
-            finalAmount = `${rounded} ${item.amountUnit}`.trim();
-            if (item.rawAmounts.length > 0) {
-              finalAmount += ` + ${item.rawAmounts.join(' + ')}`;
-            }
-          } else if (item.rawAmounts.length > 0) {
-            finalAmount = item.rawAmounts.join(' + ');
-          }
+          const finalAmount = combineAmounts(item);
 
           return {
             id: Date.now() + Math.random(),
@@ -3368,7 +3437,7 @@
         state.shoppingList = newShoppingList;
         localStorage.setItem('baza_shopping', JSON.stringify(state.shoppingList));
         updateShoppingBadge();
-        showToast(`✓ Wygenerowano listę zakupów (${newShoppingList.length} pozycji z ${totalItemsCount} składników)! 🛒`);
+        showToast(`✓ Wygenerowano listę zakupów (${newShoppingList.length} pozycji ze zsumowanymi składnikami)! 🛒`);
         renderShoppingList();
         switchTab('shopping');
         return;
@@ -3600,6 +3669,136 @@
     // ==========================================
     // 🛒 FAZA 8: SMART SHOPPING DEPARTMENTS & AGGREGATION
     // ==========================================
+    
+    // ==========================================
+    // 🛒 SMART INGREDIENT AMOUNT PARSER & AGGREGATOR
+    // ==========================================
+    function parseIngredientAmount(amtStr) {
+      if (!amtStr) return { count: 0, countUnit: '', grams: 0, ml: 0, raw: '' };
+      let s = String(amtStr).trim();
+
+      // Strip trailing serving notes e.g. "Do podania:", "do dekoracji:"
+      s = s.replace(/\s+(do\s+podania|do\s+dekoracji|opcjonalnie|do\s+smażenia).*$/i, '').trim();
+
+      let count = 0;
+      let countUnit = '';
+      let grams = 0;
+      let ml = 0;
+
+      // 1. Check for weight in parentheses: e.g. "(15 g)", "(0.5 kg)", "(120 g)", "(100 ml)"
+      const parenMatch = s.match(/\(([\d.,]+)\s*(g|kg|ml|l)\)/i);
+      if (parenMatch) {
+        const val = parseFloat(parenMatch[1].replace(',', '.'));
+        const unit = parenMatch[2].toLowerCase();
+        if (unit === 'g') grams = val;
+        else if (unit === 'kg') grams = val * 1000;
+        else if (unit === 'ml') ml = val;
+        else if (unit === 'l') ml = val * 1000;
+      }
+
+      // 2. Extract leading measure (remove paren content for main part)
+      const mainPart = s.replace(/\([^)]*\)/g, '').trim();
+      const mainMatch = mainPart.match(/^([\d.,]+)\s*(?:x\s*)?([a-ząćęłńóśźż.]*)$/i);
+      if (mainMatch) {
+        count = parseFloat(mainMatch[1].replace(',', '.'));
+        countUnit = (mainMatch[2] || '').trim().toLowerCase();
+      }
+
+      // If main part was directly grams or ml
+      if (countUnit === 'g') {
+        grams += count;
+        count = 0;
+        countUnit = '';
+      } else if (countUnit === 'kg') {
+        grams += count * 1000;
+        count = 0;
+        countUnit = '';
+      } else if (countUnit === 'ml') {
+        ml += count;
+        count = 0;
+        countUnit = '';
+      } else if (countUnit === 'l') {
+        ml += count * 1000;
+        count = 0;
+        countUnit = '';
+      }
+
+      // Standardize common count units
+      if (/^łyżeczk/.test(countUnit)) countUnit = 'łyżeczka';
+      else if (/^łyżk/.test(countUnit)) countUnit = 'łyżka';
+      else if (/^sztuk/.test(countUnit) || countUnit === 'szt' || countUnit === 'szt.') countUnit = 'szt.';
+      else if (/^plaster|^plastr/.test(countUnit)) countUnit = 'plaster';
+      else if (/^opakowan|^opak/.test(countUnit)) countUnit = 'opak.';
+      else if (/^ząb/.test(countUnit)) countUnit = 'ząbek';
+      else if (/^garść|^garsc/.test(countUnit)) countUnit = 'garść';
+      else if (/^szczypt/.test(countUnit)) countUnit = 'szczypta';
+
+      return { count, countUnit, grams, ml, raw: s };
+    }
+
+    function formatUnitCount(count, unit) {
+      const rounded = Math.round(count * 10) / 10;
+      if (unit === 'łyżeczka') {
+        if (rounded === 1) return '1 łyżeczka';
+        if (rounded >= 2 && rounded <= 4) return `${rounded} łyżeczki`;
+        return `${rounded} łyżeczek`;
+      }
+      if (unit === 'łyżka') {
+        if (rounded === 1) return '1 łyżka';
+        if (rounded >= 2 && rounded <= 4) return `${rounded} łyżki`;
+        return `${rounded} łyżek`;
+      }
+      if (unit === 'szt.' || unit === 'szt') {
+        return `${rounded} szt.`;
+      }
+      if (unit === 'plaster') {
+        if (rounded === 1) return '1 plaster';
+        if (rounded >= 2 && rounded <= 4) return `${rounded} plastry`;
+        return `${rounded} plastrów`;
+      }
+      if (unit === 'opak.') return `${rounded} opak.`;
+      if (unit === 'ząbek') {
+        if (rounded === 1) return '1 ząbek';
+        if (rounded >= 2 && rounded <= 4) return `${rounded} ząbki`;
+        return `${rounded} ząbków`;
+      }
+      if (unit === 'garść') {
+        if (rounded === 1) return '1 garść';
+        if (rounded >= 2 && rounded <= 4) return `${rounded} garście`;
+        return `${rounded} garści`;
+      }
+      if (unit) return `${rounded} ${unit}`;
+      return `${rounded}`;
+    }
+
+    function combineAmounts(item) {
+      let parts = [];
+      if (item.totalCount > 0 && item.countUnit) {
+        parts.push(formatUnitCount(item.totalCount, item.countUnit));
+      }
+      if (item.totalGrams > 0) {
+        if (item.totalGrams >= 1000) {
+          const kg = Math.round(item.totalGrams / 10) / 100;
+          parts.push(item.totalCount > 0 ? `(${kg} kg)` : `${kg} kg`);
+        } else {
+          const g = Math.round(item.totalGrams * 10) / 10;
+          parts.push(item.totalCount > 0 ? `(${g} g)` : `${g} g`);
+        }
+      } else if (item.totalMl > 0) {
+        if (item.totalMl >= 1000) {
+          const l = Math.round(item.totalMl / 10) / 100;
+          parts.push(item.totalCount > 0 ? `(${l} l)` : `${l} l`);
+        } else {
+          const ml = Math.round(item.totalMl * 10) / 10;
+          parts.push(item.totalCount > 0 ? `(${ml} ml)` : `${ml} ml`);
+        }
+      }
+      if (item.rawAmounts && item.rawAmounts.length > 0) {
+        parts.push(item.rawAmounts.join(' + '));
+      }
+      return parts.join(' ').trim() || '1 szt.';
+    }
+
     const SHOPPING_DEPARTMENTS = [
       { name: 'Warzywa i Owoce', icon: '🥦' },
       { name: 'Nabiał i Jaja', icon: '🧀' },
