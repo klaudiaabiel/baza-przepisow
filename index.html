@@ -321,6 +321,37 @@
           </div>
         </div>
 
+        <!-- 📅 CALENDAR & WEEK NAVIGATION TOOLBAR (FAZA 10) -->
+        <div class="flex flex-wrap items-center justify-between gap-3 p-3.5 bg-stone-50/80 rounded-2xl border border-stone-200/80 mb-6">
+          <!-- Week Navigator -->
+          <div class="flex items-center gap-1.5 sm:gap-2">
+            <button onclick="changePlannerWeek(-1)" class="px-3 py-1.5 rounded-xl bg-white hover:bg-stone-100 border border-stone-200 text-stone-700 font-bold text-xs transition flex items-center gap-1 shadow-2xs cursor-pointer" title="Poprzedni tydzień">
+              <i class="fa-solid fa-chevron-left text-[10px]"></i>
+              <span class="hidden sm:inline">Poprzedni tydzień</span>
+            </button>
+            <button onclick="goToTodayPlanner()" class="px-3 py-1.5 rounded-xl bg-white hover:bg-brand-50 border border-stone-200 hover:border-brand-300 text-stone-800 font-extrabold text-xs transition flex items-center gap-1.5 shadow-2xs cursor-pointer">
+              <i class="fa-solid fa-calendar-day text-brand-600"></i>
+              <span id="planner-week-label">Tydzień: Ładowanie...</span>
+            </button>
+            <button onclick="changePlannerWeek(1)" class="px-3 py-1.5 rounded-xl bg-white hover:bg-stone-100 border border-stone-200 text-stone-700 font-bold text-xs transition flex items-center gap-1 shadow-2xs cursor-pointer" title="Następny tydzień">
+              <span class="hidden sm:inline">Następny tydzień</span>
+              <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            </button>
+          </div>
+
+          <!-- Date Picker for Month/Day Navigation -->
+          <div class="flex items-center gap-2">
+            <label for="planner-date-input" class="text-xs font-bold text-stone-600 flex items-center gap-1.5 cursor-pointer">
+              <i class="fa-regular fa-calendar text-brand-600"></i>
+              <span>Wybierz dzień:</span>
+            </label>
+            <input type="date" id="planner-date-input" onchange="onPlannerDateSelected(this.value)" class="px-3 py-1.5 bg-white border border-stone-200 rounded-xl text-xs font-bold text-stone-800 outline-none focus:border-brand-500 shadow-2xs cursor-pointer">
+            <button onclick="goToTodayPlanner()" class="px-3 py-1.5 rounded-xl bg-brand-50 hover:bg-brand-100 text-brand-700 border border-brand-200 text-xs font-black transition cursor-pointer">
+              Dzisiaj
+            </button>
+          </div>
+        </div>
+
         <!-- 7-DAY BOARD -->
         <div id="planner-board" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-7 gap-4">
           <!-- Rendered dynamically via JS -->
@@ -358,7 +389,7 @@
 
         <!-- Add Custom Shopping Item -->
         <div class="py-2 flex gap-2">
-          <input type="text" id="custom-item-name" placeholder="Dodaj własny produkt (np. 1 kg jabłek, mleko owsiane)..." class="flex-1 p-3 rounded-xl border border-stone-200 bg-stone-50 focus:bg-white focus:border-brand-500 text-sm outline-none">
+          <input type="text" id="custom-item-name" onkeydown="if(event.key==='Enter') addCustomShoppingItem()" placeholder="Dodaj własny produkt (np. banan 2, mleko 500ml, jajka 4)..." class="flex-1 p-3 rounded-xl border border-stone-200 bg-stone-50 focus:bg-white focus:border-brand-500 text-sm outline-none">
           <button onclick="addCustomShoppingItem()" class="px-5 py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm transition">
             Dodaj
           </button>
@@ -1001,6 +1032,16 @@
         .trim();
     }
 
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
     function handleLogoClick() {
       switchTab('catalog');
       if (state.activeFilters) {
@@ -1032,6 +1073,8 @@
       currentPortions: 1,
       shoppingList: [],
       mealPlan: [],
+      plannerDate: new Date().toISOString().split('T')[0],
+      plannerTargetDateKey: null,
       cardView: 'grid',
       visibleCount: 24,
       dailyMealCount: parseInt(localStorage.getItem('daily_meal_count') || '4', 10),
@@ -1086,68 +1129,80 @@
 
       // 1. Owsianki, puddingi
       if (t.includes('owsiank') || t.includes('pudding') || t.includes('chia') || t.includes('kaszka') || 
-          t.includes('manna') || t.includes('jaglank') || t.includes('budyń') || t.includes('kasza gryczana z owocami') ||
-          t.includes('bowl śniadaniowy') || sub.includes('owsiank') || sub.includes('pudding')) {
+          t.includes('manna') || t.includes('jaglank') || t.includes('budyń') || t.includes('ryżank') ||
+          t.includes('klejący ryż') || t.includes('kasza gryczana z owocami') || t.includes('bowl śniadaniowy') ||
+          sub.includes('owsiank') || sub.includes('pudding')) {
         return 'Owsianki, puddingi';
       }
 
-      // 2. Jogurty, serki
-      if (t.includes('jogurt') || t.includes('skyr') || t.includes('serek wiejski') || t.includes('twarożek ze słodkimi') || 
-          sub.includes('jogurt') || sub.includes('skyr') || sub.includes('serki') || 
-          (t.includes('serek') && !t.includes('bułka') && !t.includes('kanap') && !t.includes('tost') && !t.includes('sernik'))) {
-        return 'Jogurty, serki';
-      }
-
-      // 3. Ciasta, ciasteczka, muffinki
-      if (t.includes('ciasto') || t.includes('ciastk') || t.includes('muffin') || t.includes('babeczk') || 
-          t.includes('blondie') || t.includes('brownie') || t.includes('chlebek banan') || t.includes('sernik') || 
-          t.includes('chlebek') || sub.includes('ciasta') || sub.includes('muffinki') || t.includes('pieczone ciasto')) {
-        return 'Ciasta, ciasteczka, muffinki';
+      // 6. Jajecznice, szakszuki, omlety
+      if (t.includes('jajecznic') || t.includes('szakszuk') || t.includes('omlet') || t.includes('jajka') || 
+          t.includes('sadzone') || t.includes('jajo') || t.includes('pasta jajeczna') || t.includes('pasta z jajek') ||
+          sub.includes('jajecznice') || sub.includes('omlet') || sub.includes('szakszuk')) {
+        return 'Jajecznice, szakszuki, omlety';
       }
 
       // 4. Kanapki, tosty
       if (t.includes('kanapk') || t.includes('tost') || t.includes('bajgiel') || t.includes('bułk') || 
           t.includes('bagietk') || t.includes('bruschett') || t.includes('chleb') || t.includes('kromk') || 
-          t.includes('croissant') || sub.includes('kanapk') || sub.includes('tost')) {
+          t.includes('croissant') || t.includes('pieczywo') || t.includes('paluchy z pesto') ||
+          sub.includes('kanapk') || sub.includes('tost')) {
         return 'Kanapki, tosty';
-      }
-
-      // 5. Naleśniki, placki
-      if (t.includes('naleśnik') || t.includes('plack') || t.includes('placusz') || t.includes('pancakes') || 
-          t.includes('gofry') || t.includes('syrniki') || t.includes('racuch') || sub.includes('naleśniki') || 
-          sub.includes('placki') || sub.includes('gofry')) {
-        return 'Naleśniki, placki';
-      }
-
-      // 6. Jajecznice, szakszuki, omlety
-      if (t.includes('jajecznic') || t.includes('szakszuk') || t.includes('omlet') || t.includes('jajka') || 
-          t.includes('sadzone') || t.includes('jajo') || sub.includes('jajecznice') || sub.includes('omlet')) {
-        return 'Jajecznice, szakszuki, omlety';
       }
 
       // 7. Tortille, wrapy
       if (t.includes('tortill') || t.includes('wrap') || t.includes('quesadill') || t.includes('burrito') || 
-          t.includes('roladk') || sub.includes('tortill') || sub.includes('wrap')) {
+          t.includes('roladk') || t.includes('fajita') || sub.includes('tortill') || sub.includes('wrap')) {
         return 'Tortille, wrapy';
       }
 
       // 8. Makarony
       if (t.includes('makaron') || t.includes('spaghetti') || t.includes('penne') || t.includes('lasagn') || 
-          t.includes('gnocchi') || t.includes('tagliatelle') || sub.includes('makaron') || sub.includes('pasta')) {
+          t.includes('gnocchi') || t.includes('tagliatelle') || t.includes('zapiekanka makaronowa') ||
+          sub.includes('makaron') || sub.includes('pasta')) {
         return 'Makarony';
       }
 
-      // 9. Zdrowe fast foody
-      if (t.includes('burger') || t.includes('pizza') || t.includes('frytk') || t.includes('hot dog') || 
-          t.includes('zapiekank') || t.includes('crispy rice') || t.includes('nuggets') || t.includes('kebab') || 
-          sub.includes('fast food')) {
-        return 'Zdrowe fast foody';
+      // 5. Naleśniki, placki
+      if (t.includes('naleśnik') || t.includes('plack') || t.includes('placusz') || t.includes('pancakes') || 
+          t.includes('gofry') || t.includes('syrniki') || t.includes('racuch') || t.includes('leniwe') ||
+          sub.includes('naleśniki') || sub.includes('placki') || sub.includes('gofry')) {
+        return 'Naleśniki, placki';
+      }
+
+      // 3. Ciasta, ciasteczka, muffinki
+      if (t.includes('ciasto') || t.includes('ciastk') || t.includes('ciasteczk') || t.includes('muffin') || 
+          t.includes('babeczk') || t.includes('blondie') || t.includes('brownie') || t.includes('chlebek banan') || 
+          t.includes('sernik') || t.includes('sernicz') || t.includes('drożdżówk') || t.includes('szarlotk') || 
+          t.includes('pieczone ciasto') || t.includes('ekler') || sub.includes('ciasta') || sub.includes('muffinki')) {
+        return 'Ciasta, ciasteczka, muffinki';
       }
 
       // 10. Gotowce
       if (t.includes('baton') || t.includes('gotow') || t.includes('przekąska kupna') || t.includes('szybka przekąska') || 
-          t.includes('gyoza') || t.includes('pilos') || t.includes('kupny') || t.includes('asia flavours')) {
+          t.includes('gyoza') || t.includes('pilos') || t.includes('kupny') || t.includes('asia flavours') ||
+          t.includes('donatello') || t.includes('nasze smaki') || t.includes('pierogi') || t.includes('gelatelli') ||
+          t.includes('piątnica')) {
         return 'Gotowce';
+      }
+
+      // 9. Zdrowe fast foody
+      if (t.includes('burger') || t.includes('pizza') || t.includes('pinsa') || t.includes('frytk') || 
+          t.includes('hot dog') || t.includes('zapiekank') || t.includes('crispy rice') || t.includes('nuggets') || 
+          t.includes('kebab') || t.includes('chilli z mięsem') || t.includes('kurczak pieczony') ||
+          t.includes('kurczak słodko') || t.includes('kotleciki') || t.includes('pieczone warzywa') ||
+          t.includes('risotto') || t.includes('gulasz') || t.includes('zupa') ||
+          sub.includes('fast food')) {
+        return 'Zdrowe fast foody';
+      }
+
+      // 2. Jogurty, serki
+      if (t.includes('jogurt') || t.includes('skyr') || t.includes('serek wiejski') || t.includes('twaroż') || 
+          t.includes('twarog') || t.includes('pasta z sera') || t.includes('pasta z serka') || t.includes('caprese') ||
+          t.includes('burrat') || t.includes('halloumi') || t.includes('hummus') || t.includes('sałatka z kurczakiem') ||
+          t.includes('szparagami') || sub.includes('jogurt') || sub.includes('skyr') || sub.includes('serki') ||
+          (t.includes('serek') && !t.includes('bułka') && !t.includes('kanap') && !t.includes('tost') && !t.includes('sernik'))) {
+        return 'Jogurty, serki';
       }
 
       // 11. Zdrowe desery
@@ -2121,8 +2176,8 @@
     }
 
     async function assignRecipeToDayDirectly(dayIdx) {
-      if (!state.selectedRecipeForPlan) return;
-      const r = state.selectedRecipeForPlan;
+      const r = state.currentRecipe;
+      if (!r) return;
       const dayName = DAYS[dayIdx];
 
       if (state.isStaticMode) {
@@ -2130,9 +2185,10 @@
         plan.push({
           id: Date.now() + Math.random(),
           day_index: dayIdx,
-          meal_slot: r.category || 'Posiłek',
+          date_key: ((getPlannerWeekDays(state.plannerDate).weekDays[dayIdx] || {}).isoKey) || null,
+          meal_slot: classifyRecipe(r),
           recipe_id: r.id,
-          title: r.title,
+          title: cleanRecipeTitle(r.title),
           calories: r.calories,
           protein: r.protein,
           carbs: r.carbs,
@@ -2443,40 +2499,146 @@
       }
     }
 
+    function parseShoppingInput(raw) {
+      let str = (raw || '').trim();
+      if (!str) return null;
+
+      let name = '';
+      let num = null;
+      let unit = '';
+
+      // Pattern A: <Name> <Number> [Unit] e.g. "banan 2", "banan 2 szt", "mleko 500ml", "mąka 1.5 kg"
+      const patternTrailing = /^(.+?)\s+(\d+(?:[.,]\d+)?)\s*([a-ząćęłńóśźż.]*)$/i;
+      const matchTrailing = str.match(patternTrailing);
+
+      if (matchTrailing) {
+        name = matchTrailing[1].trim();
+        num = parseFloat(matchTrailing[2].replace(',', '.'));
+        unit = matchTrailing[3].trim().toLowerCase();
+      } else {
+        // Pattern B: <Number> [Unit] [x] <Name> e.g. "2 banany", "500g mąki", "2x awokado"
+        const patternLeading = /^(\d+(?:[.,]\d+)?)\s*([a-ząćęłńóśźż.]*)\s*[xX]?\s+(.+)$/i;
+        const matchLeading = str.match(patternLeading);
+        if (matchLeading && matchLeading[3].trim()) {
+          num = parseFloat(matchLeading[1].replace(',', '.'));
+          unit = matchLeading[2].trim().toLowerCase();
+          name = matchLeading[3].trim();
+        } else {
+          name = str;
+          num = 1;
+          unit = 'szt.';
+        }
+      }
+
+      // Normalize unit
+      if (!unit || /^(szt|szt\.|sztuka|sztuki|sztuk)$/i.test(unit)) {
+        unit = 'szt.';
+      } else if (/^(g|gram|gramy|gramów)$/i.test(unit)) {
+        unit = 'g';
+      } else if (/^(kg|kilogram|kilogramy|kilogramów)$/i.test(unit)) {
+        unit = 'kg';
+      } else if (/^(ml|mililitr|mililitry|mililitrów)$/i.test(unit)) {
+        unit = 'ml';
+      } else if (/^(l|litr|litry|litrów)$/i.test(unit)) {
+        unit = 'l';
+      } else if (/^(łyżk[ia]?|lyzk[ia]?)$/i.test(unit)) {
+        unit = 'łyżka';
+      } else if (/^(łyżeczk[ia]?|lyzeczk[ia]?)$/i.test(unit)) {
+        unit = 'łyżeczka';
+      } else if (/^(opak|opak\.|opakowanie|opakowania|opakowań)$/i.test(unit)) {
+        unit = 'opak.';
+      }
+
+      name = name.replace(/^[\s,.-]+|[\s,.-]+$/g, '');
+      if (name.length > 0) {
+        name = name.charAt(0).toUpperCase() + name.slice(1);
+      }
+
+      return { name, num, unit };
+    }
+
+    function parseAmountStr(amtStr) {
+      if (!amtStr) return { num: 1, unit: 'szt.' };
+      const match = amtStr.match(/^([\d.,]+)\s*([a-ząćęłńóśźż.]*)/i);
+      if (match) {
+        const num = parseFloat(match[1].replace(',', '.'));
+        let unit = (match[2] || '').trim().toLowerCase();
+        if (!unit || /^(szt|szt\.|sztuka|sztuki|sztuk)$/i.test(unit)) unit = 'szt.';
+        else if (/^(g|gram|gramy|gramów)$/i.test(unit)) unit = 'g';
+        else if (/^(kg|kilogram|kilogramy|kilogramów)$/i.test(unit)) unit = 'kg';
+        else if (/^(ml|mililitr|mililitry|mililitrów)$/i.test(unit)) unit = 'ml';
+        else if (/^(l|litr|litry|litrów)$/i.test(unit)) unit = 'l';
+        return { num, unit };
+      }
+      return { num: 0, unit: amtStr };
+    }
+
+    function normalizeIngredientKey(str) {
+      let s = (str || '').toLowerCase().trim();
+      s = s.replace(/[\s,.-]+/g, ' ');
+      if (s.endsWith('y') && s.length > 4) s = s.slice(0, -1);
+      if (s.endsWith('e') && s.length > 4) s = s.slice(0, -1);
+      if (s.endsWith('a') && s.length > 4) s = s.slice(0, -1);
+      if (s.endsWith('ów') && s.length > 4) s = s.slice(0, -2);
+      return s;
+    }
+
     async function addCustomShoppingItem() {
-      const input = document.getElementById('custom-shopping-input');
+      const input = document.getElementById('custom-item-name') || document.getElementById('custom-shopping-input');
+      if (!input) return;
       const text = input.value.trim();
       if (!text) return;
 
-      if (state.isStaticMode) {
-        const item = {
+      const parsed = parseShoppingInput(text);
+      if (!parsed || !parsed.name) return;
+
+      if (!state.shoppingList) state.shoppingList = [];
+
+      const parsedKey = normalizeIngredientKey(parsed.name);
+      let existingItem = state.shoppingList.find(item => {
+        const itemKey = normalizeIngredientKey(item.name);
+        return itemKey === parsedKey || itemKey.includes(parsedKey) || parsedKey.includes(itemKey);
+      });
+
+      if (existingItem) {
+        const existingAmt = parseAmountStr(existingItem.amount);
+        if (existingAmt.unit === parsed.unit) {
+          const sum = Math.round((existingAmt.num + parsed.num) * 10) / 10;
+          existingItem.amount = `${sum} ${parsed.unit}`.trim();
+        } else if (existingAmt.unit === 'g' && parsed.unit === 'kg') {
+          const sum = Math.round((existingAmt.num + parsed.num * 1000) * 10) / 10;
+          existingItem.amount = `${sum} g`;
+        } else if (existingAmt.unit === 'kg' && parsed.unit === 'g') {
+          const sum = Math.round((existingAmt.num + parsed.num / 1000) * 100) / 100;
+          existingItem.amount = `${sum} kg`;
+        } else if (existingAmt.unit === 'ml' && parsed.unit === 'l') {
+          const sum = Math.round((existingAmt.num + parsed.num * 1000) * 10) / 10;
+          existingItem.amount = `${sum} ml`;
+        } else if (existingAmt.unit === 'l' && parsed.unit === 'ml') {
+          const sum = Math.round((existingAmt.num + parsed.num / 1000) * 100) / 100;
+          existingItem.amount = `${sum} l`;
+        } else {
+          existingItem.amount = `${existingItem.amount} + ${parsed.num} ${parsed.unit}`.trim();
+        }
+        showToast(`✓ Zsumowano ${existingItem.name}: ${existingItem.amount}!`);
+      } else {
+        const dept = getIngredientDepartment(parsed.name);
+        const newItem = {
           id: Date.now() + Math.random(),
-          name: text,
-          amount: '',
-          department: getIngredientDepartment(text),
-          recipe_title: '',
+          name: parsed.name,
+          amount: `${parsed.num} ${parsed.unit}`.trim(),
+          department: dept,
+          recipe_title: 'Własny produkt',
           checked: false
         };
-        state.shoppingList.push(item);
-        localStorage.setItem('baza_shopping', JSON.stringify(state.shoppingList));
-        input.value = '';
-        updateShoppingBadge();
-        renderShoppingList();
-        return;
+        state.shoppingList.push(newItem);
+        showToast(`✓ Dodano do listy zakupów: ${newItem.name} (${newItem.amount})!`);
       }
 
-      try {
-        await fetch('/api/shopping-list', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name: text, amount: '' })
-        });
-        input.value = '';
-        fetchShoppingList();
-      } catch (err) {
-        state.isStaticMode = true;
-        addCustomShoppingItem();
-      }
+      localStorage.setItem('baza_shopping', JSON.stringify(state.shoppingList));
+      input.value = '';
+      updateShoppingBadge();
+      renderShoppingList();
     }
 
     function copyShoppingListToClipboard() {
@@ -2529,17 +2691,104 @@
       }
     }
 
+    function getPlannerWeekDays(baseDateStr) {
+      const d = baseDateStr ? new Date(baseDateStr + 'T12:00:00') : new Date();
+      const dayOfWeek = d.getDay(); // 0 is Sunday, 1 is Monday...
+      const distToMonday = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
+      const monday = new Date(d);
+      monday.setDate(d.getDate() + distToMonday);
+
+      const months = ['sty', 'lut', 'mar', 'kwi', 'maj', 'cze', 'lip', 'sie', 'wrz', 'paź', 'lis', 'gru'];
+      const todayStr = new Date().toISOString().split('T')[0];
+      const targetStr = d.toISOString().split('T')[0];
+
+      const weekDays = [];
+      for (let i = 0; i < 7; i++) {
+        const cur = new Date(monday);
+        cur.setDate(monday.getDate() + i);
+        const isoKey = cur.toISOString().split('T')[0];
+        const dayNum = cur.getDate();
+        const monthStr = months[cur.getMonth()];
+
+        weekDays.push({
+          dayIdx: i,
+          dayName: DAYS[i],
+          date: cur,
+          isoKey: isoKey,
+          formattedDate: `${dayNum} ${monthStr}`,
+          isToday: isoKey === todayStr,
+          isSelected: isoKey === targetStr
+        });
+      }
+
+      const sunday = new Date(monday);
+      sunday.setDate(monday.getDate() + 6);
+      const weekLabel = `Tydzień: ${monday.getDate()} ${months[monday.getMonth()]} - ${sunday.getDate()} ${months[sunday.getMonth()]}`;
+
+      return { monday, weekDays, weekLabel, activeIso: targetStr };
+    }
+
+    function updatePlannerToolbar() {
+      const info = getPlannerWeekDays(state.plannerDate);
+      const labelEl = document.getElementById('planner-week-label');
+      if (labelEl) labelEl.innerText = info.weekLabel;
+      const dateInput = document.getElementById('planner-date-input');
+      if (dateInput) dateInput.value = state.plannerDate || info.activeIso;
+    }
+
+    function changePlannerWeek(deltaWeeks) {
+      const cur = state.plannerDate ? new Date(state.plannerDate + 'T12:00:00') : new Date();
+      cur.setDate(cur.getDate() + (deltaWeeks * 7));
+      state.plannerDate = cur.toISOString().split('T')[0];
+      updatePlannerToolbar();
+      renderPlannerBoard();
+    }
+
+    function onPlannerDateSelected(val) {
+      if (!val) return;
+      state.plannerDate = val;
+      updatePlannerToolbar();
+      renderPlannerBoard();
+    }
+
+    function goToTodayPlanner() {
+      state.plannerDate = new Date().toISOString().split('T')[0];
+      updatePlannerToolbar();
+      renderPlannerBoard();
+    }
+
     function renderPlannerBoard() {
       const container = document.getElementById('planner-board');
       if (!container) return;
 
       const count = state.dailyMealCount || 4;
       const slotNames = MEAL_SLOT_NAMES[count] || MEAL_SLOT_NAMES[4];
+      const weekInfo = getPlannerWeekDays(state.plannerDate);
+      updatePlannerToolbar();
 
-      container.innerHTML = DAYS.map((dayName, dayIdx) => {
-        const dayMeals = (state.mealPlan || []).filter(m => m.day_index === dayIdx);
-        const dayKcal = dayMeals.reduce((acc, m) => acc + (m.calories || 0), 0);
-        const dayProt = Math.round(dayMeals.reduce((acc, m) => acc + (m.protein || 0), 0));
+      container.innerHTML = weekInfo.weekDays.map(w => {
+        const dayIdx = w.dayIdx;
+        const dayName = w.dayName;
+        // Match meals by date_key or fallback to day_index for backwards compatibility
+        const dayMeals = (state.mealPlan || []).filter(m => (m.date_key ? m.date_key === w.isoKey : m.day_index === dayIdx));
+
+        // Calculate daily macros: Kcal • B • T • W
+        const dayKcal = Math.round(dayMeals.reduce((acc, m) => {
+          const r = (allStaticRecipes || []).find(x => String(x.id) === String(m.recipe_id));
+          return acc + (m.calories || (r ? r.calories : 0) || 0);
+        }, 0));
+        const dayProt = Math.round(dayMeals.reduce((acc, m) => {
+          const r = (allStaticRecipes || []).find(x => String(x.id) === String(m.recipe_id));
+          return acc + (m.protein || (r ? r.protein : 0) || 0);
+        }, 0));
+        const dayFat = Math.round(dayMeals.reduce((acc, m) => {
+          const r = (allStaticRecipes || []).find(x => String(x.id) === String(m.recipe_id));
+          return acc + (m.fat || (r ? r.fat : 0) || 0);
+        }, 0));
+        const dayCarbs = Math.round(dayMeals.reduce((acc, m) => {
+          const r = (allStaticRecipes || []).find(x => String(x.id) === String(m.recipe_id));
+          return acc + (m.carbs || (r ? r.carbs : 0) || 0);
+        }, 0));
 
         let slotsHtml = '';
         const totalSlots = Math.max(count, dayMeals.length);
@@ -2553,57 +2802,62 @@
 
             slotsHtml += `
               <div onclick="openRecipeModal(${meal.recipe_id})" class="bg-white hover:bg-stone-50/90 p-2.5 rounded-2xl border border-stone-200/90 hover:border-brand-500 hover:shadow-sm transition cursor-pointer group relative flex gap-2.5 items-center">
-                <div class="w-12 h-12 rounded-xl overflow-hidden bg-stone-100 shrink-0 border border-stone-100">
-                  <img src="${formatImagePath(imgPath)}" alt="${meal.title}" onerror="handleImageError(this, '${meal.title}')" class="w-full h-full object-cover group-hover:scale-105 transition" />
+                <div class="w-12 h-12 rounded-xl overflow-hidden bg-stone-100 shrink-0 border border-stone-100 relative">
+                  <img src="${imgPath}" alt="${escapeHtml(meal.title || '')}" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='/static/images/placeholder.png';">
                 </div>
                 <div class="flex-1 min-w-0 pr-6">
-                  <div class="flex items-center gap-1.5 mb-0.5">
-                    <span class="text-[9px] font-extrabold text-brand-700 bg-brand-50 border border-brand-200/60 px-1.5 py-0.2 rounded-md">${slotLabel}</span>
-                  </div>
-                  <div class="text-xs font-bold text-stone-900 truncate group-hover:text-brand-700 transition" title="${cleanRecipeTitle(meal.title)}">${cleanRecipeTitle(meal.title)}</div>
-                  <div class="flex items-center gap-1.5 text-[10px] text-stone-400 mt-0.5 font-semibold">
-                    <span class="text-stone-800 font-extrabold">${meal.calories} kcal</span>
+                  <span class="text-[10px] font-extrabold uppercase tracking-wider text-brand-600 block">${slotLabel}</span>
+                  <h4 class="text-xs font-bold text-stone-900 group-hover:text-brand-600 transition truncate">${escapeHtml(cleanRecipeTitle(meal.title || 'Danie'))}</h4>
+                  <div class="flex items-center gap-2 text-[10px] text-stone-500 font-semibold mt-0.5">
+                    <span>${meal.calories || (recipeObj ? recipeObj.calories : 0) || 0} kcal</span>
                     <span>•</span>
-                    <span>${meal.protein}g B</span>
+                    <span class="text-amber-700 font-bold">${meal.protein || (recipeObj ? recipeObj.protein : 0) || 0}g B</span>
                   </div>
                 </div>
-                <button type="button" onclick="event.stopPropagation(); deletePlanEntry('${meal.id}')" class="absolute top-2 right-2 w-6 h-6 rounded-lg text-stone-300 hover:text-red-500 hover:bg-red-50 flex items-center justify-center text-xs transition" title="Usuń z dnia">
-                  <i class="fa-solid fa-xmark"></i>
+                <button onclick="event.stopPropagation(); deletePlanEntry('${meal.id}')" title="Usuń z planu" class="absolute top-2.5 right-2 text-stone-300 hover:text-red-500 hover:bg-red-50 w-6 h-6 rounded-lg flex items-center justify-center text-xs transition">
+                  <i class="fa-regular fa-trash-can"></i>
                 </button>
               </div>
             `;
           } else {
             slotsHtml += `
-              <div onclick="openPlannerDishPicker(${dayIdx})" class="border-2 border-dashed border-stone-200 hover:border-brand-400 hover:bg-brand-50/40 rounded-2xl p-2.5 flex items-center justify-between cursor-pointer transition text-stone-400 hover:text-brand-600 group">
-                <div class="flex items-center gap-2">
-                  <span class="text-[10px] font-bold text-stone-400 group-hover:text-brand-700 bg-stone-100 group-hover:bg-brand-100 px-2 py-0.5 rounded-full">${slotLabel}</span>
-                  <span class="text-xs font-semibold text-stone-400 group-hover:text-stone-700">Pusty slot</span>
-                </div>
-                <i class="fa-solid fa-plus text-xs"></i>
+              <div onclick="openPlannerDishPicker(${dayIdx}, '${w.isoKey}')" class="p-3 rounded-2xl border-2 border-dashed border-stone-200/90 hover:border-brand-400 hover:bg-brand-50/30 transition cursor-pointer flex flex-col items-center justify-center gap-1 text-center group min-h-[58px]">
+                <span class="text-[11px] font-semibold text-stone-400 group-hover:text-brand-600 transition flex items-center gap-1">
+                  <i class="fa-solid fa-plus text-[9px]"></i> ${slotLabel}
+                </span>
               </div>
             `;
           }
         }
 
+        const cardBorder = w.isSelected ? 'border-brand-500 ring-2 ring-brand-200 shadow-sm' : 'border-stone-200';
+
         return `
-          <div class="bg-white rounded-3xl border border-stone-200 shadow-sm flex flex-col overflow-hidden">
-            <!-- Day Header (Clean & Minimalist, without redundant 'Dodaj' button) -->
-            <div class="p-3.5 border-b border-stone-100 bg-stone-50/80">
-              <div class="flex items-center justify-between">
+          <div class="bg-stone-50/60 rounded-3xl border ${cardBorder} overflow-hidden flex flex-col shadow-xs transition hover:border-brand-300">
+            <!-- Day Card Header: Day Name + Date + Copy + Kcal -->
+            <div class="p-3 bg-stone-50 border-b border-stone-100 flex items-center justify-between">
+              <div>
                 <div class="flex items-center gap-1.5">
                   <h3 class="font-extrabold text-sm text-stone-900">${dayName}</h3>
-                  ${dayMeals.length > 0 ? `
-                    <button onclick="openCopyDayModal(${dayIdx})" class="text-stone-300 hover:text-brand-600 hover:bg-white p-1 rounded-lg text-xs transition" title="Skopiuj jadłospis z dnia ${dayName} na inny dzień">
-                      <i class="fa-regular fa-copy"></i>
-                    </button>
-                  ` : ''}
+                  ${w.isToday ? '<span class="bg-brand-600 text-white text-[9px] font-black px-1.5 py-0.5 rounded-full uppercase tracking-wider">DZIŚ</span>' : ''}
                 </div>
-                <span class="text-xs font-extrabold ${dayKcal > 0 ? 'text-brand-700 bg-brand-50 border border-brand-200/60 px-2 py-0.5 rounded-full' : 'text-stone-400 font-semibold'}">${dayKcal} kcal</span>
+                <span class="text-[11px] text-stone-500 font-semibold">${w.formattedDate}</span>
               </div>
-              <div class="flex items-center justify-between text-[11px] text-stone-400 mt-1 font-semibold">
-                <span>${dayMeals.length} / ${count} zaplanowane</span>
-                <span>${dayProt}g białka</span>
+              <div class="text-right flex items-center gap-1.5">
+                <button onclick="copyDayMeals(${dayIdx})" title="Skopiuj ten dzień do innego" class="text-stone-400 hover:text-brand-600 p-1.5 rounded-lg hover:bg-stone-200/60 transition text-xs cursor-pointer">
+                  <i class="fa-regular fa-copy"></i>
+                </button>
+                <span class="inline-block px-2.5 py-1 bg-brand-50 text-brand-700 text-xs font-black rounded-xl">
+                  ${dayKcal} kcal
+                </span>
               </div>
+            </div>
+
+            <!-- Day Macros Bar: B (amber) • T (emerald) • W (sky) -->
+            <div class="px-3 py-1.5 bg-stone-100/70 flex items-center justify-between text-[11px] border-b border-stone-100 font-extrabold">
+              <span class="text-amber-800 bg-amber-100/80 px-1.5 py-0.5 rounded text-[10px]" title="Białko">B: ${dayProt}g</span>
+              <span class="text-emerald-800 bg-emerald-100/80 px-1.5 py-0.5 rounded text-[10px]" title="Tłuszcze">T: ${dayFat}g</span>
+              <span class="text-sky-800 bg-sky-100/80 px-1.5 py-0.5 rounded text-[10px]" title="Węglowodany">W: ${dayCarbs}g</span>
             </div>
 
             <!-- Day Meals Slots -->
@@ -2613,7 +2867,7 @@
 
             <!-- Bottom Add Button -->
             <div class="p-2 pt-0">
-              <button onclick="openPlannerDishPicker(${dayIdx})" class="w-full py-2 px-3 border border-stone-200 hover:border-brand-500 hover:bg-brand-50 text-stone-600 hover:text-brand-700 rounded-xl text-xs font-extrabold transition flex items-center justify-center gap-1.5 shadow-xs">
+              <button onclick="openPlannerDishPicker(${dayIdx}, '${w.isoKey}')" class="w-full py-2 px-3 border border-stone-200 hover:border-brand-500 hover:bg-brand-50 text-stone-600 hover:text-brand-700 rounded-xl text-xs font-extrabold transition flex items-center justify-center gap-1.5 shadow-xs cursor-pointer">
                 <i class="fa-solid fa-plus text-[10px]"></i>
                 <span>Dodaj danie</span>
               </button>
@@ -2886,8 +3140,9 @@
     // ==========================================
     // 📅 PLANNER DISH PICKER MODAL
     // ==========================================
-    function openPlannerDishPicker(dayIdx) {
+    function openPlannerDishPicker(dayIdx, dateKey) {
       state.plannerTargetDayIndex = dayIdx;
+      state.plannerTargetDateKey = dateKey || ((getPlannerWeekDays(state.plannerDate).weekDays[dayIdx] || {}).isoKey);
       const dayName = DAYS[dayIdx];
       const targetEl = document.getElementById('planner-picker-target-day');
       if (targetEl) targetEl.innerText = dayName;
@@ -2993,9 +3248,10 @@
       plan.push({
         id: Date.now() + Math.random(),
         day_index: dayIdx,
+        date_key: state.plannerTargetDateKey || ((getPlannerWeekDays(state.plannerDate).weekDays[dayIdx] || {}).isoKey) || null,
         meal_slot: classifyRecipe(r),
         recipe_id: r.id,
-        title: r.title,
+        title: cleanRecipeTitle(r.title),
         calories: r.calories,
         protein: r.protein,
         carbs: r.carbs,
