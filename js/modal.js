@@ -1,6 +1,36 @@
 import { store } from './store.js';
 import { escapeHtml, showToast, renderMacroPills } from './utils/dom.js';
 
+export function scaleAmount(amountStr, ratio, fallbackWeightG = 0) {
+  if (ratio === 1) {
+    if (!amountStr && fallbackWeightG > 0) return `${fallbackWeightG} g`;
+    return amountStr || '';
+  }
+
+  const raw = (amountStr || '').trim();
+  if (!raw) {
+    if (fallbackWeightG > 0) {
+      const scaledG = Math.round(fallbackWeightG * ratio * 10) / 10;
+      return `${scaledG} g`;
+    }
+    return '';
+  }
+
+  // Handle fractions if any (e.g. 1/2 -> 0.5)
+  const normalized = raw.replace(/(\d+)\s*\/\s*(\d+)/g, (m, n, d) => {
+    const v = parseFloat(n) / parseFloat(d);
+    return isNaN(v) ? m : String(v);
+  });
+
+  return normalized.replace(/\d+(?:[.,]\d+)?/g, (match) => {
+    const val = parseFloat(match.replace(',', '.'));
+    if (isNaN(val)) return match;
+    const scaled = Math.round(val * ratio * 100) / 100;
+    const strVal = Number.isInteger(scaled) ? String(scaled) : String(Math.round(scaled * 10) / 10);
+    return match.includes(',') ? strVal.replace('.', ',') : strVal;
+  });
+}
+
 class ModalModule {
   constructor() {
     this.currentRecipe = null;
@@ -178,18 +208,11 @@ class ModalModule {
     ingContainer.innerHTML = ings.map(ing => {
       let displayAmount = ing.amount || '';
 
-      // Universal Scaler: scale weight in grams AND scale textual numbers!
+      // Universal Scaler: scales both textual quantities and gram weights!
       if (ratio !== 1) {
-        if (ing.weight_g && ing.weight_g > 0) {
-          const scaledGrams = Math.round(ing.weight_g * ratio * 10) / 10;
-          displayAmount = `${scaledGrams} g`;
-        } else if (displayAmount) {
-          // Scale numeric prefix e.g. "2 jajka" -> "4 jajka"
-          displayAmount = displayAmount.replace(/^(\d+(?:[.,]\d+)?)/, (match) => {
-            const num = parseFloat(match.replace(',', '.'));
-            return Math.round(num * ratio * 10) / 10;
-          });
-        }
+        displayAmount = scaleAmount(ing.amount, ratio, ing.weight_g);
+      } else if (!displayAmount && ing.weight_g > 0) {
+        displayAmount = `${ing.weight_g} g`;
       }
 
       return `
@@ -241,17 +264,7 @@ class ModalModule {
     }
 
     ings.forEach(ing => {
-      let amountStr = ing.amount || '';
-      if (ratio !== 1) {
-        if (ing.weight_g && ing.weight_g > 0) {
-          amountStr = `${Math.round(ing.weight_g * ratio)} g`;
-        } else if (amountStr) {
-          amountStr = amountStr.replace(/^(\d+(?:[.,]\d+)?)/, (match) => {
-            const num = parseFloat(match.replace(',', '.'));
-            return Math.round(num * ratio * 10) / 10;
-          });
-        }
-      }
+      const amountStr = scaleAmount(ing.amount, ratio, ing.weight_g);
 
       store.addShoppingItem({
         name: ing.name,

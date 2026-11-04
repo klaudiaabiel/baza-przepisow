@@ -403,8 +403,32 @@
           </div>
 
           <div>
-            <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Składniki (jeden na linijkę, np. Chleb żytni – 2 kromki (70g))</label>
-            <textarea id="new-recipe-ingredients" rows="4" required placeholder="Jajka – 2 sztuki (100g)&#10;Pomidory krojone – 1 puszka (400g)&#10;Oliwa z oliwek – 1 łyżka (10g)" class="w-full p-3 rounded-xl border border-stone-200 focus:border-brand-500 text-xs sm:text-sm font-mono outline-none"></textarea>
+            <div class="flex items-center justify-between mb-2">
+              <label class="block text-xs font-bold text-stone-700 uppercase">Składniki *</label>
+              <button type="button" id="toggle-bulk-ingredients-btn" class="text-xs text-brand-600 hover:text-brand-700 font-bold flex items-center gap-1.5 cursor-pointer">
+                <i class="fa-solid fa-list-check"></i> <span id="toggle-bulk-text">Wklej listę hurtowo</span>
+              </button>
+            </div>
+
+            <!-- BULK PASTE CONTAINER (COLLAPSIBLE) -->
+            <div id="bulk-ingredients-container" class="hidden mb-3 p-3.5 bg-stone-50 rounded-2xl border border-stone-200/80 space-y-2.5">
+              <p class="text-[11px] text-stone-500 font-medium leading-relaxed">
+                Wklej listę składników (każdy w nowej linii, np. <code class="font-bold">Pesto zielone - 7 łyżeczek (35g)</code> lub <code class="font-bold">Mąka 100g</code>). Smart Parser automatycznie przypisze gramatury i sztuki do dedykowanych pól.
+              </p>
+              <textarea id="bulk-ingredients-input" rows="3" placeholder="Pesto zielone - 7 łyżeczek (35g)&#10;Makaron pełnoziarnisty - 100 g&#10;Pomidorki koktajlowe 150g" class="w-full p-3 rounded-xl border border-stone-200 text-xs font-mono outline-none bg-white focus:border-brand-500"></textarea>
+              <button type="button" id="apply-bulk-ingredients-btn" class="px-3.5 py-1.5 rounded-xl bg-stone-800 hover:bg-stone-900 text-white font-extrabold text-xs transition cursor-pointer flex items-center gap-1.5">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Rozdziel do pól składników
+              </button>
+            </div>
+
+            <!-- DYNAMIC ROWS LIST -->
+            <div id="recipe-ingredients-rows" class="space-y-2">
+              <!-- Rendered via creator.js -->
+            </div>
+
+            <button type="button" id="add-ingredient-row-btn" class="mt-2.5 px-3.5 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 font-bold text-xs transition cursor-pointer flex items-center gap-2">
+              <i class="fa-solid fa-plus text-[10px]"></i> Dodaj kolejny składnik
+            </button>
           </div>
 
           <div>

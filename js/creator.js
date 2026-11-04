@@ -4,6 +4,71 @@ import { escapeHtml, showToast } from './utils/dom.js';
 
 export const CREATOR_PIN = '0000';
 
+const UNITS_REGEX = /(?:g|gram|gramy|gramów|kg|ml|l|litr|litry|litrów|lyzka|lyzki|lyzek|łyżka|łyżki|łyżek|łyżeczka|łyżeczki|łyżeczek|szklanka|szklanki|szklanek|sztuka|sztuki|sztuk|szt|ząbek|ząbki|ząbków|garść|garści|plaster|plastry|plastrów|kromka|kromki|kromek|puszka|puszki|puszek|opakowanie|opakowania|opakowań|porcja|porcje|porcji|szczypta|szczypty|kropla|krople|kropel|kostka|kostki|kostek)/i;
+
+/**
+ * Robust ingredient line parser.
+ * Splits into { name, amount } handling:
+ * - separators: ' – ', ' - ', ' — ', ' : ', ':', '\t'
+ * - tight hyphen with number: 'Makaron-100g'
+ * - trailing amounts: 'Pesto zielone 7 łyżeczek (35g)', 'Mąka 100g'
+ * - leading amounts: '2 kromki chleba (70g)', '1 łyżka oliwy'
+ */
+export function parseIngredientLine(line) {
+  const raw = (line || '').trim();
+  if (!raw) return { name: '', amount: '' };
+
+  for (const sep of [' – ', ' — ', ' - ', ' − ', ' : ', ':', '\t']) {
+    if (raw.includes(sep)) {
+      const idx = raw.indexOf(sep);
+      const p0 = raw.slice(0, idx).trim();
+      const p1 = raw.slice(idx + sep.length).trim();
+      if (p0 && p1) return { name: p0, amount: p1 };
+    }
+  }
+
+  const mTight = raw.match(/^(.*?)\s*[-–—−]\s*(\d+.*)$/);
+  if (mTight && mTight[1].trim() && mTight[2].trim()) {
+    return { name: mTight[1].trim(), amount: mTight[2].trim() };
+  }
+
+  const mEnd = raw.match(new RegExp('^(.*?)\\s+(\\d+(?:[.,]\\d+)?\\s*(?:x\\s*)?' + UNITS_REGEX.source + '.*)$', 'i'));
+  if (mEnd && mEnd[1].trim() && mEnd[2].trim()) {
+    return { name: mEnd[1].trim(), amount: mEnd[2].trim() };
+  }
+
+  const mNum = raw.match(/^(.*?)\s+(\d+(?:[.,]\d+)?\s*(?:g|kg|ml|l|szt)?(?:\s*\([^)]*\))?)$/i);
+  if (mNum && mNum[1].trim().length > 1 && mNum[2].trim()) {
+    return { name: mNum[1].trim(), amount: mNum[2].trim() };
+  }
+
+  const mStart = raw.match(new RegExp('^(\\d+(?:[.,]\\d+)?\\s*(?:x\\s*)?' + UNITS_REGEX.source + ')\\s+(.*?)(?:\\s*(\\([^)]*\\)))?$', 'i'));
+  if (mStart) {
+    const unitPart = mStart[1].trim();
+    const pName = mStart[2].trim();
+    const parens = (mStart[3] || '').trim();
+    const pAmt = parens ? `${unitPart} ${parens}` : unitPart;
+    if (pName && pAmt) return { name: pName, amount: pAmt };
+  }
+
+  return { name: raw, amount: '' };
+}
+
+/**
+ * Extracts numeric weight in grams from amount string.
+ * Supports: (35g), 100g, 0.5 kg, etc.
+ */
+export function extractWeightG(amountStr) {
+  if (!amountStr) return 0;
+  const parenG = amountStr.match(/\((\d+(?:[.,]\d+)?)\s*g\)/i);
+  if (parenG) return parseFloat(parenG[1].replace(',', '.'));
+  const matchKg = amountStr.match(/(\d+(?:[.,]\d+)?)\s*kg/i);
+  if (matchKg) return parseFloat(matchKg[1].replace(',', '.')) * 1000;
+  const matchG = amountStr.match(/(\d+(?:[.,]\d+)?)\s*g/i);
+  if (matchG) return parseFloat(matchG[1].replace(',', '.'));
+  return 0;
+}
+
 class CreatorModule {
   constructor() {
     this.isUnlocked = localStorage.getItem('creator_mode_active') === 'true';
@@ -13,6 +78,7 @@ class CreatorModule {
     this.bindEvents();
     this.updateUI();
     this.renderCategorySelect();
+    this.initIngredientsUI();
   }
 
   bindEvents() {
@@ -42,6 +108,116 @@ class CreatorModule {
     if (addForm) {
       addForm.addEventListener('submit', (e) => this.handleCreateRecipe(e));
     }
+  }
+
+  initIngredientsUI() {
+    const addRowBtn = document.getElementById('add-ingredient-row-btn');
+    const toggleBulkBtn = document.getElementById('toggle-bulk-ingredients-btn');
+    const applyBulkBtn = document.getElementById('apply-bulk-ingredients-btn');
+    const bulkContainer = document.getElementById('bulk-ingredients-container');
+    const toggleBulkText = document.getElementById('toggle-bulk-text');
+
+    if (addRowBtn) {
+      addRowBtn.addEventListener('click', () => this.addIngredientRow());
+    }
+
+    if (toggleBulkBtn && bulkContainer) {
+      toggleBulkBtn.addEventListener('click', () => {
+        const isHidden = bulkContainer.classList.toggle('hidden');
+        if (toggleBulkText) {
+          toggleBulkText.innerText = isHidden ? 'Wklej listę hurtowo' : 'Ukryj wklejanie hurtowe';
+        }
+      });
+    }
+
+    if (applyBulkBtn) {
+      applyBulkBtn.addEventListener('click', () => this.applyBulkIngredients());
+    }
+
+    // Populate initial rows
+    this.resetIngredientRows();
+  }
+
+  resetIngredientRows() {
+    const container = document.getElementById('recipe-ingredients-rows');
+    if (!container) return;
+    container.innerHTML = '';
+
+    // 3 clean initial rows
+    this.addIngredientRow('', '');
+    this.addIngredientRow('', '');
+    this.addIngredientRow('', '');
+  }
+
+  addIngredientRow(name = '', amount = '') {
+    const container = document.getElementById('recipe-ingredients-rows');
+    if (!container) return;
+
+    const row = document.createElement('div');
+    row.className = 'ingredient-row flex items-center gap-2';
+    row.innerHTML = `
+      <input type="text" class="new-ing-name flex-1 p-2.5 rounded-xl border border-stone-200 text-xs sm:text-sm outline-none focus:border-brand-500 bg-white" placeholder="Nazwa składnika (np. Pesto zielone)" value="${escapeHtml(name)}">
+      <input type="text" class="new-ing-amount w-36 sm:w-48 p-2.5 rounded-xl border border-stone-200 text-xs sm:text-sm outline-none focus:border-brand-500 bg-white" placeholder="Ilość (np. 7 łyżeczek (35g))" value="${escapeHtml(amount)}">
+      <button type="button" class="new-ing-remove w-9 h-9 rounded-xl hover:bg-red-50 text-stone-400 hover:text-red-500 flex items-center justify-center transition cursor-pointer shrink-0" title="Usuń pozycję">
+        <i class="fa-solid fa-trash-can text-xs"></i>
+      </button>
+    `;
+
+    // Smart auto-split on blur if user typed or pasted amount inside the name field!
+    const nameInput = row.querySelector('.new-ing-name');
+    const amountInput = row.querySelector('.new-ing-amount');
+    const removeBtn = row.querySelector('.new-ing-remove');
+
+    nameInput.addEventListener('blur', () => {
+      const curName = nameInput.value.trim();
+      const curAmt = amountInput.value.trim();
+      if (curName && !curAmt) {
+        const parsed = parseIngredientLine(curName);
+        if (parsed.amount) {
+          nameInput.value = parsed.name;
+          amountInput.value = parsed.amount;
+        }
+      }
+    });
+
+    removeBtn.addEventListener('click', () => {
+      const allRows = container.querySelectorAll('.ingredient-row');
+      if (allRows.length > 1) {
+        row.remove();
+      } else {
+        nameInput.value = '';
+        amountInput.value = '';
+      }
+    });
+
+    container.appendChild(row);
+  }
+
+  applyBulkIngredients() {
+    const bulkInput = document.getElementById('bulk-ingredients-input');
+    if (!bulkInput) return;
+    const lines = bulkInput.value.split('\n').map(l => l.trim()).filter(Boolean);
+
+    if (lines.length === 0) {
+      showToast('Wklej najpierw listę składników do pola tekstowego.');
+      return;
+    }
+
+    const container = document.getElementById('recipe-ingredients-rows');
+    if (container) container.innerHTML = '';
+
+    lines.forEach(line => {
+      const parsed = parseIngredientLine(line);
+      this.addIngredientRow(parsed.name, parsed.amount);
+    });
+
+    bulkInput.value = '';
+    const bulkContainer = document.getElementById('bulk-ingredients-container');
+    const toggleBulkText = document.getElementById('toggle-bulk-text');
+    if (bulkContainer) bulkContainer.classList.add('hidden');
+    if (toggleBulkText) toggleBulkText.innerText = 'Wklej listę hurtowo';
+
+    showToast(`✓ Rozdzielono ${lines.length} składników do dedykowanych pól nazwy i ilości!`);
   }
 
   promptPin() {
@@ -97,32 +273,57 @@ class CreatorModule {
     const fat = parseFloat(document.getElementById('new-recipe-fat').value) || 0;
     const carbs = parseFloat(document.getElementById('new-recipe-carbs').value) || 0;
 
-    const ingsRaw = document.getElementById('new-recipe-ingredients').value.split('\n').filter(l => l.trim());
-    const ingredients = ingsRaw.map(line => {
-      let name = line.trim();
-      let amount = '';
-      let weightG = 0;
+    // Collect ingredients from dynamic rows
+    const rows = document.querySelectorAll('#recipe-ingredients-rows .ingredient-row');
+    const ingredients = [];
 
-      if (line.includes('–')) {
-        const parts = line.split('–');
-        name = parts[0].trim();
-        amount = parts[1].trim();
-      } else if (line.includes('-')) {
-        const parts = line.split('-');
-        name = parts[0].trim();
-        amount = parts[1].trim();
+    rows.forEach(row => {
+      const nameInput = row.querySelector('.new-ing-name');
+      const amountInput = row.querySelector('.new-ing-amount');
+      let name = nameInput ? nameInput.value.trim() : '';
+      let amount = amountInput ? amountInput.value.trim() : '';
+
+      if (!name && !amount) return; // skip empty rows
+
+      // Auto-split if amount was left inside name field
+      if (name && !amount) {
+        const parsed = parseIngredientLine(name);
+        name = parsed.name;
+        amount = parsed.amount;
       }
 
-      const matchG = amount.match(/(\d+)\s*g/i);
-      if (matchG) weightG = parseFloat(matchG[1]);
+      const weightG = extractWeightG(amount);
 
-      return {
+      ingredients.push({
         name: name,
         amount: amount,
         weight_g: weightG,
         department: 'Inne'
-      };
+      });
     });
+
+    // Fallback: if rows were empty but user pasted into bulk textarea
+    if (ingredients.length === 0) {
+      const bulkInput = document.getElementById('bulk-ingredients-input');
+      if (bulkInput && bulkInput.value.trim()) {
+        const lines = bulkInput.value.split('\n').map(l => l.trim()).filter(Boolean);
+        lines.forEach(line => {
+          const parsed = parseIngredientLine(line);
+          const weightG = extractWeightG(parsed.amount);
+          ingredients.push({
+            name: parsed.name,
+            amount: parsed.amount,
+            weight_g: weightG,
+            department: 'Inne'
+          });
+        });
+      }
+    }
+
+    if (ingredients.length === 0) {
+      showToast('⚠️ Dodaj co najmniej jeden składnik do przepisu.');
+      return;
+    }
 
     const stepsRaw = document.getElementById('new-recipe-instructions').value.split('\n').filter(l => l.trim());
     const instructions = stepsRaw.map(s => s.replace(/^\d+[\.\)]\s*/, '').trim());
@@ -143,10 +344,11 @@ class CreatorModule {
       tags: ['Własne']
     };
 
-    // P0 Fix: Persists into IndexedDB! Never lost on F5!
+    // Persists into IndexedDB (never lost on refresh)
     await store.addCustomRecipe(recipe);
 
     document.getElementById('add-recipe-form').reset();
+    this.resetIngredientRows();
     showToast(`✓ Przepis "${title}" został pomyślnie dodany i zapisany w bazie!`);
 
     // Switch to catalog

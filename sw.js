@@ -1,5 +1,5 @@
 // Baza Przepisów Service Worker (100% Offline PWA Support)
-const CACHE_NAME = 'baza-przepisow-v3';
+const CACHE_NAME = 'baza-przepisow-v3.1';
 
 const PRECACHE_ASSETS = [
   '/',

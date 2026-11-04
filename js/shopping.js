@@ -235,6 +235,19 @@ class ShoppingModule {
 
         if (ing.weight_g && ing.weight_g > 0) {
           aggregated[key].totalGrams += (ing.weight_g * ratio);
+          // Also capture non-gram unit count if present (e.g. 7 łyżeczek from "7 łyżeczek (35g)")
+          if (ing.amount) {
+            const matchUnit = ing.amount.match(/^(\d+(?:[.,]\d+)?)\s*([a-ząćęłńóśźż.]+)/i);
+            if (matchUnit) {
+              const u = matchUnit[2].toLowerCase().replace(/\.$/, '');
+              if (!['g', 'gram', 'gramy', 'gramów', 'kg'].includes(u)) {
+                if (!aggregated[key].countUnit || aggregated[key].countUnit.toLowerCase() === matchUnit[2].toLowerCase()) {
+                  aggregated[key].totalCount += (parseFloat(matchUnit[1].replace(',', '.')) * ratio);
+                  if (!aggregated[key].countUnit) aggregated[key].countUnit = matchUnit[2];
+                }
+              }
+            }
+          }
         } else if (ing.amount) {
           const matchNum = ing.amount.match(/(\d+(?:[.,]\d+)?)\s*([a-ząćęłńóśźż.]*)/i);
           if (matchNum) {
