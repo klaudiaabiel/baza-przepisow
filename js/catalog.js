@@ -3,31 +3,31 @@ import { matchSearchQuery } from './utils/stemmer.js';
 import { escapeHtml, renderMacroPills } from './utils/dom.js';
 
 export const CATEGORIES_11 = [
-  'Owsianki, puddingi',
-  'Jogurty, serki',
-  'Ciasta, ciasteczka, muffinki',
-  'Kanapki, tosty',
-  'Naleśniki, placki',
-  'Jajecznice, szakszuki, omlety',
-  'Tortille, wrapy',
-  'Makarony',
-  'Zdrowe fast foody',
-  'Gotowce',
-  'Zdrowe desery'
+  'Owsianki, puddingi i kasze',
+  'Nabiał i skyr-bowls',
+  'Jajka',
+  'Kanapki i tosty',
+  'Naleśniki, gofry i placki',
+  'Dania główne i obiady',
+  'Makarony i zapiekanki',
+  'Wrapy, tortille i fit fast food',
+  'Sałatki i wytrawne bowle',
+  'Fit desery i słodkie wypieki',
+  'Szybkie gotowce (SOS)'
 ];
 
 export const CATEGORY_ICONS = {
-  'Owsianki, puddingi': '🥣',
-  'Jogurty, serki': '🥛',
-  'Ciasta, ciasteczka, muffinki': '🧁',
-  'Kanapki, tosty': '🥪',
-  'Naleśniki, placki': '🥞',
-  'Jajecznice, szakszuki, omlety': '🍳',
-  'Tortille, wrapy': '🌯',
-  'Makarony': '🍝',
-  'Zdrowe fast foody': '🍔',
-  'Gotowce': '🛍️',
-  'Zdrowe desery': '🍨'
+  'Owsianki, puddingi i kasze': '🥣',
+  'Nabiał i skyr-bowls': '🥛',
+  'Jajka': '🍳',
+  'Kanapki i tosty': '🥪',
+  'Naleśniki, gofry i placki': '🥞',
+  'Dania główne i obiady': '🍛',
+  'Makarony i zapiekanki': '🍝',
+  'Wrapy, tortille i fit fast food': '🌯',
+  'Sałatki i wytrawne bowle': '🥗',
+  'Fit desery i słodkie wypieki': '🧁',
+  'Szybkie gotowce (SOS)': '🛒'
 };
 
 class CatalogModule {

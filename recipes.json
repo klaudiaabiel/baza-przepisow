@@ -2,7 +2,7 @@
   {
     "id": 1,
     "title": "Azjatycka sałatka Crispy Rice",
-    "category": "Zdrowe fast foody",
+    "category": "Sałatki i wytrawne bowle",
     "diets": [
       "Paczka Urodzinowa (Zrzuty)"
     ],
@@ -133,7 +133,7 @@
   {
     "id": 2,
     "title": "Bagietka z szynką i awokado",
-    "category": "Kanapki, tosty",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -198,7 +198,7 @@
   {
     "id": 3,
     "title": "Bajgiel z domowym twarożkiem",
-    "category": "Jogurty, serki",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 (5 posiłków)",
       "Dieta 2400 (6 posiłków)"
@@ -270,7 +270,7 @@
   {
     "id": 4,
     "title": "Bajgiel z kremowym sosem",
-    "category": "Kanapki, tosty",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -356,7 +356,7 @@
   {
     "id": 5,
     "title": "Banan + migdały",
-    "category": "Zdrowe desery",
+    "category": "Fit desery i słodkie wypieki",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -392,7 +392,7 @@
   {
     "id": 6,
     "title": "Banan + nerkowce",
-    "category": "Zdrowe desery",
+    "category": "Fit desery i słodkie wypieki",
     "diets": [
       "Dieta 2400 (6 posiłków)"
     ],
@@ -428,7 +428,7 @@
   {
     "id": 7,
     "title": "Bananowe placuszki z mąki owsianej",
-    "category": "Naleśniki, placki",
+    "category": "Naleśniki, gofry i placki",
     "diets": [
       "Dieta 2400 (6 posiłków)"
     ],
@@ -520,7 +520,7 @@
   {
     "id": 8,
     "title": "Baton wysokobiałkowy smak karmelowy Go",
-    "category": "Gotowce",
+    "category": "Szybkie gotowce (SOS)",
     "diets": [
       "Dieta 2400 (6 posiłków)"
     ],
@@ -562,7 +562,7 @@
   {
     "id": 9,
     "title": "Batoniki z miodem oraz masłem orzechowym",
-    "category": "Gotowce",
+    "category": "Szybkie gotowce (SOS)",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -618,7 +618,7 @@
   {
     "id": 10,
     "title": "Blondie cytrynowe",
-    "category": "Ciasta, ciasteczka, muffinki",
+    "category": "Fit desery i słodkie wypieki",
     "diets": [
       "Paczka Urodzinowa (Zrzuty)"
     ],
@@ -756,7 +756,7 @@
   {
     "id": 11,
     "title": "Bowl śniadaniowy z jabłkiem oraz bananem",
-    "category": "Owsianki, puddingi",
+    "category": "Owsianki, puddingi i kasze",
     "diets": [
       "Dieta 2200 (5 posiłków)",
       "Dieta 2400 (6 posiłków)"
@@ -818,7 +818,7 @@
   {
     "id": 12,
     "title": "Bruschetta z pomidorem, bazylią świeżą oraz",
-    "category": "Kanapki, tosty",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -904,7 +904,7 @@
   {
     "id": 13,
     "title": "Brzoskwinia + orzechy",
-    "category": "Zdrowe desery",
+    "category": "Fit desery i słodkie wypieki",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -940,7 +940,7 @@
   {
     "id": 14,
     "title": "Burger curry z mięsa",
-    "category": "Zdrowe fast foody",
+    "category": "Wrapy, tortille i fit fast food",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -1042,7 +1042,7 @@
   {
     "id": 15,
     "title": "Burgery z grilla",
-    "category": "Zdrowe fast foody",
+    "category": "Wrapy, tortille i fit fast food",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -1168,7 +1168,7 @@
   {
     "id": 16,
     "title": "Burrito bowl z mięsem mielonym",
-    "category": "Tortille, wrapy",
+    "category": "Dania główne i obiady",
     "diets": [
       "Dieta 2400 (6 posiłków)",
       "Dieta Agi 1800 (4 posiłki)"
@@ -1272,7 +1272,7 @@
   {
     "id": 17,
     "title": "Bułka owsiana z kurczakiem, sałatą, pomidorem",
-    "category": "Kanapki, tosty",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -1365,7 +1365,7 @@
   {
     "id": 18,
     "title": "Caprese",
-    "category": "Jogurty, serki",
+    "category": "Sałatki i wytrawne bowle",
     "diets": [
       "Dieta 2400 (6 posiłków)"
     ],
@@ -1407,7 +1407,7 @@
   {
     "id": 19,
     "title": "Chilli z mięsem",
-    "category": "Zdrowe fast foody",
+    "category": "Dania główne i obiady",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -1528,7 +1528,7 @@
   {
     "id": 20,
     "title": "Chrupiące tosty z serkiem, szpinakiem i",
-    "category": "Kanapki, tosty",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -1602,7 +1602,7 @@
   {
     "id": 21,
     "title": "Chrupiący wrap a la szarlotka",
-    "category": "Ciasta, ciasteczka, muffinki",
+    "category": "Fit desery i słodkie wypieki",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -1678,7 +1678,7 @@
   {
     "id": 22,
     "title": "Ciasteczka czarny las",
-    "category": "Ciasta, ciasteczka, muffinki",
+    "category": "Fit desery i słodkie wypieki",
     "diets": [
       "Paczka Urodzinowa (Zrzuty)"
     ],
@@ -1789,7 +1789,7 @@
   {
     "id": 23,
     "title": "Ciasteczka z malinami (liczba porcji: 2)",
-    "category": "Ciasta, ciasteczka, muffinki",
+    "category": "Fit desery i słodkie wypieki",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -1874,7 +1874,7 @@
   {
     "id": 24,
     "title": "Ciasto dyniowe z mikrofalówki",
-    "category": "Ciasta, ciasteczka, muffinki",
+    "category": "Fit desery i słodkie wypieki",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -1968,7 +1968,7 @@
   {
     "id": 25,
     "title": "Cukiniowo-serowe wrapy",
-    "category": "Tortille, wrapy",
+    "category": "Wrapy, tortille i fit fast food",
     "diets": [
       "Paczka Urodzinowa (Zrzuty)"
     ],
@@ -2062,7 +2062,7 @@
   {
     "id": 26,
     "title": "Cynamonowe gnocchi",
-    "category": "Makarony",
+    "category": "Makarony i zapiekanki",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -2126,7 +2126,7 @@
   {
     "id": 27,
     "title": "Czekoladowa owsianka",
-    "category": "Owsianki, puddingi",
+    "category": "Owsianki, puddingi i kasze",
     "diets": [
       "Dieta 2400 (6 posiłków)"
     ],
@@ -2196,7 +2196,7 @@
   {
     "id": 28,
     "title": "Czekoladowa owsianka z borówkami",
-    "category": "Owsianki, puddingi",
+    "category": "Owsianki, puddingi i kasze",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -2276,7 +2276,7 @@
   {
     "id": 29,
     "title": "Czekoladowa owsianka z owocami",
-    "category": "Owsianki, puddingi",
+    "category": "Owsianki, puddingi i kasze",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -2340,7 +2340,7 @@
   {
     "id": 30,
     "title": "Czekoladowe ciastka owsiane (liczba porcji: 2)",
-    "category": "Ciasta, ciasteczka, muffinki",
+    "category": "Fit desery i słodkie wypieki",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -2411,7 +2411,7 @@
   {
     "id": 31,
     "title": "Czekoladowy budyń jaglany z owocami",
-    "category": "Owsianki, puddingi",
+    "category": "Owsianki, puddingi i kasze",
     "diets": [
       "Dieta 2400 (6 posiłków)"
     ],
@@ -2486,7 +2486,7 @@
   {
     "id": 32,
     "title": "Daktyle z masłem orzechowym",
-    "category": "Zdrowe desery",
+    "category": "Fit desery i słodkie wypieki",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -2531,7 +2531,7 @@
   {
     "id": 33,
     "title": "Deser Zeberka w słoiczku",
-    "category": "Zdrowe desery",
+    "category": "Fit desery i słodkie wypieki",
     "diets": [
       "Paczka Urodzinowa (Zrzuty)"
     ],
@@ -2624,7 +2624,7 @@
   {
     "id": 34,
     "title": "Deser twarogowy High Protein Pilos waniliowy +",
-    "category": "Gotowce",
+    "category": "Szybkie gotowce (SOS)",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -2661,7 +2661,7 @@
   {
     "id": 35,
     "title": "Deser z raffaello oraz białą czekoladą",
-    "category": "Zdrowe desery",
+    "category": "Fit desery i słodkie wypieki",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -2735,7 +2735,7 @@
   {
     "id": 36,
     "title": "Domowe danie makaronowe na słodko",
-    "category": "Makarony",
+    "category": "Makarony i zapiekanki",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)",
       "Dieta Agi 1800 (4 posiłki)"
@@ -2799,7 +2799,7 @@
   {
     "id": 37,
     "title": "Domowe spaghetti",
-    "category": "Makarony",
+    "category": "Makarony i zapiekanki",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -2891,7 +2891,7 @@
   {
     "id": 38,
     "title": "Drożdżówka z czekoladą i wiśniami",
-    "category": "Ciasta, ciasteczka, muffinki",
+    "category": "Fit desery i słodkie wypieki",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -3012,7 +3012,7 @@
   {
     "id": 39,
     "title": "Dwukolorowe smoothie bowl",
-    "category": "Zdrowe desery",
+    "category": "Fit desery i słodkie wypieki",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -3076,7 +3076,7 @@
   {
     "id": 40,
     "title": "Dyniowa owsianka z aromatycznymi przyprawami",
-    "category": "Owsianki, puddingi",
+    "category": "Owsianki, puddingi i kasze",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -3157,7 +3157,7 @@
   {
     "id": 41,
     "title": "Eklerek bez pieczenia (liczba porcji: 4)",
-    "category": "Ciasta, ciasteczka, muffinki",
+    "category": "Fit desery i słodkie wypieki",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -3226,7 +3226,7 @@
   {
     "id": 42,
     "title": "Fit Monte",
-    "category": "Zdrowe desery",
+    "category": "Fit desery i słodkie wypieki",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -3288,7 +3288,7 @@
   {
     "id": 43,
     "title": "Francuskie paluchy z pesto (liczba porcji: 3)",
-    "category": "Kanapki, tosty",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -3334,7 +3334,7 @@
   {
     "id": 44,
     "title": "Gnocchi nadziewane pomidorami i mozzarellą",
-    "category": "Makarony",
+    "category": "Makarony i zapiekanki",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -3379,7 +3379,7 @@
   {
     "id": 45,
     "title": "Gofry francuskie z jabłkami",
-    "category": "Naleśniki, placki",
+    "category": "Naleśniki, gofry i placki",
     "diets": [
       "Paczka Urodzinowa (Zrzuty)"
     ],
@@ -3453,7 +3453,7 @@
   {
     "id": 46,
     "title": "Gofry z jagodami (liczba porcji: 4)",
-    "category": "Naleśniki, placki",
+    "category": "Naleśniki, gofry i placki",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -3553,7 +3553,7 @@
   {
     "id": 47,
     "title": "Gorzka czekolada, odżywka białkowa oraz wafle",
-    "category": "Zdrowe desery",
+    "category": "Fit desery i słodkie wypieki",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -3600,7 +3600,7 @@
   {
     "id": 48,
     "title": "Granola na słono z patelni z jajkiem i pomidorkami",
-    "category": "Zdrowe desery",
+    "category": "Jajka",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -3698,7 +3698,7 @@
   {
     "id": 49,
     "title": "Gryczana granola z jogurtem i owocami",
-    "category": "Jogurty, serki",
+    "category": "Nabiał i skyr-bowls",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -3767,7 +3767,7 @@
   {
     "id": 50,
     "title": "Grzanki z tuńczykiem i pomidorem",
-    "category": "Kanapki, tosty",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 (5 posiłków)",
       "Dieta 2400 (6 posiłków)"
@@ -3855,7 +3855,7 @@
   {
     "id": 51,
     "title": "Gulasz z soczewicy czerwonej",
-    "category": "Zdrowe fast foody",
+    "category": "Dania główne i obiady",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -3962,7 +3962,7 @@
   {
     "id": 52,
     "title": "Gyoza pierożki z kurczakiem Asia Flavours",
-    "category": "Gotowce",
+    "category": "Szybkie gotowce (SOS)",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -4011,7 +4011,7 @@
   {
     "id": 53,
     "title": "Hummus dyniowy",
-    "category": "Jogurty, serki",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -4104,7 +4104,7 @@
   {
     "id": 54,
     "title": "Hummus z pieczoną papryką (liczba porcji: 2)",
-    "category": "Jogurty, serki",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -4192,7 +4192,7 @@
   {
     "id": 55,
     "title": "Jabłko + migdały",
-    "category": "Zdrowe desery",
+    "category": "Fit desery i słodkie wypieki",
     "diets": [
       "Dieta 2400 (6 posiłków)",
       "Dieta Agi 1800 (4 posiłki)"
@@ -4229,7 +4229,7 @@
   {
     "id": 56,
     "title": "Jabłko + pistacje",
-    "category": "Zdrowe desery",
+    "category": "Fit desery i słodkie wypieki",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -4265,7 +4265,7 @@
   {
     "id": 57,
     "title": "Jaglanka z jabłkiem oraz cynamonem",
-    "category": "Owsianki, puddingi",
+    "category": "Owsianki, puddingi i kasze",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -4339,7 +4339,7 @@
   {
     "id": 58,
     "title": "Jajecznica na maśle z kurkami, dymką i pieprzem",
-    "category": "Jajecznice, szakszuki, omlety",
+    "category": "Jajka",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -4412,7 +4412,7 @@
   {
     "id": 59,
     "title": "Jajecznica z chlebem razowym",
-    "category": "Jajecznice, szakszuki, omlety",
+    "category": "Jajka",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -4490,7 +4490,7 @@
   {
     "id": 60,
     "title": "Jajecznica z pieczarkami, cebulą oraz chlebem",
-    "category": "Jajecznice, szakszuki, omlety",
+    "category": "Jajka",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)",
       "Dieta 2400 (6 posiłków)"
@@ -4573,7 +4573,7 @@
   {
     "id": 61,
     "title": "Jajecznica ze szpinakiem oraz suszonymi",
-    "category": "Jajecznice, szakszuki, omlety",
+    "category": "Jajka",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -4641,7 +4641,7 @@
   {
     "id": 62,
     "title": "Jajka sadzone na pęczaku i warzywach",
-    "category": "Jajecznice, szakszuki, omlety",
+    "category": "Dania główne i obiady",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -4741,7 +4741,7 @@
   {
     "id": 63,
     "title": "Jajka sadzone z młodymi ziemniakami i kapustą",
-    "category": "Jajecznice, szakszuki, omlety",
+    "category": "Dania główne i obiady",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -4819,7 +4819,7 @@
   {
     "id": 64,
     "title": "Jajka sadzone z młodymi ziemniakami i mizerią",
-    "category": "Jajecznice, szakszuki, omlety",
+    "category": "Dania główne i obiady",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -4901,7 +4901,7 @@
   {
     "id": 65,
     "title": "Japoński omlet",
-    "category": "Jajecznice, szakszuki, omlety",
+    "category": "Jajka",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -4989,7 +4989,7 @@
   {
     "id": 66,
     "title": "Jednoporcjowy serniczek pistacjowy",
-    "category": "Ciasta, ciasteczka, muffinki",
+    "category": "Fit desery i słodkie wypieki",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -5060,7 +5060,7 @@
   {
     "id": 67,
     "title": "Jogurt grecki z migdałami oraz bananem",
-    "category": "Jogurty, serki",
+    "category": "Nabiał i skyr-bowls",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -5109,7 +5109,7 @@
   {
     "id": 68,
     "title": "Jogurt proteinowy z owocami",
-    "category": "Jogurty, serki",
+    "category": "Nabiał i skyr-bowls",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -5164,7 +5164,7 @@
   {
     "id": 69,
     "title": "Jogurt skyr z domową granolą z orzechami",
-    "category": "Jogurty, serki",
+    "category": "Nabiał i skyr-bowls",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)",
       "Dieta Agi 1800 (4 posiłki)"
@@ -5233,7 +5233,7 @@
   {
     "id": 70,
     "title": "Jogurt skyr z domową granolą, gorzką czekoladą",
-    "category": "Jogurty, serki",
+    "category": "Nabiał i skyr-bowls",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -5294,7 +5294,7 @@
   {
     "id": 71,
     "title": "Jogurt skyr z domową granolą, orzechami oraz",
-    "category": "Jogurty, serki",
+    "category": "Nabiał i skyr-bowls",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -5361,7 +5361,7 @@
   {
     "id": 72,
     "title": "Jogurt z truskawkami oraz orzechami",
-    "category": "Jogurty, serki",
+    "category": "Nabiał i skyr-bowls",
     "diets": [
       "Dieta 2400 (6 posiłków)"
     ],
@@ -5403,7 +5403,7 @@
   {
     "id": 73,
     "title": "Kakaowa kasza gryczana z owocami",
-    "category": "Zdrowe desery",
+    "category": "Owsianki, puddingi i kasze",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)",
       "Dieta 2400 (6 posiłków)"
@@ -5478,7 +5478,7 @@
   {
     "id": 74,
     "title": "Kanapka z jajecznicą i awokado",
-    "category": "Jajecznice, szakszuki, omlety",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -5547,7 +5547,7 @@
   {
     "id": 75,
     "title": "Kanapka z jajkiem",
-    "category": "Kanapki, tosty",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 (5 posiłków)",
       "Dieta 2400 (6 posiłków)"
@@ -5617,7 +5617,7 @@
   {
     "id": 76,
     "title": "Kanapka z jajkiem sadzonym",
-    "category": "Kanapki, tosty",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -5688,7 +5688,7 @@
   {
     "id": 77,
     "title": "Kanapka z jajkiem, awokado i serem cheddar",
-    "category": "Kanapki, tosty",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -5758,7 +5758,7 @@
   {
     "id": 78,
     "title": "Kanapka z mozzarellą i warzywami",
-    "category": "Kanapki, tosty",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -5820,7 +5820,7 @@
   {
     "id": 79,
     "title": "Kanapka z pastą z awokado i pieczonym tofu",
-    "category": "Kanapki, tosty",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -5890,7 +5890,7 @@
   {
     "id": 80,
     "title": "Kanapka z pastą z jajka oraz awokado",
-    "category": "Kanapki, tosty",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -5958,7 +5958,7 @@
   {
     "id": 81,
     "title": "Kanapka z szynką z indyka",
-    "category": "Kanapki, tosty",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -6015,7 +6015,7 @@
   {
     "id": 82,
     "title": "Kanapki na słodko z masłem orzechowym, serem",
-    "category": "Kanapki, tosty",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 (5 posiłków)",
       "Dieta Agi 1800 (4 posiłki)"
@@ -6071,7 +6071,7 @@
   {
     "id": 83,
     "title": "Kanapki w greckim stylu",
-    "category": "Kanapki, tosty",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -6138,7 +6138,7 @@
   {
     "id": 84,
     "title": "Kanapki z burratą i pomidorkami",
-    "category": "Jogurty, serki",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -6214,7 +6214,7 @@
   {
     "id": 85,
     "title": "Kanapki z gruszką i serem camembert",
-    "category": "Kanapki, tosty",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -6287,7 +6287,7 @@
   {
     "id": 86,
     "title": "Kanapki z hummusem, wędliną i warzywami",
-    "category": "Jogurty, serki",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 (5 posiłków)",
       "Dieta 2400 (6 posiłków)"
@@ -6358,7 +6358,7 @@
   {
     "id": 87,
     "title": "Kanapki z pastą jajeczną i tuńczyka",
-    "category": "Kanapki, tosty",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -6441,7 +6441,7 @@
   {
     "id": 88,
     "title": "Kanapki z pastą z awokado i wędliną",
-    "category": "Kanapki, tosty",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -6526,7 +6526,7 @@
   {
     "id": 89,
     "title": "Kanapki z pastą z jajka i serka wiejskiego",
-    "category": "Kanapki, tosty",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -6601,7 +6601,7 @@
   {
     "id": 90,
     "title": "Kanapki z serem gouda i warzywami",
-    "category": "Kanapki, tosty",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -6675,7 +6675,7 @@
   {
     "id": 91,
     "title": "Kanapki z szynką, jajkiem i ogórkiem kiszonym",
-    "category": "Kanapki, tosty",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -6730,7 +6730,7 @@
   {
     "id": 92,
     "title": "Kanapki z twarożkiem",
-    "category": "Jogurty, serki",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -6817,7 +6817,7 @@
   {
     "id": 93,
     "title": "Kanapki z twarożkiem na słodko",
-    "category": "Jogurty, serki",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -6885,7 +6885,7 @@
   {
     "id": 94,
     "title": "Kasza manna z puddingiem proteinowym i",
-    "category": "Owsianki, puddingi",
+    "category": "Owsianki, puddingi i kasze",
     "diets": [
       "Dieta 2400 (6 posiłków)"
     ],
@@ -6947,7 +6947,7 @@
   {
     "id": 95,
     "title": "Klejący ryż z prażonymi owocami",
-    "category": "Owsianki, puddingi",
+    "category": "Owsianki, puddingi i kasze",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -7011,7 +7011,7 @@
   {
     "id": 96,
     "title": "Koktajl odżywczy (mango, marakuja) Piątnica",
-    "category": "Gotowce",
+    "category": "Szybkie gotowce (SOS)",
     "diets": [
       "Dieta 2400 (6 posiłków)"
     ],
@@ -7042,7 +7042,7 @@
   {
     "id": 97,
     "title": "Koktajl z banana, borówek oraz malin",
-    "category": "Zdrowe desery",
+    "category": "Fit desery i słodkie wypieki",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -7091,7 +7091,7 @@
   {
     "id": 98,
     "title": "Korzenna ryżanka ze śliwkami",
-    "category": "Owsianki, puddingi",
+    "category": "Owsianki, puddingi i kasze",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -7167,7 +7167,7 @@
   {
     "id": 99,
     "title": "Kotleciki z ciecierzycy z kapustą czerwoną",
-    "category": "Zdrowe fast foody",
+    "category": "Dania główne i obiady",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -7280,7 +7280,7 @@
   {
     "id": 100,
     "title": "Kremowe gnocchi w sosie grzybowym z",
-    "category": "Makarony",
+    "category": "Makarony i zapiekanki",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -7380,7 +7380,7 @@
   {
     "id": 101,
     "title": "Kurczak pieczony z ziemniakami",
-    "category": "Zdrowe fast foody",
+    "category": "Dania główne i obiady",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -7477,7 +7477,7 @@
   {
     "id": 102,
     "title": "Kurczak słodko kwaśny",
-    "category": "Zdrowe fast foody",
+    "category": "Dania główne i obiady",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -7610,7 +7610,7 @@
   {
     "id": 103,
     "title": "Kurczak z makaronem wysokobiałkowy w sosie",
-    "category": "Makarony",
+    "category": "Makarony i zapiekanki",
     "diets": [
       "Dieta 2400 (6 posiłków)"
     ],
@@ -7654,7 +7654,7 @@
   {
     "id": 104,
     "title": "Kąski z mrożonego jogurtu",
-    "category": "Jogurty, serki",
+    "category": "Nabiał i skyr-bowls",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -7704,7 +7704,7 @@
   {
     "id": 105,
     "title": "Lasagne (liczba porcji: 3)",
-    "category": "Makarony",
+    "category": "Makarony i zapiekanki",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -7845,7 +7845,7 @@
   {
     "id": 106,
     "title": "Lasagne z kurczakiem Donatello (Biedronka)",
-    "category": "Gotowce",
+    "category": "Szybkie gotowce (SOS)",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -7883,7 +7883,7 @@
   {
     "id": 107,
     "title": "Leniwe odsmażone na maśle z jagodami i",
-    "category": "Naleśniki, placki",
+    "category": "Naleśniki, gofry i placki",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -7953,7 +7953,7 @@
   {
     "id": 108,
     "title": "Leniwe ze śliwkami",
-    "category": "Naleśniki, placki",
+    "category": "Naleśniki, gofry i placki",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -8017,7 +8017,7 @@
   {
     "id": 109,
     "title": "Lody proteinowe o smaku czekoladowym Gelatelli",
-    "category": "Zdrowe desery",
+    "category": "Szybkie gotowce (SOS)",
     "diets": [
       "Dieta 2400 (6 posiłków)"
     ],
@@ -8059,7 +8059,7 @@
   {
     "id": 110,
     "title": "Makaron po włosku z dodatkiem szpinaku oraz",
-    "category": "Makarony",
+    "category": "Makarony i zapiekanki",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -8148,7 +8148,7 @@
   {
     "id": 111,
     "title": "Makaron z sosem grzybowym",
-    "category": "Makarony",
+    "category": "Makarony i zapiekanki",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -8252,7 +8252,7 @@
   {
     "id": 112,
     "title": "Makaron z sosem pomidorowym z ricottą",
-    "category": "Makarony",
+    "category": "Makarony i zapiekanki",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -8341,7 +8341,7 @@
   {
     "id": 113,
     "title": "Makaron z suszonymi pomidorami i ciecierzycą",
-    "category": "Makarony",
+    "category": "Makarony i zapiekanki",
     "diets": [
       "Dieta 2400 (6 posiłków)"
     ],
@@ -8459,7 +8459,7 @@
   {
     "id": 114,
     "title": "Makaron z zielonymi warzywami: groszkiem",
-    "category": "Makarony",
+    "category": "Makarony i zapiekanki",
     "diets": [
       "Dieta 2400 (6 posiłków)"
     ],
@@ -8564,7 +8564,7 @@
   {
     "id": 115,
     "title": "Matcha Souffle Pancakes (liczba porcji: 2)",
-    "category": "Naleśniki, placki",
+    "category": "Naleśniki, gofry i placki",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -8666,7 +8666,7 @@
   {
     "id": 116,
     "title": "Muffiny dyniowe (liczba porcji: 3)",
-    "category": "Ciasta, ciasteczka, muffinki",
+    "category": "Fit desery i słodkie wypieki",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -8762,7 +8762,7 @@
   {
     "id": 117,
     "title": "Naleśniki z cukinią, szpinakiem, marchwią i",
-    "category": "Naleśniki, placki",
+    "category": "Naleśniki, gofry i placki",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -8865,7 +8865,7 @@
   {
     "id": 118,
     "title": "Naleśniki z jabłkami Nasze Smaki (Biedronka)",
-    "category": "Naleśniki, placki",
+    "category": "Naleśniki, gofry i placki",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -8902,7 +8902,7 @@
   {
     "id": 119,
     "title": "Naleśniki z jabłkiem",
-    "category": "Naleśniki, placki",
+    "category": "Naleśniki, gofry i placki",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -8970,7 +8970,7 @@
   {
     "id": 120,
     "title": "Naleśniki z jogurtem z mango",
-    "category": "Naleśniki, placki",
+    "category": "Naleśniki, gofry i placki",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -9026,7 +9026,7 @@
   {
     "id": 121,
     "title": "Naleśniki z twarożkiem i karmelizowanym",
-    "category": "Jogurty, serki",
+    "category": "Naleśniki, gofry i placki",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -9088,7 +9088,7 @@
   {
     "id": 122,
     "title": "Nasiona chia bowl z kiwi oraz pomarańczą",
-    "category": "Owsianki, puddingi",
+    "category": "Naleśniki, gofry i placki",
     "diets": [
       "Dieta 2200 (5 posiłków)",
       "Dieta 2400 (6 posiłków)"
@@ -9158,7 +9158,7 @@
   {
     "id": 123,
     "title": "Nocna owsianka a la Monte z puddingiem",
-    "category": "Owsianki, puddingi",
+    "category": "Jajka",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -9227,7 +9227,7 @@
   {
     "id": 124,
     "title": "Nocna owsianka pistacjowa",
-    "category": "Owsianki, puddingi",
+    "category": "Jajka",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)",
       "Dieta 2400 (6 posiłków)"
@@ -9301,7 +9301,7 @@
   {
     "id": 125,
     "title": "Omlet mleczna kanapka",
-    "category": "Jajecznice, szakszuki, omlety",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)",
       "Dieta Agi 1800 (4 posiłki)"
@@ -9404,7 +9404,7 @@
   {
     "id": 126,
     "title": "Omlet szarlotka",
-    "category": "Ciasta, ciasteczka, muffinki",
+    "category": "Jajka",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -9494,7 +9494,7 @@
   {
     "id": 127,
     "title": "Omlet z kurkami",
-    "category": "Jajecznice, szakszuki, omlety",
+    "category": "Jajka",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -9582,7 +9582,7 @@
   {
     "id": 128,
     "title": "Omlet z pieczywem",
-    "category": "Jajecznice, szakszuki, omlety",
+    "category": "Jajka",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -9672,7 +9672,7 @@
   {
     "id": 129,
     "title": "Omleto-kanapka",
-    "category": "Jajecznice, szakszuki, omlety",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -9775,7 +9775,7 @@
   {
     "id": 130,
     "title": "Omletowa tortilla",
-    "category": "Jajecznice, szakszuki, omlety",
+    "category": "Wrapy, tortille i fit fast food",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -9865,7 +9865,7 @@
   {
     "id": 131,
     "title": "Orzechy pistacjowe",
-    "category": "Zdrowe desery",
+    "category": "Fit desery i słodkie wypieki",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -9893,7 +9893,7 @@
   {
     "id": 132,
     "title": "Owoce pod chrupiącą kruszonką",
-    "category": "Zdrowe desery",
+    "category": "Fit desery i słodkie wypieki",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -9949,7 +9949,7 @@
   {
     "id": 133,
     "title": "Owsianka a la Bounty",
-    "category": "Owsianki, puddingi",
+    "category": "Owsianki, puddingi i kasze",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -10030,7 +10030,7 @@
   {
     "id": 134,
     "title": "Owsianka a la Mars",
-    "category": "Owsianki, puddingi",
+    "category": "Owsianki, puddingi i kasze",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -10094,7 +10094,7 @@
   {
     "id": 135,
     "title": "Owsianka banoffee",
-    "category": "Owsianki, puddingi",
+    "category": "Owsianki, puddingi i kasze",
     "diets": [
       "Dieta 2200 (5 posiłków)",
       "Dieta 2400 (6 posiłków)"
@@ -10158,7 +10158,7 @@
   {
     "id": 136,
     "title": "Owsianka w stylu batona Lion",
-    "category": "Owsianki, puddingi",
+    "category": "Owsianki, puddingi i kasze",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -10227,7 +10227,7 @@
   {
     "id": 137,
     "title": "Owsianka w stylu kinder country",
-    "category": "Owsianki, puddingi",
+    "category": "Owsianki, puddingi i kasze",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -10295,7 +10295,7 @@
   {
     "id": 138,
     "title": "Owsianka z bananem oraz borówkami",
-    "category": "Owsianki, puddingi",
+    "category": "Owsianki, puddingi i kasze",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -10352,7 +10352,7 @@
   {
     "id": 139,
     "title": "Owsianka z białą czekoladą i truskawkami",
-    "category": "Owsianki, puddingi",
+    "category": "Owsianki, puddingi i kasze",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -10407,7 +10407,7 @@
   {
     "id": 140,
     "title": "Owsianka z lodami i owocami",
-    "category": "Owsianki, puddingi",
+    "category": "Owsianki, puddingi i kasze",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -10470,7 +10470,7 @@
   {
     "id": 141,
     "title": "Owsianka z masłem orzechowym",
-    "category": "Owsianki, puddingi",
+    "category": "Owsianki, puddingi i kasze",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -10526,7 +10526,7 @@
   {
     "id": 142,
     "title": "Owsianka z owocami i nasionami chia Vitanella",
-    "category": "Owsianki, puddingi",
+    "category": "Owsianki, puddingi i kasze",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -10569,7 +10569,7 @@
   {
     "id": 143,
     "title": "Owsianka z płatkami Cini Minis",
-    "category": "Owsianki, puddingi",
+    "category": "Owsianki, puddingi i kasze",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)",
       "Dieta Agi 1800 (4 posiłki)"
@@ -10639,7 +10639,7 @@
   {
     "id": 144,
     "title": "Owsianka z płatkami nesquik",
-    "category": "Owsianki, puddingi",
+    "category": "Owsianki, puddingi i kasze",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -10702,7 +10702,7 @@
   {
     "id": 145,
     "title": "Owsianka z serem twarogowym i owocami",
-    "category": "Jogurty, serki",
+    "category": "Owsianki, puddingi i kasze",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -10764,7 +10764,7 @@
   {
     "id": 146,
     "title": "Pasta jajeczna z ogórkiem, szczypiorkiem,",
-    "category": "Jajecznice, szakszuki, omlety",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -10850,7 +10850,7 @@
   {
     "id": 147,
     "title": "Pasta jajeczna ze szczypiorkiem, suszonym",
-    "category": "Jajecznice, szakszuki, omlety",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -10935,7 +10935,7 @@
   {
     "id": 148,
     "title": "Pasta z jajek z rzodkiewką, ogórkiem,",
-    "category": "Jajecznice, szakszuki, omlety",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 (5 posiłków)",
       "Dieta 2400 (6 posiłków)"
@@ -11010,7 +11010,7 @@
   {
     "id": 149,
     "title": "Pasta z sera twarogowego z czarnuszką z",
-    "category": "Jogurty, serki",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -11096,7 +11096,7 @@
   {
     "id": 150,
     "title": "Pasta z serka wiejskiego z suszonymi pomidorami,",
-    "category": "Zdrowe desery",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -11175,7 +11175,7 @@
   {
     "id": 151,
     "title": "Pełnoziarniste naleśniki z twarożkiem, prażoną",
-    "category": "Jogurty, serki",
+    "category": "Naleśniki, gofry i placki",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -11258,7 +11258,7 @@
   {
     "id": 152,
     "title": "Pianka z galaretki",
-    "category": "Zdrowe desery",
+    "category": "Fit desery i słodkie wypieki",
     "diets": [
       "Dieta 2400 (6 posiłków)"
     ],
@@ -11308,7 +11308,7 @@
   {
     "id": 153,
     "title": "Pieczona owsianka z bananem (liczba porcji: 3)",
-    "category": "Owsianki, puddingi",
+    "category": "Owsianki, puddingi i kasze",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -11410,7 +11410,7 @@
   {
     "id": 154,
     "title": "Pieczona owsianka z jabłkiem oraz cynamonem",
-    "category": "Owsianki, puddingi",
+    "category": "Owsianki, puddingi i kasze",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -11513,7 +11513,7 @@
   {
     "id": 155,
     "title": "Pieczone warzywa korzeniowe z dipem",
-    "category": "Zdrowe fast foody",
+    "category": "Dania główne i obiady",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -11614,7 +11614,7 @@
   {
     "id": 156,
     "title": "Pieczywo z pastą z tuńczyka, z ogórkiem oraz",
-    "category": "Kanapki, tosty",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -11700,7 +11700,7 @@
   {
     "id": 157,
     "title": "Pierogi ruskie Nasze Smaki (Biedronka)",
-    "category": "Gotowce",
+    "category": "Szybkie gotowce (SOS)",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -11749,7 +11749,7 @@
   {
     "id": 158,
     "title": "Pierogi serowo-jagodowe [Biedronka]",
-    "category": "Gotowce",
+    "category": "Szybkie gotowce (SOS)",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)",
       "Dieta 2400 (6 posiłków)"
@@ -11794,7 +11794,7 @@
   {
     "id": 159,
     "title": "Pinsa z bakłażanem i cukinią",
-    "category": "Zdrowe fast foody",
+    "category": "Wrapy, tortille i fit fast food",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -11883,7 +11883,7 @@
   {
     "id": 160,
     "title": "Pinsa z cukinią oraz burratą (liczba porcji: 2)",
-    "category": "Jogurty, serki",
+    "category": "Wrapy, tortille i fit fast food",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -11953,7 +11953,7 @@
   {
     "id": 161,
     "title": "Pinsa z sosem pomidorowym, mozzarellą i rukolą",
-    "category": "Zdrowe fast foody",
+    "category": "Wrapy, tortille i fit fast food",
     "diets": [
       "Dieta 2400 (6 posiłków)"
     ],
@@ -12036,7 +12036,7 @@
   {
     "id": 162,
     "title": "Pinsa z szynką i suszonymi pomidorami",
-    "category": "Zdrowe fast foody",
+    "category": "Wrapy, tortille i fit fast food",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -12115,7 +12115,7 @@
   {
     "id": 163,
     "title": "Placki z dyni (liczba porcji: 3)",
-    "category": "Naleśniki, placki",
+    "category": "Naleśniki, gofry i placki",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -12206,7 +12206,7 @@
   {
     "id": 164,
     "title": "Placuszki orzechowe (liczba porcji: 2)",
-    "category": "Naleśniki, placki",
+    "category": "Naleśniki, gofry i placki",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -12266,7 +12266,7 @@
   {
     "id": 165,
     "title": "Placuszki owsiane z gorzką czekoladą oraz",
-    "category": "Naleśniki, placki",
+    "category": "Naleśniki, gofry i placki",
     "diets": [
       "Dieta 2400 (6 posiłków)"
     ],
@@ -12338,7 +12338,7 @@
   {
     "id": 166,
     "title": "Pomidor nadziewany serem twarogowym ze",
-    "category": "Jogurty, serki",
+    "category": "Nabiał i skyr-bowls",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -12400,7 +12400,7 @@
   {
     "id": 167,
     "title": "Pomidorowo serowa zapiekanka makaronowa z",
-    "category": "Makarony",
+    "category": "Makarony i zapiekanki",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -12500,7 +12500,7 @@
   {
     "id": 168,
     "title": "Przekąska z masłem orzechowym",
-    "category": "Zdrowe desery",
+    "category": "Fit desery i słodkie wypieki",
     "diets": [
       "Dieta 2400 (6 posiłków)"
     ],
@@ -12549,7 +12549,7 @@
   {
     "id": 169,
     "title": "Pudding chia z musem mango",
-    "category": "Owsianki, puddingi",
+    "category": "Owsianki, puddingi i kasze",
     "diets": [
       "Dieta 2400 (6 posiłków)"
     ],
@@ -12602,7 +12602,7 @@
   {
     "id": 170,
     "title": "Pudding na mleku roślinnym z gorzką czekoladą",
-    "category": "Owsianki, puddingi",
+    "category": "Owsianki, puddingi i kasze",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)",
       "Dieta 2400 (6 posiłków)"
@@ -12677,7 +12677,7 @@
   {
     "id": 171,
     "title": "Pudding proteinowy caffe latte Go Active",
-    "category": "Owsianki, puddingi",
+    "category": "Owsianki, puddingi i kasze",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -12713,7 +12713,7 @@
   {
     "id": 172,
     "title": "Pudding proteinowy czekoladowy Go Active",
-    "category": "Owsianki, puddingi",
+    "category": "Owsianki, puddingi i kasze",
     "diets": [
       "Dieta 2400 (6 posiłków)"
     ],
@@ -12755,7 +12755,7 @@
   {
     "id": 173,
     "title": "Pudding proteinowy czekoladowy Go active +",
-    "category": "Owsianki, puddingi",
+    "category": "Owsianki, puddingi i kasze",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -12803,7 +12803,7 @@
   {
     "id": 174,
     "title": "Pudding proteinowy toffee i czekolada Valio +",
-    "category": "Owsianki, puddingi",
+    "category": "Owsianki, puddingi i kasze",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -12839,7 +12839,7 @@
   {
     "id": 175,
     "title": "Płatki owsiane z mlekiem i owocami",
-    "category": "Zdrowe desery",
+    "category": "Owsianki, puddingi i kasze",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -12912,7 +12912,7 @@
   {
     "id": 176,
     "title": "Quesadilla z kurczakiem (liczba porcji: 2)",
-    "category": "Tortille, wrapy",
+    "category": "Wrapy, tortille i fit fast food",
     "diets": [
       "Dieta 2400 (6 posiłków)"
     ],
@@ -13021,7 +13021,7 @@
   {
     "id": 177,
     "title": "Risotto z dynią i serem typu feta",
-    "category": "Zdrowe fast foody",
+    "category": "Dania główne i obiady",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -13126,7 +13126,7 @@
   {
     "id": 178,
     "title": "Ryżowe placuszki z owocami (liczba porcji: 2)",
-    "category": "Naleśniki, placki",
+    "category": "Naleśniki, gofry i placki",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -13205,7 +13205,7 @@
   {
     "id": 179,
     "title": "Sałatka grecka z serem typu feta oraz chlebem",
-    "category": "Kanapki, tosty",
+    "category": "Sałatki i wytrawne bowle",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -13310,7 +13310,7 @@
   {
     "id": 180,
     "title": "Sałatka z bobem, halloumi i miętą",
-    "category": "Jogurty, serki",
+    "category": "Sałatki i wytrawne bowle",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -13414,7 +13414,7 @@
   {
     "id": 181,
     "title": "Sałatka z burratą oraz truskawkami",
-    "category": "Jogurty, serki",
+    "category": "Sałatki i wytrawne bowle",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -13483,7 +13483,7 @@
   {
     "id": 182,
     "title": "Sałatka z grillowanymi szparagami",
-    "category": "Jogurty, serki",
+    "category": "Sałatki i wytrawne bowle",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -13573,7 +13573,7 @@
   {
     "id": 183,
     "title": "Sałatka z kurczakiem i warzywami z sosem",
-    "category": "Jogurty, serki",
+    "category": "Sałatki i wytrawne bowle",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -13671,7 +13671,7 @@
   {
     "id": 184,
     "title": "Serek proteinowy z owocami",
-    "category": "Jogurty, serki",
+    "category": "Nabiał i skyr-bowls",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -13726,7 +13726,7 @@
   {
     "id": 185,
     "title": "Serek waniliowy z gorzką czekoladą oraz bananem",
-    "category": "Jogurty, serki",
+    "category": "Nabiał i skyr-bowls",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -13787,7 +13787,7 @@
   {
     "id": 186,
     "title": "Serek wiejski + migdały + wafle ryżowe + dżem",
-    "category": "Jogurty, serki",
+    "category": "Nabiał i skyr-bowls",
     "diets": [
       "Dieta 2200 (5 posiłków)",
       "Dieta 2200 cz. 2 (5 posiłków)"
@@ -13836,7 +13836,7 @@
   {
     "id": 187,
     "title": "Serek wiejski na słodko z masłem orzechowym,",
-    "category": "Jogurty, serki",
+    "category": "Nabiał i skyr-bowls",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -13891,7 +13891,7 @@
   {
     "id": 188,
     "title": "Serek wiejski z malinami, borówkami oraz masłem",
-    "category": "Jogurty, serki",
+    "category": "Nabiał i skyr-bowls",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -13959,7 +13959,7 @@
   {
     "id": 189,
     "title": "Serek wiejski z miodem, orzechami oraz gruszką",
-    "category": "Jogurty, serki",
+    "category": "Nabiał i skyr-bowls",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -14014,7 +14014,7 @@
   {
     "id": 190,
     "title": "Serek wiejski z miodem, orzechami włoskimi oraz",
-    "category": "Jogurty, serki",
+    "category": "Nabiał i skyr-bowls",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -14076,7 +14076,7 @@
   {
     "id": 191,
     "title": "Serek wiejski z owocami i syropem klonowym",
-    "category": "Jogurty, serki",
+    "category": "Nabiał i skyr-bowls",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -14131,7 +14131,7 @@
   {
     "id": 192,
     "title": "Serek wiejski z owocami i wiórkami kokosowymi",
-    "category": "Jogurty, serki",
+    "category": "Nabiał i skyr-bowls",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -14179,7 +14179,7 @@
   {
     "id": 193,
     "title": "Serniczek waniliowy z borówkami",
-    "category": "Ciasta, ciasteczka, muffinki",
+    "category": "Fit desery i słodkie wypieki",
     "diets": [
       "Paczka Urodzinowa (Zrzuty)"
     ],
@@ -14260,7 +14260,7 @@
   {
     "id": 194,
     "title": "Serniczki z kaszy manny z owocami",
-    "category": "Ciasta, ciasteczka, muffinki",
+    "category": "Fit desery i słodkie wypieki",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -14340,7 +14340,7 @@
   {
     "id": 195,
     "title": "Sernik matcha",
-    "category": "Ciasta, ciasteczka, muffinki",
+    "category": "Fit desery i słodkie wypieki",
     "diets": [
       "Paczka Urodzinowa (Zrzuty)"
     ],
@@ -14472,7 +14472,7 @@
   {
     "id": 196,
     "title": "Skyr + orzechy + banan",
-    "category": "Jogurty, serki",
+    "category": "Nabiał i skyr-bowls",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)",
       "Dieta 2400 (6 posiłków)",
@@ -14516,7 +14516,7 @@
   {
     "id": 197,
     "title": "Skyr z czekoladą i owocami",
-    "category": "Jogurty, serki",
+    "category": "Nabiał i skyr-bowls",
     "diets": [
       "Dieta 2400 (6 posiłków)"
     ],
@@ -14574,7 +14574,7 @@
   {
     "id": 198,
     "title": "Smoothie truskawkowo bananowe",
-    "category": "Zdrowe desery",
+    "category": "Fit desery i słodkie wypieki",
     "diets": [
       "Dieta 2400 (6 posiłków)"
     ],
@@ -14623,7 +14623,7 @@
   {
     "id": 199,
     "title": "Spaghetti z pesto",
-    "category": "Makarony",
+    "category": "Makarony i zapiekanki",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -14706,7 +14706,7 @@
   {
     "id": 200,
     "title": "Szakszuka z pieczarkami, papryką czerwoną,",
-    "category": "Jajecznice, szakszuki, omlety",
+    "category": "Jajka",
     "diets": [
       "Dieta 2400 (6 posiłków)"
     ],
@@ -14806,7 +14806,7 @@
   {
     "id": 201,
     "title": "Szarlotka na serku waniliowym (liczba porcji: 2)",
-    "category": "Ciasta, ciasteczka, muffinki",
+    "category": "Fit desery i słodkie wypieki",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -14872,7 +14872,7 @@
   {
     "id": 202,
     "title": "Szybki wrap z łososiem oraz burratą",
-    "category": "Jogurty, serki",
+    "category": "Wrapy, tortille i fit fast food",
     "diets": [
       "Dieta 2400 (6 posiłków)"
     ],
@@ -14933,7 +14933,7 @@
   {
     "id": 203,
     "title": "Słodka kanapka z wafli ryżowych",
-    "category": "Kanapki, tosty",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2400 (6 posiłków)"
     ],
@@ -14990,7 +14990,7 @@
   {
     "id": 204,
     "title": "Tortilla z ciecierzycą, cukinią oraz awokado",
-    "category": "Tortille, wrapy",
+    "category": "Wrapy, tortille i fit fast food",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -15090,7 +15090,7 @@
   {
     "id": 205,
     "title": "Tortilla z jajecznicą",
-    "category": "Jajecznice, szakszuki, omlety",
+    "category": "Wrapy, tortille i fit fast food",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -15169,7 +15169,7 @@
   {
     "id": 206,
     "title": "Tortilla z kurczakiem (liczba porcji: 2)",
-    "category": "Tortille, wrapy",
+    "category": "Wrapy, tortille i fit fast food",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -15270,7 +15270,7 @@
   {
     "id": 207,
     "title": "Tortilla z szynką z kurczaka i warzywami",
-    "category": "Tortille, wrapy",
+    "category": "Wrapy, tortille i fit fast food",
     "diets": [
       "Dieta 2200 (5 posiłków)",
       "Dieta Agi 1800 (4 posiłki)"
@@ -15344,7 +15344,7 @@
   {
     "id": 208,
     "title": "Tortilla z szynką, serem i warzywami",
-    "category": "Tortille, wrapy",
+    "category": "Wrapy, tortille i fit fast food",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -15414,7 +15414,7 @@
   {
     "id": 209,
     "title": "Tost z awokado oraz mozzarellą",
-    "category": "Kanapki, tosty",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)",
       "Dieta Agi 1800 (4 posiłki)"
@@ -15491,7 +15491,7 @@
   {
     "id": 210,
     "title": "Tost z mozzarellą oraz szynką z kurczaka",
-    "category": "Kanapki, tosty",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -15547,7 +15547,7 @@
   {
     "id": 211,
     "title": "Tost z mozzarellą, szynką z indyka oraz suszonymi",
-    "category": "Kanapki, tosty",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -15609,7 +15609,7 @@
   {
     "id": 212,
     "title": "Tost z szynką, serem i warzywami",
-    "category": "Kanapki, tosty",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -15679,7 +15679,7 @@
   {
     "id": 213,
     "title": "Tosty francuskie z szynką i warzywami",
-    "category": "Kanapki, tosty",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)",
       "Dieta Agi 1800 (4 posiłki)"
@@ -15774,7 +15774,7 @@
   {
     "id": 214,
     "title": "Tosty z zielonym pesto, mozzarellą oraz",
-    "category": "Kanapki, tosty",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -15832,7 +15832,7 @@
   {
     "id": 215,
     "title": "Trufle z ciecierzycy (liczba porcji: 4)",
-    "category": "Zdrowe desery",
+    "category": "Fit desery i słodkie wypieki",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -15895,7 +15895,7 @@
   {
     "id": 216,
     "title": "Twarogowe placuszki proteinowe",
-    "category": "Jogurty, serki",
+    "category": "Naleśniki, gofry i placki",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -15982,7 +15982,7 @@
   {
     "id": 217,
     "title": "Twarożek z suszonymi pomidorami, ogórkiem,",
-    "category": "Jogurty, serki",
+    "category": "Kanapki i tosty",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)"
     ],
@@ -16067,7 +16067,7 @@
   {
     "id": 218,
     "title": "Waniliowa owsianka z wiśniami",
-    "category": "Owsianki, puddingi",
+    "category": "Owsianki, puddingi i kasze",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)",
       "Dieta Agi 1800 (4 posiłki)"
@@ -16138,7 +16138,7 @@
   {
     "id": 219,
     "title": "Warstwowy deser z gorzką czekoladą",
-    "category": "Zdrowe desery",
+    "category": "Fit desery i słodkie wypieki",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -16209,7 +16209,7 @@
   {
     "id": 220,
     "title": "Warzywne danie z makaronem, mozzarellą i",
-    "category": "Makarony",
+    "category": "Makarony i zapiekanki",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -16322,7 +16322,7 @@
   {
     "id": 221,
     "title": "Warzywny sos z mięsem mielonym i makaronem",
-    "category": "Makarony",
+    "category": "Makarony i zapiekanki",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -16447,7 +16447,7 @@
   {
     "id": 222,
     "title": "Wegańska zupa z soczewicy ze skwarkami z",
-    "category": "Zdrowe fast foody",
+    "category": "Dania główne i obiady",
     "diets": [
       "Dieta Agi 1800 (4 posiłki)"
     ],
@@ -16568,7 +16568,7 @@
   {
     "id": 223,
     "title": "Wegańskie naleśniki z jabłkami",
-    "category": "Naleśniki, placki",
+    "category": "Naleśniki, gofry i placki",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -16619,7 +16619,7 @@
   {
     "id": 224,
     "title": "Wiosenny serek wiejski z ogórkiem, papryką",
-    "category": "Jogurty, serki",
+    "category": "Nabiał i skyr-bowls",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
@@ -16685,7 +16685,7 @@
   {
     "id": 225,
     "title": "Wrap z pastą jajeczną, awokado oraz roszponką",
-    "category": "Tortille, wrapy",
+    "category": "Wrapy, tortille i fit fast food",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -16769,7 +16769,7 @@
   {
     "id": 226,
     "title": "Wrapy z tortilli z kurczakiem i sosem czosnkowym",
-    "category": "Tortille, wrapy",
+    "category": "Wrapy, tortille i fit fast food",
     "diets": [
       "Dieta 2200 cz. 2 (5 posiłków)",
       "Dieta 2400 (6 posiłków)"
@@ -16873,7 +16873,7 @@
   {
     "id": 227,
     "title": "Zapiekanka z pomidorem oraz mozzarellą",
-    "category": "Zdrowe fast foody",
+    "category": "Wrapy, tortille i fit fast food",
     "diets": [
       "Dieta 2200 cz. 3 (5 posiłków)"
     ],
@@ -16953,7 +16953,7 @@
   {
     "id": 228,
     "title": "Zawijasy z fetą i żurawiną",
-    "category": "Zdrowe desery",
+    "category": "Kanapki i tosty",
     "diets": [
       "Paczka Urodzinowa (Zrzuty)"
     ],
@@ -17051,7 +17051,7 @@
   {
     "id": 229,
     "title": "kurczak Fajita",
-    "category": "Tortille, wrapy",
+    "category": "Dania główne i obiady",
     "diets": [
       "Dieta 2200 (5 posiłków)"
     ],
