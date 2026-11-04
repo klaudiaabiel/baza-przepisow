@@ -207,7 +207,7 @@ class CatalogModule {
     const isAllActive = this.filters.categories.length === 0;
 
     let html = `
-      <button type="button" data-cat="all" class="hero-cat-pill px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${isAllActive ? 'bg-orange-600 text-white shadow-md shadow-orange-600/25 font-black' : 'bg-white/90 hover:bg-white text-stone-800 border border-orange-200/70 shadow-2xs'}">
+      <button type="button" data-cat="all" class="hero-cat-pill px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${isAllActive ? 'bg-orange-600 text-white shadow-md shadow-orange-600/25 font-black' : 'bg-white/90 hover:bg-white text-stone-800 border border-orange-200/70 shadow-2xs'}">
         <span>✨ Wszystkie</span>
         <span class="text-[10px] px-1.5 py-0.5 rounded-md ${isAllActive ? 'bg-orange-700 text-white' : 'bg-orange-50 text-stone-600'} font-black">${allRecipes.length}</span>
       </button>
@@ -219,7 +219,7 @@ class CatalogModule {
       const count = counts[cat] || 0;
 
       html += `
-        <button type="button" data-cat="${escapeHtml(cat)}" class="hero-cat-pill px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${active ? 'bg-orange-600 text-white shadow-md shadow-orange-600/25 font-black' : 'bg-white/90 hover:bg-white text-stone-800 border border-orange-200/70 shadow-2xs'}">
+        <button type="button" data-cat="${escapeHtml(cat)}" class="hero-cat-pill px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${active ? 'bg-orange-600 text-white shadow-md shadow-orange-600/25 font-black' : 'bg-white/90 hover:bg-white text-stone-800 border border-orange-200/70 shadow-2xs'}">
           <span>${icon} ${escapeHtml(cat)}</span>
           <span class="text-[10px] px-1.5 py-0.5 rounded-md ${active ? 'bg-orange-700 text-white' : 'bg-orange-50 text-stone-600'} font-bold">${count}</span>
         </button>
