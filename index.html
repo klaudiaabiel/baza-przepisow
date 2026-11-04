@@ -146,13 +146,13 @@
     <!-- TAB 1: CATALOG (KATALOG DAŃ) -->
     <section id="tab-catalog" class="space-y-6">
       
-      <!-- HERO WARM EDITORIAL BANNER (BiteCraft Terracotta #ea580c) -->
-      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#ea580c] via-[#d95308] to-[#c2410c] text-white p-6 sm:p-8 shadow-md shadow-orange-950/10 border border-orange-500/30">
+      <!-- HERO WARM EDITORIAL BANNER (BiteCraft Terracotta & Dark Typography) -->
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-orange-100/90 via-amber-50/50 to-orange-50/70 border border-orange-200/90 p-6 sm:p-8 shadow-xs">
         <div class="max-w-3xl">
-          <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
+          <h1 class="text-2xl sm:text-4xl font-extrabold text-stone-900 tracking-tight leading-tight">
             Co dzisiaj przygotujesz?
           </h1>
-          <p class="text-xs sm:text-sm text-orange-100 mt-1 font-medium">
+          <p class="text-xs sm:text-sm text-stone-600 mt-1 font-medium">
             Wyszukuj po nazwie, składnikach i czasie przygotowania. Planuj posiłki jednym kliknięciem.
           </p>
         </div>
@@ -167,7 +167,7 @@
               type="text" 
               id="search-input" 
               placeholder="Wpisz nazwę dania lub składnik (np. kurczak, feta, borówki)..." 
-              class="w-full pl-11 pr-10 py-3.5 bg-white rounded-2xl border-0 text-sm font-semibold text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-white/50 shadow-md transition"
+              class="w-full pl-11 pr-10 py-3.5 bg-white rounded-2xl border border-orange-200/80 text-sm font-semibold text-stone-900 placeholder-stone-400 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 shadow-xs transition"
             >
             <button id="search-clear-btn" class="hidden absolute inset-y-0 right-0 pr-3.5 flex items-center text-stone-400 hover:text-stone-600 cursor-pointer">
               <i class="fa-solid fa-circle-xmark text-sm"></i>
@@ -176,20 +176,20 @@
 
           <!-- TIME MULTI-SELECT CHIPS -->
           <div class="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0">
-            <button type="button" id="hero-time-15" class="px-3.5 py-3 rounded-2xl text-xs font-bold bg-white/20 hover:bg-white/30 text-white backdrop-blur-xs transition cursor-pointer whitespace-nowrap flex items-center gap-1.5">
+            <button type="button" id="hero-time-15" class="px-3.5 py-3 rounded-2xl text-xs font-bold bg-white hover:bg-orange-50 text-stone-800 border border-orange-200/70 transition cursor-pointer whitespace-nowrap flex items-center gap-1.5 shadow-2xs">
               <span>⏱️ do 15 min</span>
             </button>
-            <button type="button" id="hero-time-30" class="px-3.5 py-3 rounded-2xl text-xs font-bold bg-white/20 hover:bg-white/30 text-white backdrop-blur-xs transition cursor-pointer whitespace-nowrap flex items-center gap-1.5">
+            <button type="button" id="hero-time-30" class="px-3.5 py-3 rounded-2xl text-xs font-bold bg-white hover:bg-orange-50 text-stone-800 border border-orange-200/70 transition cursor-pointer whitespace-nowrap flex items-center gap-1.5 shadow-2xs">
               <span>⏱️ do 30 min</span>
             </button>
-            <button type="button" id="hero-time-60" class="px-3.5 py-3 rounded-2xl text-xs font-bold bg-white/20 hover:bg-white/30 text-white backdrop-blur-xs transition cursor-pointer whitespace-nowrap flex items-center gap-1.5">
+            <button type="button" id="hero-time-60" class="px-3.5 py-3 rounded-2xl text-xs font-bold bg-white hover:bg-orange-50 text-stone-800 border border-orange-200/70 transition cursor-pointer whitespace-nowrap flex items-center gap-1.5 shadow-2xs">
               <span>⏱️ do 60 min</span>
             </button>
           </div>
         </div>
 
         <!-- 11 CATEGORIES PILL BAR (DYNAMIC COUNTERS) -->
-        <div class="mt-4 pt-4 border-t border-white/20">
+        <div class="mt-4 pt-4 border-t border-orange-200/70">
           <div id="hero-category-pills" class="flex items-center gap-2 overflow-x-auto pb-2 custom-scrollbar">
             <!-- Rendered dynamically via catalog.js -->
           </div>

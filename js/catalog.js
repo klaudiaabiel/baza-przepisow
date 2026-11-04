@@ -207,9 +207,9 @@ class CatalogModule {
     const isAllActive = this.filters.categories.length === 0;
 
     let html = `
-      <button type="button" data-cat="all" class="hero-cat-pill px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${isAllActive ? 'bg-white text-stone-900 shadow-md font-extrabold' : 'bg-white/20 hover:bg-white/30 text-white backdrop-blur-xs'}">
+      <button type="button" data-cat="all" class="hero-cat-pill px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${isAllActive ? 'bg-orange-600 text-white shadow-md shadow-orange-600/25 font-black' : 'bg-white/90 hover:bg-white text-stone-800 border border-orange-200/70 shadow-2xs'}">
         <span>✨ Wszystkie</span>
-        <span class="text-[10px] px-1.5 py-0.5 rounded-md ${isAllActive ? 'bg-orange-100 text-orange-900' : 'bg-black/25 text-white/90'} font-black">${allRecipes.length}</span>
+        <span class="text-[10px] px-1.5 py-0.5 rounded-md ${isAllActive ? 'bg-orange-700 text-white' : 'bg-orange-50 text-stone-600'} font-black">${allRecipes.length}</span>
       </button>
     `;
 
@@ -219,9 +219,9 @@ class CatalogModule {
       const count = counts[cat] || 0;
 
       html += `
-        <button type="button" data-cat="${escapeHtml(cat)}" class="hero-cat-pill px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${active ? 'bg-white text-stone-900 shadow-md font-extrabold' : 'bg-white/20 hover:bg-white/30 text-white backdrop-blur-xs'}">
+        <button type="button" data-cat="${escapeHtml(cat)}" class="hero-cat-pill px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${active ? 'bg-orange-600 text-white shadow-md shadow-orange-600/25 font-black' : 'bg-white/90 hover:bg-white text-stone-800 border border-orange-200/70 shadow-2xs'}">
           <span>${icon} ${escapeHtml(cat)}</span>
-          <span class="text-[10px] px-1.5 py-0.5 rounded-md ${active ? 'bg-orange-100 text-orange-900' : 'bg-black/25 text-white/90'} font-bold">${count}</span>
+          <span class="text-[10px] px-1.5 py-0.5 rounded-md ${active ? 'bg-orange-700 text-white' : 'bg-orange-50 text-stone-600'} font-bold">${count}</span>
         </button>
       `;
     });
@@ -255,7 +255,7 @@ class CatalogModule {
       if (!btn) return;
 
       const active = this.filters.prepTimes.includes(t);
-      btn.className = `px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${active ? 'bg-white text-orange-600 shadow-md font-black' : 'bg-white/20 hover:bg-white/30 text-white backdrop-blur-xs'}`;
+      btn.className = `px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${active ? 'bg-orange-600 text-white shadow-md shadow-orange-600/25 font-black' : 'bg-white/90 hover:bg-white text-stone-800 border border-orange-200/70 shadow-2xs'}`;
       
       btn.onclick = () => {
         const idx = this.filters.prepTimes.indexOf(t);
