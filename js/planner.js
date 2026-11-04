@@ -193,15 +193,19 @@ class PlannerModule {
           const title = r ? r.title : 'Nieznana potrawa';
           const img = r ? r.image : 'images/placeholder.svg';
           const kcal = r ? Math.round(r.calories * (meal.portions || 1)) : 0;
+          const subCount = Object.keys(meal.substitutions || {}).length;
 
           html += `
-            <div class="meal-slot-filled group bg-stone-50/80 hover:bg-brand-50/40 p-2 rounded-2xl border border-stone-200/70 hover:border-brand-500/60 transition flex items-center justify-between gap-2.5 cursor-pointer" data-recipe-id="${meal.recipe_id}">
+            <div class="meal-slot-filled group bg-stone-50/80 hover:bg-brand-50/40 p-2 rounded-2xl border border-stone-200/70 hover:border-brand-500/60 transition flex items-center justify-between gap-2.5 cursor-pointer" data-recipe-id="${meal.recipe_id}" data-meal-id="${meal.id}" data-date="${w.isoKey}" data-slot="${slotIdx}" data-day-name="${w.dayName}" data-slot-name="${escapeHtml(slotName)}">
               <div class="flex items-center gap-2.5 min-w-0 flex-1">
                 <div class="w-10 h-10 rounded-xl overflow-hidden bg-stone-200 shrink-0">
                   <img src="${img}" alt="${escapeHtml(title)}" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='images/placeholder.svg';">
                 </div>
                 <div class="min-w-0 flex-1">
-                  <span class="text-[10px] font-black uppercase text-brand-600 block leading-tight">${slotName}</span>
+                  <div class="flex items-center gap-1.5 flex-wrap">
+                    <span class="text-[10px] font-black uppercase text-brand-600 block leading-tight">${slotName}</span>
+                    ${subCount > 0 ? `<span class="inline-flex items-center gap-1 text-[9px] font-extrabold text-amber-700 bg-amber-50 border border-amber-200/80 px-1.5 py-0.2 rounded-md"><i class="fa-solid fa-arrows-rotate text-[8px]"></i> ${subCount} zmiana</span>` : ''}
+                  </div>
                   <h4 class="text-xs font-bold text-stone-800 truncate" title="${escapeHtml(title)}">${escapeHtml(title)}</h4>
                   <span class="text-[10px] font-semibold text-stone-400">${kcal} kcal</span>
                 </div>
@@ -245,7 +249,22 @@ class PlannerModule {
       el.addEventListener('click', (e) => {
         if (e.target.closest('.remove-meal-btn')) return;
         const recipeId = el.getAttribute('data-recipe-id');
-        window.dispatchEvent(new CustomEvent('open_recipe_modal', { detail: { id: Number(recipeId) } }));
+        const mealId = el.getAttribute('data-meal-id');
+        const dateKey = el.getAttribute('data-date');
+        const slotIdx = el.getAttribute('data-slot');
+        const dayName = el.getAttribute('data-day-name');
+        const slotName = el.getAttribute('data-slot-name');
+
+        window.dispatchEvent(new CustomEvent('open_recipe_modal', {
+          detail: {
+            id: Number(recipeId),
+            mealPlanId: mealId ? (Number(mealId) || mealId) : null,
+            dateKey,
+            slotIndex: slotIdx !== null ? Number(slotIdx) : null,
+            dayName,
+            slotName
+          }
+        }));
       });
     });
 

@@ -213,11 +213,29 @@ class ShoppingModule {
       const ratio = portions / basePortions;
 
       recipe.ingredients.forEach(ing => {
-        const rawName = (ing.name || '').trim();
+        let rawName = (ing.name || '').trim();
         if (!rawName) return;
 
+        let weightG = ing.weight_g || 0;
+        let amountStr = ing.amount || '';
+        let dept = ing.department || this.detectDepartment(rawName);
+        let noteRecipe = recipe.title;
+
+        // Check if ingredient was substituted in this meal plan entry!
+        const subs = planItem.substitutions || {};
+        const normIng = rawName.toLowerCase();
+        const subEntry = Object.entries(subs).find(([k, v]) => normIng === k || normIng.includes(k) || k.includes(normIng));
+
+        if (subEntry) {
+          const sub = subEntry[1];
+          rawName = (sub.replacementName || sub.name || rawName).trim();
+          weightG = sub.baseWeightG || sub.weight_g || weightG;
+          amountStr = sub.baseAmount || sub.amount || amountStr;
+          dept = sub.department || this.detectDepartment(rawName);
+          noteRecipe = `${recipe.title} (zamiana: ${escapeHtml(sub.originalName || '')} → ${escapeHtml(rawName)})`;
+        }
+
         const key = rawName.toLowerCase();
-        const dept = ing.department || this.detectDepartment(rawName);
 
         if (!aggregated[key]) {
           aggregated[key] = {
@@ -227,17 +245,17 @@ class ShoppingModule {
             totalCount: 0,
             countUnit: '',
             rawAmounts: [],
-            recipes: new Set([recipe.title])
+            recipes: new Set([noteRecipe])
           };
         } else {
-          aggregated[key].recipes.add(recipe.title);
+          aggregated[key].recipes.add(noteRecipe);
         }
 
-        if (ing.weight_g && ing.weight_g > 0) {
-          aggregated[key].totalGrams += (ing.weight_g * ratio);
+        if (weightG > 0) {
+          aggregated[key].totalGrams += (weightG * ratio);
           // Also capture non-gram unit count if present (e.g. 7 łyżeczek from "7 łyżeczek (35g)")
-          if (ing.amount) {
-            const matchUnit = ing.amount.match(/^(\d+(?:[.,]\d+)?)\s*([a-ząćęłńóśźż.]+)/i);
+          if (amountStr) {
+            const matchUnit = amountStr.match(/^(\d+(?:[.,]\d+)?)\s*([a-ząćęłńóśźż.]+)/i);
             if (matchUnit) {
               const u = matchUnit[2].toLowerCase().replace(/\.$/, '');
               if (!['g', 'gram', 'gramy', 'gramów', 'kg'].includes(u)) {
@@ -248,13 +266,13 @@ class ShoppingModule {
               }
             }
           }
-        } else if (ing.amount) {
-          const matchNum = ing.amount.match(/(\d+(?:[.,]\d+)?)\s*([a-ząćęłńóśźż.]*)/i);
+        } else if (amountStr) {
+          const matchNum = amountStr.match(/(\d+(?:[.,]\d+)?)\s*([a-ząćęłńóśźż.]*)/i);
           if (matchNum) {
             aggregated[key].totalCount += (parseFloat(matchNum[1].replace(',', '.')) * ratio);
             if (!aggregated[key].countUnit) aggregated[key].countUnit = matchNum[2] || 'szt.';
           } else {
-            aggregated[key].rawAmounts.push(ing.amount);
+            aggregated[key].rawAmounts.push(amountStr);
           }
         }
       });

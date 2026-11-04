@@ -264,13 +264,18 @@ class AppStore extends EventTarget {
     return this.mealPlan;
   }
 
-  async addMealPlanEntry(dateKey, slotIndex, recipeId, portions = 1) {
+  getMealPlanEntry(id) {
+    return this.mealPlan.find(m => m.id === id || String(m.id) === String(id)) || null;
+  }
+
+  async addMealPlanEntry(dateKey, slotIndex, recipeId, portions = 1, substitutions = {}) {
     const entry = {
       id: Date.now() + Math.random(),
       date_key: dateKey,
       slot_index: Number(slotIndex),
       recipe_id: Number(recipeId),
-      portions: Number(portions) || 1
+      portions: Number(portions) || 1,
+      substitutions: substitutions ? JSON.parse(JSON.stringify(substitutions)) : {}
     };
     await this.idbPut('meal_plan', entry);
     this.mealPlan.push(entry);
@@ -280,8 +285,33 @@ class AppStore extends EventTarget {
 
   async removeMealPlanEntry(id) {
     await this.idbDelete('meal_plan', id);
-    this.mealPlan = this.mealPlan.filter(m => m.id !== id);
+    this.mealPlan = this.mealPlan.filter(m => m.id !== id && String(m.id) !== String(id));
     this.emit('mealplan_changed', { action: 'remove', id });
+  }
+
+  async updateMealPlanSubstitution(mealPlanId, originalName, replacementData) {
+    const entry = this.getMealPlanEntry(mealPlanId);
+    if (!entry) return false;
+
+    if (!entry.substitutions) entry.substitutions = {};
+    const key = (originalName || '').toLowerCase().trim();
+    entry.substitutions[key] = replacementData;
+
+    await this.idbPut('meal_plan', entry);
+    this.emit('mealplan_changed', { action: 'substitute', entry, originalName, replacementData });
+    return true;
+  }
+
+  async removeMealPlanSubstitution(mealPlanId, originalName) {
+    const entry = this.getMealPlanEntry(mealPlanId);
+    if (!entry || !entry.substitutions) return false;
+
+    const key = (originalName || '').toLowerCase().trim();
+    delete entry.substitutions[key];
+
+    await this.idbPut('meal_plan', entry);
+    this.emit('mealplan_changed', { action: 'substitute_restore', entry, originalName });
+    return true;
   }
 
   async cloneDayMealPlan(fromDateKey, toDateKey) {
@@ -303,7 +333,8 @@ class AppStore extends EventTarget {
         date_key: toDateKey,
         slot_index: m.slot_index,
         recipe_id: m.recipe_id,
-        portions: m.portions
+        portions: m.portions,
+        substitutions: m.substitutions ? JSON.parse(JSON.stringify(m.substitutions)) : {}
       };
       await this.idbPut('meal_plan', entry);
       this.mealPlan.push(entry);
