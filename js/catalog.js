@@ -37,7 +37,6 @@ class CatalogModule {
       categories: [],
       prepTimes: [], // e.g. [15, 30]
       ingredients: [],
-      diet: 'Wszystkie',
       onlyFavorites: false,
       sortBy: 'title'
     };
@@ -50,13 +49,11 @@ class CatalogModule {
     this.bindEvents();
     this.renderCategoryPills();
     this.renderTimeChips();
-    this.renderDietOptions();
     this.applyFilters();
 
     // Subscribe to store events
     store.addEventListener('ready', () => {
       this.renderCategoryPills();
-      this.renderDietOptions();
       this.applyFilters();
     });
 
@@ -129,15 +126,6 @@ class CatalogModule {
       });
     }
 
-    // Diet select
-    const dietSelect = document.getElementById('diet-select');
-    if (dietSelect) {
-      dietSelect.addEventListener('change', (e) => {
-        this.filters.diet = e.target.value;
-        this.applyFilters();
-      });
-    }
-
     // Favorite toggle button
     const favToggleBtn = document.getElementById('fav-toggle-btn');
     if (favToggleBtn) {
@@ -162,7 +150,6 @@ class CatalogModule {
     this.filters.categories = [];
     this.filters.prepTimes = [];
     this.filters.ingredients = [];
-    this.filters.diet = 'Wszystkie';
     this.filters.onlyFavorites = false;
     this.filters.sortBy = 'title';
 
@@ -170,9 +157,6 @@ class CatalogModule {
     if (searchInput) searchInput.value = '';
     const searchClear = document.getElementById('search-clear-btn');
     if (searchClear) searchClear.classList.add('hidden');
-
-    const dietSelect = document.getElementById('diet-select');
-    if (dietSelect) dietSelect.value = 'Wszystkie';
 
     const favToggleBtn = document.getElementById('fav-toggle-btn');
     if (favToggleBtn) {
@@ -270,23 +254,6 @@ class CatalogModule {
     });
   }
 
-  renderDietOptions() {
-    const select = document.getElementById('diet-select');
-    if (!select) return;
-
-    const allDiets = new Set();
-    store.getRecipes().forEach(r => {
-      (r.diets || []).forEach(d => allDiets.add(d));
-    });
-
-    const currentVal = this.filters.diet;
-    let html = `<option value="Wszystkie">Wszystkie diety</option>`;
-    Array.from(allDiets).sort().forEach(d => {
-      html += `<option value="${escapeHtml(d)}" ${d === currentVal ? 'selected' : ''}>${escapeHtml(d)}</option>`;
-    });
-    select.innerHTML = html;
-  }
-
   applyFilters() {
     let list = store.getRecipes();
 
@@ -308,12 +275,7 @@ class CatalogModule {
       });
     }
 
-    // 4. Diet Filter
-    if (this.filters.diet && this.filters.diet !== 'Wszystkie') {
-      list = list.filter(r => (r.diets || []).includes(this.filters.diet));
-    }
-
-    // 5. Favorites Filter
+    // 4. Favorites Filter
     if (this.filters.onlyFavorites) {
       list = list.filter(r => store.isFavorite(r.id));
     }

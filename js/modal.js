@@ -124,7 +124,6 @@ class ModalModule {
     const imgEl = document.getElementById('modal-img');
     const catEl = document.getElementById('modal-category');
     const timeEl = document.getElementById('modal-time');
-    const dietsEl = document.getElementById('modal-diets');
 
     if (titleEl) titleEl.innerText = r.title;
     if (imgEl) {
@@ -133,7 +132,6 @@ class ModalModule {
     }
     if (catEl) catEl.innerText = r.category;
     if (timeEl) timeEl.innerText = `${r.prep_time_minutes || 15} min`;
-    if (dietsEl) dietsEl.innerText = (r.diets || []).join(' • ');
 
     this.updateFavBtnUI();
     this.renderMacrosAndIngredients();

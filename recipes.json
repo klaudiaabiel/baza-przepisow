@@ -3,9 +3,6 @@
     "id": 1,
     "title": "Azjatycka sałatka Crispy Rice",
     "category": "Sałatki i wytrawne bowle",
-    "diets": [
-      "Paczka Urodzinowa (Zrzuty)"
-    ],
     "calories": 407,
     "protein": 13.0,
     "fat": 22.0,
@@ -134,9 +131,6 @@
     "id": 2,
     "title": "Bagietka z szynką i awokado",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 404,
     "protein": 19.0,
     "fat": 13.0,
@@ -199,10 +193,6 @@
     "id": 3,
     "title": "Bajgiel z domowym twarożkiem",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 (5 posiłków)",
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 410,
     "protein": 33.0,
     "fat": 10.0,
@@ -271,9 +261,6 @@
     "id": 4,
     "title": "Bajgiel z kremowym sosem",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 420,
     "protein": 18.0,
     "fat": 17.0,
@@ -357,9 +344,6 @@
     "id": 5,
     "title": "Banan + migdały",
     "category": "Fit desery i słodkie wypieki",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 207,
     "protein": 4.0,
     "fat": 8.0,
@@ -393,9 +377,6 @@
     "id": 6,
     "title": "Banan + nerkowce",
     "category": "Fit desery i słodkie wypieki",
-    "diets": [
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 199,
     "protein": 4.0,
     "fat": 7.0,
@@ -429,9 +410,6 @@
     "id": 7,
     "title": "Bananowe placuszki z mąki owsianej",
     "category": "Naleśniki, gofry i placki",
-    "diets": [
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 409,
     "protein": 21.0,
     "fat": 15.0,
@@ -521,9 +499,6 @@
     "id": 8,
     "title": "Baton wysokobiałkowy smak karmelowy Go",
     "category": "Szybkie gotowce (SOS)",
-    "diets": [
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 213,
     "protein": 11.0,
     "fat": 8.0,
@@ -563,9 +538,6 @@
     "id": 9,
     "title": "Batoniki z miodem oraz masłem orzechowym",
     "category": "Szybkie gotowce (SOS)",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 398,
     "protein": 23.0,
     "fat": 17.0,
@@ -619,9 +591,6 @@
     "id": 10,
     "title": "Blondie cytrynowe",
     "category": "Fit desery i słodkie wypieki",
-    "diets": [
-      "Paczka Urodzinowa (Zrzuty)"
-    ],
     "calories": 392,
     "protein": 6.0,
     "fat": 23.0,
@@ -757,10 +726,6 @@
     "id": 11,
     "title": "Bowl śniadaniowy z jabłkiem oraz bananem",
     "category": "Owsianki, puddingi i kasze",
-    "diets": [
-      "Dieta 2200 (5 posiłków)",
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 412,
     "protein": 25.0,
     "fat": 11.0,
@@ -819,9 +784,6 @@
     "id": 12,
     "title": "Bruschetta z pomidorem, bazylią świeżą oraz",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 405,
     "protein": 12.0,
     "fat": 15.0,
@@ -905,9 +867,6 @@
     "id": 13,
     "title": "Brzoskwinia + orzechy",
     "category": "Fit desery i słodkie wypieki",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 211,
     "protein": 6.0,
     "fat": 11.0,
@@ -941,9 +900,6 @@
     "id": 14,
     "title": "Burger curry z mięsa",
     "category": "Wrapy, tortille i fit fast food",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 598,
     "protein": 31.0,
     "fat": 17.0,
@@ -1043,9 +999,6 @@
     "id": 15,
     "title": "Burgery z grilla",
     "category": "Wrapy, tortille i fit fast food",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 571,
     "protein": 36.0,
     "fat": 23.0,
@@ -1169,10 +1122,6 @@
     "id": 16,
     "title": "Burrito bowl z mięsem mielonym",
     "category": "Dania główne i obiady",
-    "diets": [
-      "Dieta 2400 (6 posiłków)",
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 697,
     "protein": 51.0,
     "fat": 25.0,
@@ -1273,9 +1222,6 @@
     "id": 17,
     "title": "Bułka owsiana z kurczakiem, sałatą, pomidorem",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 522,
     "protein": 32.0,
     "fat": 16.0,
@@ -1366,9 +1312,6 @@
     "id": 18,
     "title": "Caprese",
     "category": "Sałatki i wytrawne bowle",
-    "diets": [
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 201,
     "protein": 14.0,
     "fat": 11.0,
@@ -1408,9 +1351,6 @@
     "id": 19,
     "title": "Chilli z mięsem",
     "category": "Dania główne i obiady",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 591,
     "protein": 32.0,
     "fat": 21.0,
@@ -1529,9 +1469,6 @@
     "id": 20,
     "title": "Chrupiące tosty z serkiem, szpinakiem i",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 406,
     "protein": 14.0,
     "fat": 23.0,
@@ -1603,9 +1540,6 @@
     "id": 21,
     "title": "Chrupiący wrap a la szarlotka",
     "category": "Fit desery i słodkie wypieki",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 411,
     "protein": 18.0,
     "fat": 13.0,
@@ -1679,9 +1613,6 @@
     "id": 22,
     "title": "Ciasteczka czarny las",
     "category": "Fit desery i słodkie wypieki",
-    "diets": [
-      "Paczka Urodzinowa (Zrzuty)"
-    ],
     "calories": 399,
     "protein": 8.0,
     "fat": 17.0,
@@ -1790,9 +1721,6 @@
     "id": 23,
     "title": "Ciasteczka z malinami (liczba porcji: 2)",
     "category": "Fit desery i słodkie wypieki",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 404,
     "protein": 20.0,
     "fat": 13.0,
@@ -1875,9 +1803,6 @@
     "id": 24,
     "title": "Ciasto dyniowe z mikrofalówki",
     "category": "Fit desery i słodkie wypieki",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 387,
     "protein": 13.0,
     "fat": 25.0,
@@ -1969,9 +1894,6 @@
     "id": 25,
     "title": "Cukiniowo-serowe wrapy",
     "category": "Wrapy, tortille i fit fast food",
-    "diets": [
-      "Paczka Urodzinowa (Zrzuty)"
-    ],
     "calories": 388,
     "protein": 28.0,
     "fat": 27.0,
@@ -2063,9 +1985,6 @@
     "id": 26,
     "title": "Cynamonowe gnocchi",
     "category": "Makarony i zapiekanki",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 583,
     "protein": 28.0,
     "fat": 16.0,
@@ -2127,9 +2046,6 @@
     "id": 27,
     "title": "Czekoladowa owsianka",
     "category": "Owsianki, puddingi i kasze",
-    "diets": [
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 407,
     "protein": 26.0,
     "fat": 14.0,
@@ -2197,9 +2113,6 @@
     "id": 28,
     "title": "Czekoladowa owsianka z borówkami",
     "category": "Owsianki, puddingi i kasze",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 411,
     "protein": 22.0,
     "fat": 18.0,
@@ -2277,9 +2190,6 @@
     "id": 29,
     "title": "Czekoladowa owsianka z owocami",
     "category": "Owsianki, puddingi i kasze",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 411,
     "protein": 20.0,
     "fat": 15.0,
@@ -2341,9 +2251,6 @@
     "id": 30,
     "title": "Czekoladowe ciastka owsiane (liczba porcji: 2)",
     "category": "Fit desery i słodkie wypieki",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 427,
     "protein": 18.0,
     "fat": 22.0,
@@ -2412,9 +2319,6 @@
     "id": 31,
     "title": "Czekoladowy budyń jaglany z owocami",
     "category": "Owsianki, puddingi i kasze",
-    "diets": [
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 418,
     "protein": 29.0,
     "fat": 9.0,
@@ -2487,9 +2391,6 @@
     "id": 32,
     "title": "Daktyle z masłem orzechowym",
     "category": "Fit desery i słodkie wypieki",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 190,
     "protein": 4.0,
     "fat": 12.0,
@@ -2532,9 +2433,6 @@
     "id": 33,
     "title": "Deser Zeberka w słoiczku",
     "category": "Fit desery i słodkie wypieki",
-    "diets": [
-      "Paczka Urodzinowa (Zrzuty)"
-    ],
     "calories": 409,
     "protein": 12.0,
     "fat": 13.0,
@@ -2625,9 +2523,6 @@
     "id": 34,
     "title": "Deser twarogowy High Protein Pilos waniliowy +",
     "category": "Szybkie gotowce (SOS)",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 196,
     "protein": 11.0,
     "fat": 5.0,
@@ -2662,9 +2557,6 @@
     "id": 35,
     "title": "Deser z raffaello oraz białą czekoladą",
     "category": "Fit desery i słodkie wypieki",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 419,
     "protein": 19.0,
     "fat": 17.0,
@@ -2736,10 +2628,6 @@
     "id": 36,
     "title": "Domowe danie makaronowe na słodko",
     "category": "Makarony i zapiekanki",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)",
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 398,
     "protein": 30.0,
     "fat": 12.0,
@@ -2800,9 +2688,6 @@
     "id": 37,
     "title": "Domowe spaghetti",
     "category": "Makarony i zapiekanki",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 598,
     "protein": 38.0,
     "fat": 19.0,
@@ -2892,9 +2777,6 @@
     "id": 38,
     "title": "Drożdżówka z czekoladą i wiśniami",
     "category": "Fit desery i słodkie wypieki",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 395,
     "protein": 9.0,
     "fat": 15.0,
@@ -3013,9 +2895,6 @@
     "id": 39,
     "title": "Dwukolorowe smoothie bowl",
     "category": "Fit desery i słodkie wypieki",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 502,
     "protein": 24.0,
     "fat": 13.0,
@@ -3077,9 +2956,6 @@
     "id": 40,
     "title": "Dyniowa owsianka z aromatycznymi przyprawami",
     "category": "Owsianki, puddingi i kasze",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 380,
     "protein": 20.0,
     "fat": 14.0,
@@ -3158,9 +3034,6 @@
     "id": 41,
     "title": "Eklerek bez pieczenia (liczba porcji: 4)",
     "category": "Fit desery i słodkie wypieki",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 515,
     "protein": 15.0,
     "fat": 29.0,
@@ -3227,9 +3100,6 @@
     "id": 42,
     "title": "Fit Monte",
     "category": "Fit desery i słodkie wypieki",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 407,
     "protein": 24.0,
     "fat": 14.0,
@@ -3289,9 +3159,6 @@
     "id": 43,
     "title": "Francuskie paluchy z pesto (liczba porcji: 3)",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 521,
     "protein": 8.0,
     "fat": 37.0,
@@ -3335,9 +3202,6 @@
     "id": 44,
     "title": "Gnocchi nadziewane pomidorami i mozzarellą",
     "category": "Makarony i zapiekanki",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 626,
     "protein": 15.0,
     "fat": 34.0,
@@ -3380,9 +3244,6 @@
     "id": 45,
     "title": "Gofry francuskie z jabłkami",
     "category": "Naleśniki, gofry i placki",
-    "diets": [
-      "Paczka Urodzinowa (Zrzuty)"
-    ],
     "calories": 406,
     "protein": 5.0,
     "fat": 20.0,
@@ -3454,9 +3315,6 @@
     "id": 46,
     "title": "Gofry z jagodami (liczba porcji: 4)",
     "category": "Naleśniki, gofry i placki",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 412,
     "protein": 20.0,
     "fat": 13.0,
@@ -3554,9 +3412,6 @@
     "id": 47,
     "title": "Gorzka czekolada, odżywka białkowa oraz wafle",
     "category": "Fit desery i słodkie wypieki",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 411,
     "protein": 20.0,
     "fat": 18.0,
@@ -3601,9 +3456,6 @@
     "id": 48,
     "title": "Granola na słono z patelni z jajkiem i pomidorkami",
     "category": "Jajka",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 398,
     "protein": 23.0,
     "fat": 20.0,
@@ -3699,9 +3551,6 @@
     "id": 49,
     "title": "Gryczana granola z jogurtem i owocami",
     "category": "Nabiał i skyr-bowls",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 390,
     "protein": 27.0,
     "fat": 15.0,
@@ -3768,10 +3617,6 @@
     "id": 50,
     "title": "Grzanki z tuńczykiem i pomidorem",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 (5 posiłków)",
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 401,
     "protein": 31.0,
     "fat": 14.0,
@@ -3856,9 +3701,6 @@
     "id": 51,
     "title": "Gulasz z soczewicy czerwonej",
     "category": "Dania główne i obiady",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 592,
     "protein": 28.0,
     "fat": 20.0,
@@ -3963,9 +3805,6 @@
     "id": 52,
     "title": "Gyoza pierożki z kurczakiem Asia Flavours",
     "category": "Szybkie gotowce (SOS)",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 577,
     "protein": 20.0,
     "fat": 23.0,
@@ -4012,9 +3851,6 @@
     "id": 53,
     "title": "Hummus dyniowy",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 398,
     "protein": 15.0,
     "fat": 14.0,
@@ -4105,9 +3941,6 @@
     "id": 54,
     "title": "Hummus z pieczoną papryką (liczba porcji: 2)",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 228,
     "protein": 11.0,
     "fat": 6.0,
@@ -4193,10 +4026,6 @@
     "id": 55,
     "title": "Jabłko + migdały",
     "category": "Fit desery i słodkie wypieki",
-    "diets": [
-      "Dieta 2400 (6 posiłków)",
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 196,
     "protein": 5.0,
     "fat": 11.0,
@@ -4230,9 +4059,6 @@
     "id": 56,
     "title": "Jabłko + pistacje",
     "category": "Fit desery i słodkie wypieki",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 196,
     "protein": 5.0,
     "fat": 10.0,
@@ -4266,9 +4092,6 @@
     "id": 57,
     "title": "Jaglanka z jabłkiem oraz cynamonem",
     "category": "Owsianki, puddingi i kasze",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 405,
     "protein": 30.0,
     "fat": 9.0,
@@ -4340,9 +4163,6 @@
     "id": 58,
     "title": "Jajecznica na maśle z kurkami, dymką i pieprzem",
     "category": "Jajka",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 414,
     "protein": 24.0,
     "fat": 26.0,
@@ -4413,9 +4233,6 @@
     "id": 59,
     "title": "Jajecznica z chlebem razowym",
     "category": "Jajka",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 406,
     "protein": 20.0,
     "fat": 22.0,
@@ -4491,10 +4308,6 @@
     "id": 60,
     "title": "Jajecznica z pieczarkami, cebulą oraz chlebem",
     "category": "Jajka",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)",
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 416,
     "protein": 20.0,
     "fat": 22.0,
@@ -4574,9 +4387,6 @@
     "id": 61,
     "title": "Jajecznica ze szpinakiem oraz suszonymi",
     "category": "Jajka",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 409,
     "protein": 19.0,
     "fat": 22.0,
@@ -4642,9 +4452,6 @@
     "id": 62,
     "title": "Jajka sadzone na pęczaku i warzywach",
     "category": "Dania główne i obiady",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 586,
     "protein": 26.0,
     "fat": 20.0,
@@ -4742,9 +4549,6 @@
     "id": 63,
     "title": "Jajka sadzone z młodymi ziemniakami i kapustą",
     "category": "Dania główne i obiady",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 594,
     "protein": 30.0,
     "fat": 22.0,
@@ -4820,9 +4624,6 @@
     "id": 64,
     "title": "Jajka sadzone z młodymi ziemniakami i mizerią",
     "category": "Dania główne i obiady",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 578,
     "protein": 30.0,
     "fat": 23.0,
@@ -4902,9 +4703,6 @@
     "id": 65,
     "title": "Japoński omlet",
     "category": "Jajka",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 385,
     "protein": 20.0,
     "fat": 18.0,
@@ -4990,9 +4788,6 @@
     "id": 66,
     "title": "Jednoporcjowy serniczek pistacjowy",
     "category": "Fit desery i słodkie wypieki",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 401,
     "protein": 27.0,
     "fat": 20.0,
@@ -5061,9 +4856,6 @@
     "id": 67,
     "title": "Jogurt grecki z migdałami oraz bananem",
     "category": "Nabiał i skyr-bowls",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 398,
     "protein": 11.0,
     "fat": 22.0,
@@ -5110,9 +4902,6 @@
     "id": 68,
     "title": "Jogurt proteinowy z owocami",
     "category": "Nabiał i skyr-bowls",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 407,
     "protein": 27.0,
     "fat": 14.0,
@@ -5165,10 +4954,6 @@
     "id": 69,
     "title": "Jogurt skyr z domową granolą z orzechami",
     "category": "Nabiał i skyr-bowls",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)",
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 411,
     "protein": 26.0,
     "fat": 13.0,
@@ -5234,9 +5019,6 @@
     "id": 70,
     "title": "Jogurt skyr z domową granolą, gorzką czekoladą",
     "category": "Nabiał i skyr-bowls",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 375,
     "protein": 20.0,
     "fat": 15.0,
@@ -5295,9 +5077,6 @@
     "id": 71,
     "title": "Jogurt skyr z domową granolą, orzechami oraz",
     "category": "Nabiał i skyr-bowls",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 414,
     "protein": 26.0,
     "fat": 15.0,
@@ -5362,9 +5141,6 @@
     "id": 72,
     "title": "Jogurt z truskawkami oraz orzechami",
     "category": "Nabiał i skyr-bowls",
-    "diets": [
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 209,
     "protein": 21.0,
     "fat": 8.0,
@@ -5404,10 +5180,6 @@
     "id": 73,
     "title": "Kakaowa kasza gryczana z owocami",
     "category": "Owsianki, puddingi i kasze",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)",
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 402,
     "protein": 30.0,
     "fat": 9.0,
@@ -5479,9 +5251,6 @@
     "id": 74,
     "title": "Kanapka z jajecznicą i awokado",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 383,
     "protein": 13.0,
     "fat": 20.0,
@@ -5548,10 +5317,6 @@
     "id": 75,
     "title": "Kanapka z jajkiem",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 (5 posiłków)",
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 406,
     "protein": 22.0,
     "fat": 18.0,
@@ -5618,9 +5383,6 @@
     "id": 76,
     "title": "Kanapka z jajkiem sadzonym",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 404,
     "protein": 26.0,
     "fat": 18.0,
@@ -5689,9 +5451,6 @@
     "id": 77,
     "title": "Kanapka z jajkiem, awokado i serem cheddar",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 399,
     "protein": 20.0,
     "fat": 21.0,
@@ -5759,9 +5518,6 @@
     "id": 78,
     "title": "Kanapka z mozzarellą i warzywami",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 398,
     "protein": 18.0,
     "fat": 17.0,
@@ -5821,9 +5577,6 @@
     "id": 79,
     "title": "Kanapka z pastą z awokado i pieczonym tofu",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 500,
     "protein": 24.0,
     "fat": 26.0,
@@ -5891,9 +5644,6 @@
     "id": 80,
     "title": "Kanapka z pastą z jajka oraz awokado",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 395,
     "protein": 19.0,
     "fat": 20.0,
@@ -5959,9 +5709,6 @@
     "id": 81,
     "title": "Kanapka z szynką z indyka",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 395,
     "protein": 21.0,
     "fat": 16.0,
@@ -6016,10 +5763,6 @@
     "id": 82,
     "title": "Kanapki na słodko z masłem orzechowym, serem",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 (5 posiłków)",
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 400,
     "protein": 21.0,
     "fat": 17.0,
@@ -6072,9 +5815,6 @@
     "id": 83,
     "title": "Kanapki w greckim stylu",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 418,
     "protein": 23.0,
     "fat": 18.0,
@@ -6139,9 +5879,6 @@
     "id": 84,
     "title": "Kanapki z burratą i pomidorkami",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 410,
     "protein": 20.0,
     "fat": 20.0,
@@ -6215,9 +5952,6 @@
     "id": 85,
     "title": "Kanapki z gruszką i serem camembert",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 415,
     "protein": 19.0,
     "fat": 16.0,
@@ -6288,10 +6022,6 @@
     "id": 86,
     "title": "Kanapki z hummusem, wędliną i warzywami",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 (5 posiłków)",
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 402,
     "protein": 26.0,
     "fat": 13.0,
@@ -6359,9 +6089,6 @@
     "id": 87,
     "title": "Kanapki z pastą jajeczną i tuńczyka",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 412,
     "protein": 26.0,
     "fat": 17.0,
@@ -6442,9 +6169,6 @@
     "id": 88,
     "title": "Kanapki z pastą z awokado i wędliną",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 521,
     "protein": 34.0,
     "fat": 18.0,
@@ -6527,9 +6251,6 @@
     "id": 89,
     "title": "Kanapki z pastą z jajka i serka wiejskiego",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 407,
     "protein": 24.0,
     "fat": 19.0,
@@ -6602,9 +6323,6 @@
     "id": 90,
     "title": "Kanapki z serem gouda i warzywami",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 408,
     "protein": 20.0,
     "fat": 21.0,
@@ -6676,9 +6394,6 @@
     "id": 91,
     "title": "Kanapki z szynką, jajkiem i ogórkiem kiszonym",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 390,
     "protein": 20.0,
     "fat": 19.0,
@@ -6731,9 +6446,6 @@
     "id": 92,
     "title": "Kanapki z twarożkiem",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 387,
     "protein": 20.0,
     "fat": 16.0,
@@ -6818,9 +6530,6 @@
     "id": 93,
     "title": "Kanapki z twarożkiem na słodko",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 411,
     "protein": 19.0,
     "fat": 18.0,
@@ -6886,9 +6595,6 @@
     "id": 94,
     "title": "Kasza manna z puddingiem proteinowym i",
     "category": "Owsianki, puddingi i kasze",
-    "diets": [
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 401,
     "protein": 27.0,
     "fat": 11.0,
@@ -6948,9 +6654,6 @@
     "id": 95,
     "title": "Klejący ryż z prażonymi owocami",
     "category": "Owsianki, puddingi i kasze",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 402,
     "protein": 25.0,
     "fat": 12.0,
@@ -7012,9 +6715,6 @@
     "id": 96,
     "title": "Koktajl odżywczy (mango, marakuja) Piątnica",
     "category": "Szybkie gotowce (SOS)",
-    "diets": [
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 220,
     "protein": 26.0,
     "fat": 3.0,
@@ -7043,9 +6743,6 @@
     "id": 97,
     "title": "Koktajl z banana, borówek oraz malin",
     "category": "Fit desery i słodkie wypieki",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 195,
     "protein": 3.0,
     "fat": 1.0,
@@ -7092,9 +6789,6 @@
     "id": 98,
     "title": "Korzenna ryżanka ze śliwkami",
     "category": "Owsianki, puddingi i kasze",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 409,
     "protein": 21.0,
     "fat": 9.0,
@@ -7168,9 +6862,6 @@
     "id": 99,
     "title": "Kotleciki z ciecierzycy z kapustą czerwoną",
     "category": "Dania główne i obiady",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 621,
     "protein": 27.0,
     "fat": 20.0,
@@ -7281,9 +6972,6 @@
     "id": 100,
     "title": "Kremowe gnocchi w sosie grzybowym z",
     "category": "Makarony i zapiekanki",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 585,
     "protein": 25.0,
     "fat": 14.0,
@@ -7381,9 +7069,6 @@
     "id": 101,
     "title": "Kurczak pieczony z ziemniakami",
     "category": "Dania główne i obiady",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 591,
     "protein": 31.0,
     "fat": 23.0,
@@ -7478,9 +7163,6 @@
     "id": 102,
     "title": "Kurczak słodko kwaśny",
     "category": "Dania główne i obiady",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 621,
     "protein": 32.0,
     "fat": 18.0,
@@ -7611,9 +7293,6 @@
     "id": 103,
     "title": "Kurczak z makaronem wysokobiałkowy w sosie",
     "category": "Makarony i zapiekanki",
-    "diets": [
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 728,
     "protein": 40.0,
     "fat": 23.0,
@@ -7655,9 +7334,6 @@
     "id": 104,
     "title": "Kąski z mrożonego jogurtu",
     "category": "Nabiał i skyr-bowls",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 204,
     "protein": 9.0,
     "fat": 4.0,
@@ -7705,9 +7381,6 @@
     "id": 105,
     "title": "Lasagne (liczba porcji: 3)",
     "category": "Makarony i zapiekanki",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 603,
     "protein": 36.0,
     "fat": 29.0,
@@ -7846,9 +7519,6 @@
     "id": 106,
     "title": "Lasagne z kurczakiem Donatello (Biedronka)",
     "category": "Szybkie gotowce (SOS)",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 602,
     "protein": 29.0,
     "fat": 27.0,
@@ -7884,9 +7554,6 @@
     "id": 107,
     "title": "Leniwe odsmażone na maśle z jagodami i",
     "category": "Naleśniki, gofry i placki",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 615,
     "protein": 30.0,
     "fat": 19.0,
@@ -7954,9 +7621,6 @@
     "id": 108,
     "title": "Leniwe ze śliwkami",
     "category": "Naleśniki, gofry i placki",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 587,
     "protein": 30.0,
     "fat": 26.0,
@@ -8018,9 +7682,6 @@
     "id": 109,
     "title": "Lody proteinowe o smaku czekoladowym Gelatelli",
     "category": "Szybkie gotowce (SOS)",
-    "diets": [
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 197,
     "protein": 12.0,
     "fat": 5.0,
@@ -8060,9 +7721,6 @@
     "id": 110,
     "title": "Makaron po włosku z dodatkiem szpinaku oraz",
     "category": "Makarony i zapiekanki",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 613,
     "protein": 33.0,
     "fat": 23.0,
@@ -8149,9 +7807,6 @@
     "id": 111,
     "title": "Makaron z sosem grzybowym",
     "category": "Makarony i zapiekanki",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 606,
     "protein": 43.0,
     "fat": 19.0,
@@ -8253,9 +7908,6 @@
     "id": 112,
     "title": "Makaron z sosem pomidorowym z ricottą",
     "category": "Makarony i zapiekanki",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 604,
     "protein": 24.0,
     "fat": 24.0,
@@ -8342,9 +7994,6 @@
     "id": 113,
     "title": "Makaron z suszonymi pomidorami i ciecierzycą",
     "category": "Makarony i zapiekanki",
-    "diets": [
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 711,
     "protein": 50.0,
     "fat": 22.0,
@@ -8460,9 +8109,6 @@
     "id": 114,
     "title": "Makaron z zielonymi warzywami: groszkiem",
     "category": "Makarony i zapiekanki",
-    "diets": [
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 722,
     "protein": 45.0,
     "fat": 26.0,
@@ -8565,9 +8211,6 @@
     "id": 115,
     "title": "Matcha Souffle Pancakes (liczba porcji: 2)",
     "category": "Naleśniki, gofry i placki",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 413,
     "protein": 17.0,
     "fat": 21.0,
@@ -8667,9 +8310,6 @@
     "id": 116,
     "title": "Muffiny dyniowe (liczba porcji: 3)",
     "category": "Fit desery i słodkie wypieki",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 410,
     "protein": 13.0,
     "fat": 7.0,
@@ -8763,9 +8403,6 @@
     "id": 117,
     "title": "Naleśniki z cukinią, szpinakiem, marchwią i",
     "category": "Naleśniki, gofry i placki",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 590,
     "protein": 51.0,
     "fat": 19.0,
@@ -8866,9 +8503,6 @@
     "id": 118,
     "title": "Naleśniki z jabłkami Nasze Smaki (Biedronka)",
     "category": "Naleśniki, gofry i placki",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 602,
     "protein": 27.0,
     "fat": 5.0,
@@ -8903,9 +8537,6 @@
     "id": 119,
     "title": "Naleśniki z jabłkiem",
     "category": "Naleśniki, gofry i placki",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 403,
     "protein": 24.0,
     "fat": 9.0,
@@ -8971,9 +8602,6 @@
     "id": 120,
     "title": "Naleśniki z jogurtem z mango",
     "category": "Naleśniki, gofry i placki",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 411,
     "protein": 15.0,
     "fat": 9.0,
@@ -9027,9 +8655,6 @@
     "id": 121,
     "title": "Naleśniki z twarożkiem i karmelizowanym",
     "category": "Naleśniki, gofry i placki",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 395,
     "protein": 20.0,
     "fat": 8.0,
@@ -9089,10 +8714,6 @@
     "id": 122,
     "title": "Nasiona chia bowl z kiwi oraz pomarańczą",
     "category": "Naleśniki, gofry i placki",
-    "diets": [
-      "Dieta 2200 (5 posiłków)",
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 415,
     "protein": 27.0,
     "fat": 16.0,
@@ -9159,9 +8780,6 @@
     "id": 123,
     "title": "Nocna owsianka a la Monte z puddingiem",
     "category": "Jajka",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 396,
     "protein": 30.0,
     "fat": 13.0,
@@ -9228,10 +8846,6 @@
     "id": 124,
     "title": "Nocna owsianka pistacjowa",
     "category": "Jajka",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)",
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 420,
     "protein": 22.0,
     "fat": 20.0,
@@ -9302,10 +8916,6 @@
     "id": 125,
     "title": "Omlet mleczna kanapka",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)",
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 406,
     "protein": 25.0,
     "fat": 16.0,
@@ -9405,9 +9015,6 @@
     "id": 126,
     "title": "Omlet szarlotka",
     "category": "Jajka",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 481,
     "protein": 26.0,
     "fat": 24.0,
@@ -9495,9 +9102,6 @@
     "id": 127,
     "title": "Omlet z kurkami",
     "category": "Jajka",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 384,
     "protein": 21.0,
     "fat": 18.0,
@@ -9583,9 +9187,6 @@
     "id": 128,
     "title": "Omlet z pieczywem",
     "category": "Jajka",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 401,
     "protein": 23.0,
     "fat": 20.0,
@@ -9673,9 +9274,6 @@
     "id": 129,
     "title": "Omleto-kanapka",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 400,
     "protein": 23.0,
     "fat": 22.0,
@@ -9776,9 +9374,6 @@
     "id": 130,
     "title": "Omletowa tortilla",
     "category": "Wrapy, tortille i fit fast food",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 406,
     "protein": 28.0,
     "fat": 18.0,
@@ -9866,9 +9461,6 @@
     "id": 131,
     "title": "Orzechy pistacjowe",
     "category": "Fit desery i słodkie wypieki",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 212,
     "protein": 7.0,
     "fat": 17.0,
@@ -9894,9 +9486,6 @@
     "id": 132,
     "title": "Owoce pod chrupiącą kruszonką",
     "category": "Fit desery i słodkie wypieki",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 402,
     "protein": 24.0,
     "fat": 14.0,
@@ -9950,9 +9539,6 @@
     "id": 133,
     "title": "Owsianka a la Bounty",
     "category": "Owsianki, puddingi i kasze",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 396,
     "protein": 18.0,
     "fat": 17.0,
@@ -10031,9 +9617,6 @@
     "id": 134,
     "title": "Owsianka a la Mars",
     "category": "Owsianki, puddingi i kasze",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 509,
     "protein": 31.0,
     "fat": 20.0,
@@ -10095,10 +9678,6 @@
     "id": 135,
     "title": "Owsianka banoffee",
     "category": "Owsianki, puddingi i kasze",
-    "diets": [
-      "Dieta 2200 (5 posiłków)",
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 394,
     "protein": 21.0,
     "fat": 11.0,
@@ -10159,9 +9738,6 @@
     "id": 136,
     "title": "Owsianka w stylu batona Lion",
     "category": "Owsianki, puddingi i kasze",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 410,
     "protein": 21.0,
     "fat": 14.0,
@@ -10228,9 +9804,6 @@
     "id": 137,
     "title": "Owsianka w stylu kinder country",
     "category": "Owsianki, puddingi i kasze",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 403,
     "protein": 21.0,
     "fat": 14.0,
@@ -10296,9 +9869,6 @@
     "id": 138,
     "title": "Owsianka z bananem oraz borówkami",
     "category": "Owsianki, puddingi i kasze",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 409,
     "protein": 27.0,
     "fat": 13.0,
@@ -10353,9 +9923,6 @@
     "id": 139,
     "title": "Owsianka z białą czekoladą i truskawkami",
     "category": "Owsianki, puddingi i kasze",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 399,
     "protein": 19.0,
     "fat": 12.0,
@@ -10408,9 +9975,6 @@
     "id": 140,
     "title": "Owsianka z lodami i owocami",
     "category": "Owsianki, puddingi i kasze",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 420,
     "protein": 27.0,
     "fat": 14.0,
@@ -10471,9 +10035,6 @@
     "id": 141,
     "title": "Owsianka z masłem orzechowym",
     "category": "Owsianki, puddingi i kasze",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 404,
     "protein": 22.0,
     "fat": 17.0,
@@ -10527,9 +10088,6 @@
     "id": 142,
     "title": "Owsianka z owocami i nasionami chia Vitanella",
     "category": "Owsianki, puddingi i kasze",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 399,
     "protein": 13.0,
     "fat": 18.0,
@@ -10570,10 +10128,6 @@
     "id": 143,
     "title": "Owsianka z płatkami Cini Minis",
     "category": "Owsianki, puddingi i kasze",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)",
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 401,
     "protein": 25.0,
     "fat": 10.0,
@@ -10640,9 +10194,6 @@
     "id": 144,
     "title": "Owsianka z płatkami nesquik",
     "category": "Owsianki, puddingi i kasze",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 515,
     "protein": 30.0,
     "fat": 13.0,
@@ -10703,9 +10254,6 @@
     "id": 145,
     "title": "Owsianka z serem twarogowym i owocami",
     "category": "Owsianki, puddingi i kasze",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 400,
     "protein": 20.0,
     "fat": 15.0,
@@ -10765,9 +10313,6 @@
     "id": 146,
     "title": "Pasta jajeczna z ogórkiem, szczypiorkiem,",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 489,
     "protein": 29.0,
     "fat": 24.0,
@@ -10851,9 +10396,6 @@
     "id": 147,
     "title": "Pasta jajeczna ze szczypiorkiem, suszonym",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 407,
     "protein": 20.0,
     "fat": 24.0,
@@ -10936,10 +10478,6 @@
     "id": 148,
     "title": "Pasta z jajek z rzodkiewką, ogórkiem,",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 (5 posiłków)",
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 410,
     "protein": 19.0,
     "fat": 21.0,
@@ -11011,9 +10549,6 @@
     "id": 149,
     "title": "Pasta z sera twarogowego z czarnuszką z",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 407,
     "protein": 24.0,
     "fat": 17.0,
@@ -11097,9 +10632,6 @@
     "id": 150,
     "title": "Pasta z serka wiejskiego z suszonymi pomidorami,",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 393,
     "protein": 19.0,
     "fat": 17.0,
@@ -11176,9 +10708,6 @@
     "id": 151,
     "title": "Pełnoziarniste naleśniki z twarożkiem, prażoną",
     "category": "Naleśniki, gofry i placki",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 391,
     "protein": 24.0,
     "fat": 17.0,
@@ -11259,9 +10788,6 @@
     "id": 152,
     "title": "Pianka z galaretki",
     "category": "Fit desery i słodkie wypieki",
-    "diets": [
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 200,
     "protein": 7.0,
     "fat": 4.0,
@@ -11309,9 +10835,6 @@
     "id": 153,
     "title": "Pieczona owsianka z bananem (liczba porcji: 3)",
     "category": "Owsianki, puddingi i kasze",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 377,
     "protein": 17.0,
     "fat": 10.0,
@@ -11411,9 +10934,6 @@
     "id": 154,
     "title": "Pieczona owsianka z jabłkiem oraz cynamonem",
     "category": "Owsianki, puddingi i kasze",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 396,
     "protein": 22.0,
     "fat": 9.0,
@@ -11514,9 +11034,6 @@
     "id": 155,
     "title": "Pieczone warzywa korzeniowe z dipem",
     "category": "Dania główne i obiady",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 578,
     "protein": 15.0,
     "fat": 29.0,
@@ -11615,9 +11132,6 @@
     "id": 156,
     "title": "Pieczywo z pastą z tuńczyka, z ogórkiem oraz",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 395,
     "protein": 20.0,
     "fat": 12.0,
@@ -11701,9 +11215,6 @@
     "id": 157,
     "title": "Pierogi ruskie Nasze Smaki (Biedronka)",
     "category": "Szybkie gotowce (SOS)",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 577,
     "protein": 18.0,
     "fat": 31.0,
@@ -11750,10 +11261,6 @@
     "id": 158,
     "title": "Pierogi serowo-jagodowe [Biedronka]",
     "category": "Szybkie gotowce (SOS)",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)",
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 614,
     "protein": 39.0,
     "fat": 19.0,
@@ -11795,9 +11302,6 @@
     "id": 159,
     "title": "Pinsa z bakłażanem i cukinią",
     "category": "Wrapy, tortille i fit fast food",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 580,
     "protein": 13.0,
     "fat": 28.0,
@@ -11884,9 +11388,6 @@
     "id": 160,
     "title": "Pinsa z cukinią oraz burratą (liczba porcji: 2)",
     "category": "Wrapy, tortille i fit fast food",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 608,
     "protein": 33.0,
     "fat": 26.0,
@@ -11954,9 +11455,6 @@
     "id": 161,
     "title": "Pinsa z sosem pomidorowym, mozzarellą i rukolą",
     "category": "Wrapy, tortille i fit fast food",
-    "diets": [
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 701,
     "protein": 31.0,
     "fat": 13.0,
@@ -12037,9 +11535,6 @@
     "id": 162,
     "title": "Pinsa z szynką i suszonymi pomidorami",
     "category": "Wrapy, tortille i fit fast food",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 397,
     "protein": 22.0,
     "fat": 14.0,
@@ -12116,9 +11611,6 @@
     "id": 163,
     "title": "Placki z dyni (liczba porcji: 3)",
     "category": "Naleśniki, gofry i placki",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 406,
     "protein": 14.0,
     "fat": 11.0,
@@ -12207,9 +11699,6 @@
     "id": 164,
     "title": "Placuszki orzechowe (liczba porcji: 2)",
     "category": "Naleśniki, gofry i placki",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 397,
     "protein": 23.0,
     "fat": 13.0,
@@ -12267,9 +11756,6 @@
     "id": 165,
     "title": "Placuszki owsiane z gorzką czekoladą oraz",
     "category": "Naleśniki, gofry i placki",
-    "diets": [
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 405,
     "protein": 14.0,
     "fat": 18.0,
@@ -12339,9 +11825,6 @@
     "id": 166,
     "title": "Pomidor nadziewany serem twarogowym ze",
     "category": "Nabiał i skyr-bowls",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 172,
     "protein": 19.0,
     "fat": 6.0,
@@ -12401,9 +11884,6 @@
     "id": 167,
     "title": "Pomidorowo serowa zapiekanka makaronowa z",
     "category": "Makarony i zapiekanki",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 586,
     "protein": 31.0,
     "fat": 19.0,
@@ -12501,9 +11981,6 @@
     "id": 168,
     "title": "Przekąska z masłem orzechowym",
     "category": "Fit desery i słodkie wypieki",
-    "diets": [
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 226,
     "protein": 8.0,
     "fat": 8.0,
@@ -12550,9 +12027,6 @@
     "id": 169,
     "title": "Pudding chia z musem mango",
     "category": "Owsianki, puddingi i kasze",
-    "diets": [
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 194,
     "protein": 6.0,
     "fat": 5.0,
@@ -12603,10 +12077,6 @@
     "id": 170,
     "title": "Pudding na mleku roślinnym z gorzką czekoladą",
     "category": "Owsianki, puddingi i kasze",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)",
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 418,
     "protein": 21.0,
     "fat": 16.0,
@@ -12678,9 +12148,6 @@
     "id": 171,
     "title": "Pudding proteinowy caffe latte Go Active",
     "category": "Owsianki, puddingi i kasze",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 205,
     "protein": 21.0,
     "fat": 3.0,
@@ -12714,9 +12181,6 @@
     "id": 172,
     "title": "Pudding proteinowy czekoladowy Go Active",
     "category": "Owsianki, puddingi i kasze",
-    "diets": [
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 205,
     "protein": 21.0,
     "fat": 3.0,
@@ -12756,9 +12220,6 @@
     "id": 173,
     "title": "Pudding proteinowy czekoladowy Go active +",
     "category": "Owsianki, puddingi i kasze",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 400,
     "protein": 27.0,
     "fat": 17.0,
@@ -12804,9 +12265,6 @@
     "id": 174,
     "title": "Pudding proteinowy toffee i czekolada Valio +",
     "category": "Owsianki, puddingi i kasze",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 198,
     "protein": 21.0,
     "fat": 3.0,
@@ -12840,9 +12298,6 @@
     "id": 175,
     "title": "Płatki owsiane z mlekiem i owocami",
     "category": "Owsianki, puddingi i kasze",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 510,
     "protein": 29.0,
     "fat": 14.0,
@@ -12913,9 +12368,6 @@
     "id": 176,
     "title": "Quesadilla z kurczakiem (liczba porcji: 2)",
     "category": "Wrapy, tortille i fit fast food",
-    "diets": [
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 403,
     "protein": 28.0,
     "fat": 21.0,
@@ -13022,9 +12474,6 @@
     "id": 177,
     "title": "Risotto z dynią i serem typu feta",
     "category": "Dania główne i obiady",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 607,
     "protein": 27.0,
     "fat": 24.0,
@@ -13127,9 +12576,6 @@
     "id": 178,
     "title": "Ryżowe placuszki z owocami (liczba porcji: 2)",
     "category": "Naleśniki, gofry i placki",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 396,
     "protein": 23.0,
     "fat": 9.0,
@@ -13206,9 +12652,6 @@
     "id": 179,
     "title": "Sałatka grecka z serem typu feta oraz chlebem",
     "category": "Sałatki i wytrawne bowle",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 495,
     "protein": 23.0,
     "fat": 30.0,
@@ -13311,9 +12754,6 @@
     "id": 180,
     "title": "Sałatka z bobem, halloumi i miętą",
     "category": "Sałatki i wytrawne bowle",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 605,
     "protein": 23.0,
     "fat": 42.0,
@@ -13415,9 +12855,6 @@
     "id": 181,
     "title": "Sałatka z burratą oraz truskawkami",
     "category": "Sałatki i wytrawne bowle",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 495,
     "protein": 16.0,
     "fat": 34.0,
@@ -13484,9 +12921,6 @@
     "id": 182,
     "title": "Sałatka z grillowanymi szparagami",
     "category": "Sałatki i wytrawne bowle",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 581,
     "protein": 31.0,
     "fat": 25.0,
@@ -13574,9 +13008,6 @@
     "id": 183,
     "title": "Sałatka z kurczakiem i warzywami z sosem",
     "category": "Sałatki i wytrawne bowle",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 589,
     "protein": 34.0,
     "fat": 23.0,
@@ -13672,9 +13103,6 @@
     "id": 184,
     "title": "Serek proteinowy z owocami",
     "category": "Nabiał i skyr-bowls",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 401,
     "protein": 32.0,
     "fat": 13.0,
@@ -13727,9 +13155,6 @@
     "id": 185,
     "title": "Serek waniliowy z gorzką czekoladą oraz bananem",
     "category": "Nabiał i skyr-bowls",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 409,
     "protein": 16.0,
     "fat": 17.0,
@@ -13788,10 +13213,6 @@
     "id": 186,
     "title": "Serek wiejski + migdały + wafle ryżowe + dżem",
     "category": "Nabiał i skyr-bowls",
-    "diets": [
-      "Dieta 2200 (5 posiłków)",
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 403,
     "protein": 20.0,
     "fat": 21.0,
@@ -13837,9 +13258,6 @@
     "id": 187,
     "title": "Serek wiejski na słodko z masłem orzechowym,",
     "category": "Nabiał i skyr-bowls",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 415,
     "protein": 22.0,
     "fat": 17.0,
@@ -13892,9 +13310,6 @@
     "id": 188,
     "title": "Serek wiejski z malinami, borówkami oraz masłem",
     "category": "Nabiał i skyr-bowls",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 500,
     "protein": 34.0,
     "fat": 18.0,
@@ -13960,9 +13375,6 @@
     "id": 189,
     "title": "Serek wiejski z miodem, orzechami oraz gruszką",
     "category": "Nabiał i skyr-bowls",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 376,
     "protein": 23.0,
     "fat": 17.0,
@@ -14015,9 +13427,6 @@
     "id": 190,
     "title": "Serek wiejski z miodem, orzechami włoskimi oraz",
     "category": "Nabiał i skyr-bowls",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 491,
     "protein": 30.0,
     "fat": 19.0,
@@ -14077,9 +13486,6 @@
     "id": 191,
     "title": "Serek wiejski z owocami i syropem klonowym",
     "category": "Nabiał i skyr-bowls",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 403,
     "protein": 28.0,
     "fat": 14.0,
@@ -14132,9 +13538,6 @@
     "id": 192,
     "title": "Serek wiejski z owocami i wiórkami kokosowymi",
     "category": "Nabiał i skyr-bowls",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 403,
     "protein": 20.0,
     "fat": 20.0,
@@ -14180,9 +13583,6 @@
     "id": 193,
     "title": "Serniczek waniliowy z borówkami",
     "category": "Fit desery i słodkie wypieki",
-    "diets": [
-      "Paczka Urodzinowa (Zrzuty)"
-    ],
     "calories": 415,
     "protein": 33.0,
     "fat": 17.0,
@@ -14261,9 +13661,6 @@
     "id": 194,
     "title": "Serniczki z kaszy manny z owocami",
     "category": "Fit desery i słodkie wypieki",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 409,
     "protein": 21.0,
     "fat": 18.0,
@@ -14341,9 +13738,6 @@
     "id": 195,
     "title": "Sernik matcha",
     "category": "Fit desery i słodkie wypieki",
-    "diets": [
-      "Paczka Urodzinowa (Zrzuty)"
-    ],
     "calories": 403,
     "protein": 7.0,
     "fat": 33.0,
@@ -14473,11 +13867,6 @@
     "id": 196,
     "title": "Skyr + orzechy + banan",
     "category": "Nabiał i skyr-bowls",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)",
-      "Dieta 2400 (6 posiłków)",
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 390,
     "protein": 25.0,
     "fat": 16.0,
@@ -14517,9 +13906,6 @@
     "id": 197,
     "title": "Skyr z czekoladą i owocami",
     "category": "Nabiał i skyr-bowls",
-    "diets": [
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 210,
     "protein": 19.0,
     "fat": 5.0,
@@ -14575,9 +13961,6 @@
     "id": 198,
     "title": "Smoothie truskawkowo bananowe",
     "category": "Fit desery i słodkie wypieki",
-    "diets": [
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 196,
     "protein": 15.0,
     "fat": 2.0,
@@ -14624,9 +14007,6 @@
     "id": 199,
     "title": "Spaghetti z pesto",
     "category": "Makarony i zapiekanki",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 602,
     "protein": 33.0,
     "fat": 23.0,
@@ -14707,9 +14087,6 @@
     "id": 200,
     "title": "Szakszuka z pieczarkami, papryką czerwoną,",
     "category": "Jajka",
-    "diets": [
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 408,
     "protein": 25.0,
     "fat": 22.0,
@@ -14807,9 +14184,6 @@
     "id": 201,
     "title": "Szarlotka na serku waniliowym (liczba porcji: 2)",
     "category": "Fit desery i słodkie wypieki",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 503,
     "protein": 22.0,
     "fat": 18.0,
@@ -14873,9 +14247,6 @@
     "id": 202,
     "title": "Szybki wrap z łososiem oraz burratą",
     "category": "Wrapy, tortille i fit fast food",
-    "diets": [
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 414,
     "protein": 23.0,
     "fat": 21.0,
@@ -14934,9 +14305,6 @@
     "id": 203,
     "title": "Słodka kanapka z wafli ryżowych",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 214,
     "protein": 5.0,
     "fat": 10.0,
@@ -14991,9 +14359,6 @@
     "id": 204,
     "title": "Tortilla z ciecierzycą, cukinią oraz awokado",
     "category": "Wrapy, tortille i fit fast food",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 613,
     "protein": 17.0,
     "fat": 31.0,
@@ -15091,9 +14456,6 @@
     "id": 205,
     "title": "Tortilla z jajecznicą",
     "category": "Wrapy, tortille i fit fast food",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 414,
     "protein": 16.0,
     "fat": 21.0,
@@ -15170,9 +14532,6 @@
     "id": 206,
     "title": "Tortilla z kurczakiem (liczba porcji: 2)",
     "category": "Wrapy, tortille i fit fast food",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 589,
     "protein": 33.0,
     "fat": 23.0,
@@ -15271,10 +14630,6 @@
     "id": 207,
     "title": "Tortilla z szynką z kurczaka i warzywami",
     "category": "Wrapy, tortille i fit fast food",
-    "diets": [
-      "Dieta 2200 (5 posiłków)",
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 403,
     "protein": 15.0,
     "fat": 19.0,
@@ -15345,9 +14700,6 @@
     "id": 208,
     "title": "Tortilla z szynką, serem i warzywami",
     "category": "Wrapy, tortille i fit fast food",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 491,
     "protein": 29.0,
     "fat": 20.0,
@@ -15415,10 +14767,6 @@
     "id": 209,
     "title": "Tost z awokado oraz mozzarellą",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)",
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 391,
     "protein": 15.0,
     "fat": 14.0,
@@ -15492,9 +14840,6 @@
     "id": 210,
     "title": "Tost z mozzarellą oraz szynką z kurczaka",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 386,
     "protein": 21.0,
     "fat": 17.0,
@@ -15548,9 +14893,6 @@
     "id": 211,
     "title": "Tost z mozzarellą, szynką z indyka oraz suszonymi",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 429,
     "protein": 23.0,
     "fat": 20.0,
@@ -15610,9 +14952,6 @@
     "id": 212,
     "title": "Tost z szynką, serem i warzywami",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 407,
     "protein": 23.0,
     "fat": 18.0,
@@ -15680,10 +15019,6 @@
     "id": 213,
     "title": "Tosty francuskie z szynką i warzywami",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)",
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 420,
     "protein": 26.0,
     "fat": 19.0,
@@ -15775,9 +15110,6 @@
     "id": 214,
     "title": "Tosty z zielonym pesto, mozzarellą oraz",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 398,
     "protein": 18.0,
     "fat": 19.0,
@@ -15833,9 +15165,6 @@
     "id": 215,
     "title": "Trufle z ciecierzycy (liczba porcji: 4)",
     "category": "Fit desery i słodkie wypieki",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 204,
     "protein": 6.0,
     "fat": 11.0,
@@ -15896,9 +15225,6 @@
     "id": 216,
     "title": "Twarogowe placuszki proteinowe",
     "category": "Naleśniki, gofry i placki",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 500,
     "protein": 36.0,
     "fat": 19.0,
@@ -15983,9 +15309,6 @@
     "id": 217,
     "title": "Twarożek z suszonymi pomidorami, ogórkiem,",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)"
-    ],
     "calories": 382,
     "protein": 23.0,
     "fat": 15.0,
@@ -16068,10 +15391,6 @@
     "id": 218,
     "title": "Waniliowa owsianka z wiśniami",
     "category": "Owsianki, puddingi i kasze",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)",
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 412,
     "protein": 25.0,
     "fat": 10.0,
@@ -16139,9 +15458,6 @@
     "id": 219,
     "title": "Warstwowy deser z gorzką czekoladą",
     "category": "Fit desery i słodkie wypieki",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 414,
     "protein": 23.0,
     "fat": 16.0,
@@ -16210,9 +15526,6 @@
     "id": 220,
     "title": "Warzywne danie z makaronem, mozzarellą i",
     "category": "Makarony i zapiekanki",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 605,
     "protein": 27.0,
     "fat": 23.0,
@@ -16323,9 +15636,6 @@
     "id": 221,
     "title": "Warzywny sos z mięsem mielonym i makaronem",
     "category": "Makarony i zapiekanki",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 582,
     "protein": 30.0,
     "fat": 21.0,
@@ -16448,9 +15758,6 @@
     "id": 222,
     "title": "Wegańska zupa z soczewicy ze skwarkami z",
     "category": "Dania główne i obiady",
-    "diets": [
-      "Dieta Agi 1800 (4 posiłki)"
-    ],
     "calories": 586,
     "protein": 36.0,
     "fat": 22.0,
@@ -16569,9 +15876,6 @@
     "id": 223,
     "title": "Wegańskie naleśniki z jabłkami",
     "category": "Naleśniki, gofry i placki",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 585,
     "protein": 20.0,
     "fat": 15.0,
@@ -16620,9 +15924,6 @@
     "id": 224,
     "title": "Wiosenny serek wiejski z ogórkiem, papryką",
     "category": "Nabiał i skyr-bowls",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 397,
     "protein": 18.0,
     "fat": 18.0,
@@ -16686,9 +15987,6 @@
     "id": 225,
     "title": "Wrap z pastą jajeczną, awokado oraz roszponką",
     "category": "Wrapy, tortille i fit fast food",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 402,
     "protein": 13.0,
     "fat": 23.0,
@@ -16770,10 +16068,6 @@
     "id": 226,
     "title": "Wrapy z tortilli z kurczakiem i sosem czosnkowym",
     "category": "Wrapy, tortille i fit fast food",
-    "diets": [
-      "Dieta 2200 cz. 2 (5 posiłków)",
-      "Dieta 2400 (6 posiłków)"
-    ],
     "calories": 573,
     "protein": 42.0,
     "fat": 20.0,
@@ -16874,9 +16168,6 @@
     "id": 227,
     "title": "Zapiekanka z pomidorem oraz mozzarellą",
     "category": "Wrapy, tortille i fit fast food",
-    "diets": [
-      "Dieta 2200 cz. 3 (5 posiłków)"
-    ],
     "calories": 400,
     "protein": 17.0,
     "fat": 19.0,
@@ -16954,9 +16245,6 @@
     "id": 228,
     "title": "Zawijasy z fetą i żurawiną",
     "category": "Kanapki i tosty",
-    "diets": [
-      "Paczka Urodzinowa (Zrzuty)"
-    ],
     "calories": 401,
     "protein": 12.0,
     "fat": 21.0,
@@ -17052,9 +16340,6 @@
     "id": 229,
     "title": "kurczak Fajita",
     "category": "Dania główne i obiady",
-    "diets": [
-      "Dieta 2200 (5 posiłków)"
-    ],
     "calories": 580,
     "protein": 28.0,
     "fat": 18.0,
