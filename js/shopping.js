@@ -284,16 +284,9 @@ class ShoppingModule {
   renderList() {
     const container = document.getElementById('shopping-list-container');
     const emptyState = document.getElementById('shopping-empty-state');
-    const badge = document.getElementById('shopping-badge');
     if (!container) return;
 
     const list = store.getShoppingList();
-    const uncheckedCount = list.filter(x => !x.checked).length;
-
-    if (badge) {
-      badge.innerText = uncheckedCount;
-      badge.classList.toggle('hidden', uncheckedCount === 0);
-    }
 
     if (list.length === 0) {
       container.innerHTML = '';
