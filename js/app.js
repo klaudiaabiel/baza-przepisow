@@ -29,7 +29,7 @@ class Application {
     // 4. Register PWA Service Worker
     this.registerServiceWorker();
 
-    console.log('⚡ Baza Przepisów 3.0 zainicjalizowana pomyślnie!');
+    console.log('⚡ BiteCraft zainicjalizowany pomyślnie! Craft your week, bite by bite.');
   }
 
   bindNavigation() {

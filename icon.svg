@@ -1,17 +1,88 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
   <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#059669" />
-      <stop offset="100%" stop-color="#064e3b" />
+    <!-- Background Gradient: Deep Anthracite -->
+    <linearGradient id="bcBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1c1917"/>
+      <stop offset="100%" stop-color="#0c0a09"/>
     </linearGradient>
-    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
-      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-opacity="0.25"/>
+
+    <!-- Warm Copper / Terracotta Gradient for Steam, C Arc & Accents -->
+    <linearGradient id="bcCopper" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#c2410c"/>
+      <stop offset="50%" stop-color="#ea580c"/>
+      <stop offset="100%" stop-color="#fb923c"/>
+    </linearGradient>
+
+    <!-- Titanium Steel Gradient for Pan Structure & B -->
+    <linearGradient id="bcTitanium" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#e2e8f0"/>
+    </linearGradient>
+
+    <!-- Subtle Drop Shadow -->
+    <filter id="bcShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000000" flood-opacity="0.45"/>
     </filter>
   </defs>
-  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
-  <g filter="url(#shadow)" fill="#ffffff" transform="translate(64, 64) scale(0.75)">
-    <!-- Recipe Book / Chef Icon -->
-    <path d="M448 368V96c0-35.3-28.7-64-64-64H128C92.7 32 64 60.7 64 96v272c0 35.3 28.7 64 64 64h256c35.3 0 64-28.7 64-64zM128 80h256c8.8 0 16 7.2 16 16v208H112V96c0-8.8 7.2-16 16-16zm256 304H128c-8.8 0-16-7.2-16-16v-16h288v16c0 8.8-7.2 16-16 16z" fill="#f8fafc" opacity="0.95"/>
-    <path d="M256 128c-26.5 0-48 21.5-48 48 0 18.5 10.5 34.6 26 42.6-3.8 2.6-6 7-6 11.6v21.8h56v-21.8c0-4.6-2.2-9-6-11.6 15.5-8 26-24.1 26-42.6 0-26.5-21.5-48-48-48z" fill="#34d399"/>
+
+  <!-- Squircle Base for App Icon -->
+  <rect width="512" height="512" rx="114" fill="url(#bcBg)"/>
+  <rect width="510" height="510" x="1" y="1" rx="113" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="2"/>
+
+  <!-- Centered Sygnet Group -->
+  <g filter="url(#bcShadow)">
+    
+    <!-- Steam lines (Warm Terracotta / Copper) -->
+    <!-- Steam Left -->
+    <path d="M 200 160 C 190 142 208 126 198 94" 
+          fill="none" 
+          stroke="url(#bcCopper)" 
+          stroke-width="13" 
+          stroke-linecap="round"/>
+          
+    <!-- Steam Center (Prominent) -->
+    <path d="M 256 162 C 244 136 268 114 256 72" 
+          fill="none" 
+          stroke="url(#bcCopper)" 
+          stroke-width="16" 
+          stroke-linecap="round"/>
+
+    <!-- Steam Right -->
+    <path d="M 312 160 C 322 142 304 126 314 94" 
+          fill="none" 
+          stroke="url(#bcCopper)" 
+          stroke-width="13" 
+          stroke-linecap="round"/>
+
+    <!-- Pan / Bowl Monogram Structure (B + C fusion) -->
+    <!-- Handle extending to the left: geometric skillet handle -->
+    <rect x="52" y="240" width="76" height="24" rx="10" fill="url(#bcCopper)"/>
+
+    <!-- Main Skillet / Bowl Body Outer Rim -->
+    <path d="M 112 234 L 436 234 C 444 234 448 240 444 248 C 428 322 374 402 274 402 C 174 402 120 322 104 248 C 100 240 104 234 112 234 Z" 
+          fill="url(#bcTitanium)"/>
+
+    <!-- Inner Bowl Cavity (Anthracite Depth) -->
+    <path d="M 128 248 L 420 248 C 406 312 360 384 274 384 C 188 384 142 312 128 248 Z" 
+          fill="#18181b"/>
+
+    <!-- Monogram Inside Bowl: B (Titanium) + C (Copper) -->
+    <!-- Letter B (Left) -->
+    <g fill="url(#bcTitanium)">
+      <!-- Vertical Stem -->
+      <rect x="180" y="270" width="16" height="84" rx="4"/>
+      <!-- Top Loop -->
+      <path d="M 196 270 L 228 270 C 242 270 252 278 252 290 C 252 302 242 310 228 310 L 196 310 Z"/>
+      <!-- Bottom Loop -->
+      <path d="M 196 308 L 234 308 C 248 308 260 318 260 332 C 260 346 248 354 234 354 L 196 354 Z"/>
+    </g>
+    <!-- B Inner Cutouts -->
+    <rect x="196" y="278" width="28" height="24" rx="3" fill="#18181b"/>
+    <rect x="196" y="316" width="34" height="28" rx="3" fill="#18181b"/>
+
+    <!-- Letter C (Right, Sweeping Arc in Warm Copper) -->
+    <path d="M 334 286 C 320 274 300 268 280 272 C 274 273 270 280 272 286 C 274 292 280 296 286 295 C 300 293 312 297 320 304 C 330 313 330 333 320 342 C 312 349 300 353 286 351 C 280 350 274 354 272 360 C 270 366 274 373 280 374 C 300 378 320 372 334 360 C 354 342 354 304 334 286 Z" 
+          fill="url(#bcCopper)"/>
+
   </g>
 </svg>

@@ -1,12 +1,12 @@
 {
-  "name": "Baza Przepisów & Diety",
-  "short_name": "Przepisy",
+  "name": "BiteCraft — Craft your week, bite by bite",
+  "short_name": "BiteCraft",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "background_color": "#faf8f5",
-  "theme_color": "#15803d",
-  "description": "Twoja baza przepisów dietetycznych, jadłospis tygodniowy i inteligentna lista zakupów.",
+  "background_color": "#18181b",
+  "theme_color": "#18181b",
+  "description": "Craft your week, bite by bite. Świadome komponowanie posiłków.",
   "icons": [
     {
       "src": "/icon.svg",

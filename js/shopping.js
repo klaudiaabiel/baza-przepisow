@@ -394,7 +394,7 @@ class ShoppingModule {
       return;
     }
 
-    let text = '🛒 LISTA ZAKUPÓW (Baza Przepisów):\n\n';
+    let text = '🛒 LISTA ZAKUPÓW (BiteCraft):\n\n';
 
     const grouped = {};
     DEPARTMENTS.forEach(d => { grouped[d] = []; });
