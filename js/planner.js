@@ -30,7 +30,7 @@ class PlannerModule {
 
     // Listen to custom event from card "Dodaj do dnia"
     window.addEventListener('open_day_picker', (e) => {
-      this.openDayPickerModal(e.detail.id);
+      this.openDayPickerModal(e.detail.id, e.detail.substitutions);
     });
   }
 
@@ -339,8 +339,9 @@ class PlannerModule {
   }
 
   // --- 1-Click Day Picker Modal (opened from recipe card) ---
-  openDayPickerModal(recipeId) {
+  openDayPickerModal(recipeId, substitutions = {}) {
     this.targetRecipeId = Number(recipeId);
+    this.targetSubstitutions = substitutions || {};
     const recipe = store.getRecipeById(recipeId);
     if (!recipe) return;
 
@@ -393,7 +394,7 @@ class PlannerModule {
         const select = container.querySelector(`.picker-slot-select[data-date="${dateKey}"]`);
         const slotIdx = select ? Number(select.value) : defaultSlot;
         
-        store.addMealPlanEntry(dateKey, slotIdx, this.targetRecipeId, 1).then(() => {
+        store.addMealPlanEntry(dateKey, slotIdx, this.targetRecipeId, 1, this.targetSubstitutions).then(() => {
           showToast(`✓ Przypisano "${recipe.title}" do jadłospisu!`);
           this.closeDayPickerModal();
         });
@@ -407,6 +408,7 @@ class PlannerModule {
     const modal = document.getElementById('modal-day-picker');
     if (modal) modal.classList.add('hidden');
     this.targetRecipeId = null;
+    this.targetSubstitutions = {};
   }
 
   // --- Dish Selector Modal (opened from "+ Dodaj danie" slot button) ---

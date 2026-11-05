@@ -1,5 +1,5 @@
-// Baza Przepisów Service Worker (100% Offline PWA Support)
-const CACHE_NAME = 'baza-przepisow-v3.1';
+// BiteCraft Service Worker (PWA Offline Support & Instant Updates)
+const CACHE_NAME = 'baza-przepisow-v4.0';
 
 const PRECACHE_ASSETS = [
   '/',
@@ -11,6 +11,9 @@ const PRECACHE_ASSETS = [
   '/icon-192.png',
   '/icon-512.png',
   '/icon.svg',
+  '/favicon.ico',
+  '/favicon-32x32.png',
+  '/favicon-16x16.png',
   '/js/app.js',
   '/js/store.js',
   '/js/catalog.js',
@@ -19,7 +22,8 @@ const PRECACHE_ASSETS = [
   '/js/modal.js',
   '/js/creator.js',
   '/js/utils/dom.js',
-  '/js/utils/stemmer.js'
+  '/js/utils/stemmer.js',
+  '/js/utils/substitutes.js'
 ];
 
 self.addEventListener('install', event => {
@@ -36,7 +40,10 @@ self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys => {
       return Promise.all(
-        keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))
+        keys.filter(k => k !== CACHE_NAME).map(k => {
+          console.log('[SW] Usunięto przestarzały cache:', k);
+          return caches.delete(k);
+        })
       );
     }).then(() => self.clients.claim())
   );
@@ -57,7 +64,7 @@ self.addEventListener('fetch', event => {
   }
 
   // 2. Images: Stale-While-Revalidate with placeholder fallback
-  if (req.destination === 'image' || url.pathname.endsWith('.webp') || url.pathname.endsWith('.png') || url.pathname.endsWith('.svg')) {
+  if (req.destination === 'image' || url.pathname.endsWith('.webp') || url.pathname.endsWith('.png') || url.pathname.endsWith('.svg') || url.pathname.endsWith('.ico')) {
     event.respondWith(
       caches.match(req).then(cached => {
         const fetchPromise = fetch(req).then(networkResponse => {
@@ -76,16 +83,17 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // 3. Static scripts, styles, data: Cache first, network fallback
+  // 3. Application code (JS, CSS, JSON): NETWORK FIRST with CACHE FALLBACK
+  // Guarantees desktop & mobile users immediately receive code updates on deploy!
   event.respondWith(
-    caches.match(req).then(cached => {
-      return cached || fetch(req).then(networkResponse => {
-        if (networkResponse && networkResponse.status === 200) {
-          const clone = networkResponse.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(req, clone));
-        }
-        return networkResponse;
-      });
+    fetch(req).then(networkResponse => {
+      if (networkResponse && networkResponse.status === 200) {
+        const clone = networkResponse.clone();
+        caches.open(CACHE_NAME).then(cache => cache.put(req, clone));
+      }
+      return networkResponse;
+    }).catch(() => {
+      return caches.match(req);
     })
   );
 });

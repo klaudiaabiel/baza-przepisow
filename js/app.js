@@ -154,6 +154,8 @@ class Application {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js').then(reg => {
           console.log('[PWA] Service Worker zarejestrowany pomyślnie:', reg.scope);
+          // Force immediate check for updates on each load
+          reg.update();
         }).catch(err => {
           console.warn('[PWA] Błąd rejestracji Service Workera:', err);
         });

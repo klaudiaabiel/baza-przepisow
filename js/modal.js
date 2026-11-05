@@ -38,6 +38,7 @@ class ModalModule {
     this.currentPortions = 1;
     this.context = null; // { mealPlanId, dateKey, slotIndex, dayName, slotName }
     this.activeMealPlanEntry = null;
+    this.localSubstitutions = {}; // Active substitutions map (normKey -> subData)
     this.openSubDrawers = new Set();
     this.wakeLock = null;
     this.isWakeLockActive = false;
@@ -81,12 +82,17 @@ class ModalModule {
       });
     }
 
-    // Add to plan button in modal
+    // Add to plan button in modal (passes active substitutions!)
     const planBtn = document.getElementById('modal-add-to-plan-btn');
     if (planBtn) {
       planBtn.addEventListener('click', () => {
         if (!this.currentRecipe) return;
-        window.dispatchEvent(new CustomEvent('open_day_picker', { detail: { id: this.currentRecipe.id } }));
+        window.dispatchEvent(new CustomEvent('open_day_picker', {
+          detail: {
+            id: this.currentRecipe.id,
+            substitutions: this.localSubstitutions
+          }
+        }));
       });
     }
 
@@ -110,6 +116,32 @@ class ModalModule {
     });
   }
 
+  findMealPlanEntry(context) {
+    if (!context) return null;
+
+    // 1. Check direct mealPlanId
+    if (context.mealPlanId) {
+      const entry = store.getMealPlanEntry(context.mealPlanId);
+      if (entry) return entry;
+    }
+
+    // 2. Check by dateKey and slotIndex
+    if (context.dateKey && typeof context.slotIndex === 'number') {
+      const bySlot = store.getMealPlan().find(m => m.date_key === context.dateKey && Number(m.slot_index) === Number(context.slotIndex));
+      if (bySlot) return bySlot;
+    }
+
+    // 3. Fallback: if recipe is currently planned in exactly 1 slot, auto-link
+    if (this.currentRecipe) {
+      const planned = store.getMealPlan().filter(m => m.recipe_id === this.currentRecipe.id);
+      if (planned.length === 1) {
+        return planned[0];
+      }
+    }
+
+    return null;
+  }
+
   openModal(recipeId, context = {}) {
     const r = store.getRecipeById(recipeId);
     if (!r) {
@@ -121,13 +153,15 @@ class ModalModule {
     this.context = context || {};
     this.openSubDrawers.clear();
 
-    // Check if opened from a specific planned meal slot
-    if (this.context.mealPlanId) {
-      this.activeMealPlanEntry = store.getMealPlanEntry(this.context.mealPlanId);
-      this.currentPortions = this.activeMealPlanEntry ? (this.activeMealPlanEntry.portions || r.portions || 1) : (r.portions || 1);
+    // Find if opened for a planned meal slot or linked occurrence
+    this.activeMealPlanEntry = this.findMealPlanEntry(this.context);
+
+    if (this.activeMealPlanEntry) {
+      this.currentPortions = this.activeMealPlanEntry.portions || r.portions || 1;
+      this.localSubstitutions = this.activeMealPlanEntry.substitutions ? JSON.parse(JSON.stringify(this.activeMealPlanEntry.substitutions)) : {};
     } else {
-      this.activeMealPlanEntry = null;
       this.currentPortions = r.portions || 1;
+      this.localSubstitutions = {};
     }
 
     const modal = document.getElementById('modal-recipe');
@@ -163,6 +197,7 @@ class ModalModule {
     this.currentRecipe = null;
     this.context = null;
     this.activeMealPlanEntry = null;
+    this.localSubstitutions = {};
     this.openSubDrawers.clear();
     this.releaseWakeLock();
   }
@@ -171,11 +206,12 @@ class ModalModule {
     const banner = document.getElementById('modal-plan-context');
     if (!banner || !this.currentRecipe) return;
 
-    // Case 1: Opened from a specific planned slot in the planner
+    const subCount = Object.keys(this.localSubstitutions || {}).length;
+
+    // Case 1: Opened or linked to a specific planned slot in the planner
     if (this.activeMealPlanEntry) {
-      const dayText = this.context.dayName || 'Zaplanowany dzień';
-      const slotText = this.context.slotName || `Posiłek ${this.activeMealPlanEntry.slot_index + 1}`;
-      const subCount = Object.keys(this.activeMealPlanEntry.substitutions || {}).length;
+      const dayText = this.context?.dayName || `Dzień ${this.activeMealPlanEntry.date_key}`;
+      const slotText = this.context?.slotName || `Posiłek ${Number(this.activeMealPlanEntry.slot_index) + 1}`;
 
       banner.className = 'mt-3 p-3 rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50/70 border border-amber-200/90 flex items-center justify-between gap-3 shadow-2xs';
       banner.innerHTML = `
@@ -186,7 +222,7 @@ class ModalModule {
               📅 Posiłek w jadłospisie: <span class="text-brand-700">${escapeHtml(dayText)} • ${escapeHtml(slotText)}</span>
             </span>
             <span class="text-[11px] text-stone-500 font-medium">
-              ${subCount > 0 ? `Aktywne zamienniki: <strong>${subCount}</strong>. ` : ''}Zmiany zapisują się <strong>tylko dla tego posiłku</strong> (baza główna pozostaje nienaruszona).
+              ${subCount > 0 ? `Aktywne zamienniki: <strong>${subCount}</strong>. ` : ''}Zamiany zapisują się <strong>tylko dla tego posiłku</strong> (baza dań pozostaje nienaruszona).
             </span>
           </div>
         </div>
@@ -198,20 +234,20 @@ class ModalModule {
       return;
     }
 
-    // Case 2: Opened from catalog, but recipe exists in active meal plan
+    // Case 2: Recipe exists in active meal plan multiple times
     const plannedOccurrences = store.getMealPlan().filter(m => m.recipe_id === this.currentRecipe.id);
-    if (plannedOccurrences.length > 0) {
+    if (plannedOccurrences.length > 1) {
       banner.className = 'mt-3 p-3 rounded-2xl bg-stone-50 border border-stone-200/90 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5';
       
       const optionsHtml = plannedOccurrences.map(p => {
-        return `<option value="${p.id}">Dzień ${p.date_key} (Posiłek ${p.slot_index + 1})</option>`;
+        return `<option value="${p.id}">Dzień ${p.date_key} (Posiłek ${Number(p.slot_index) + 1})</option>`;
       }).join('');
 
       banner.innerHTML = `
         <div class="flex items-center gap-2 min-w-0">
           <i class="fa-solid fa-calendar-days text-brand-600 text-xs"></i>
           <span class="text-xs text-stone-700 font-semibold">
-            To danie jest w Twoim jadłospisie (${plannedOccurrences.length}x). Chcesz dostosować zamiennik dla konkretnego dnia?
+            To danie jest w Twoim jadłospisie (${plannedOccurrences.length}x). Wybierz dzień, by przypisać do niego zamienniki:
           </span>
         </div>
         <div class="flex items-center gap-2 w-full sm:w-auto shrink-0">
@@ -233,6 +269,7 @@ class ModalModule {
               this.activeMealPlanEntry = entry;
               this.context = { mealPlanId: entry.id, dateKey: entry.date_key, slotIndex: entry.slot_index };
               this.currentPortions = entry.portions || this.currentRecipe.portions || 1;
+              this.localSubstitutions = entry.substitutions ? JSON.parse(JSON.stringify(entry.substitutions)) : {};
               this.renderPlanContextBanner();
               this.renderMacrosAndIngredients();
               showToast('Przełączono w tryb edycji wybranego posiłku z jadłospisu!');
@@ -243,7 +280,22 @@ class ModalModule {
       return;
     }
 
-    // Case 3: Not in planner at all
+    // Case 3: Custom substitutions active in preview mode (not yet in planner)
+    if (subCount > 0) {
+      banner.className = 'mt-3 p-3 rounded-2xl bg-amber-50/70 border border-amber-200/80 flex items-center justify-between text-xs gap-3';
+      banner.innerHTML = `
+        <div class="flex items-center gap-2 min-w-0">
+          <i class="fa-solid fa-arrows-rotate text-amber-600"></i>
+          <span class="text-stone-700 font-medium">
+            Aktywne zamienniki w podglądzie: <strong>${subCount}</strong>. Aby zapisać je na stałe w jadłospisie, kliknij <strong>"Dodaj do dnia"</strong>.
+          </span>
+        </div>
+      `;
+      banner.classList.remove('hidden');
+      return;
+    }
+
+    // Case 4: Default hidden
     banner.classList.add('hidden');
     banner.innerHTML = '';
   }
@@ -296,9 +348,6 @@ class ModalModule {
     if (fatEl) fatEl.innerText = `${Math.round(r.fat * ratio * 10) / 10}g`;
     if (carbsEl) carbsEl.innerText = `${Math.round(r.carbs * ratio * 10) / 10}g`;
 
-    // Active substitutions map if in meal plan context
-    const activeSubs = (this.activeMealPlanEntry && this.activeMealPlanEntry.substitutions) || {};
-
     // Ingredients rendering with universal scaler & substitutes engine
     const ingContainer = document.getElementById('modal-ingredients');
     const ingCountEl = document.getElementById('modal-ing-count');
@@ -316,8 +365,8 @@ class ModalModule {
       const origName = (ing.name || '').trim();
       const normName = origName.toLowerCase();
 
-      // Check if this ingredient has been substituted for this meal
-      const subEntry = Object.entries(activeSubs).find(([k, v]) => normName === k || normName.includes(k) || k.includes(normName));
+      // Check if this ingredient has an active substitution
+      const subEntry = Object.entries(this.localSubstitutions).find(([k, v]) => normName === k || normName.includes(k) || k.includes(normName));
       const isSubstituted = !!subEntry;
       const subData = isSubstituted ? subEntry[1] : null;
 
@@ -349,7 +398,7 @@ class ModalModule {
 
               <div class="flex items-center gap-2 shrink-0">
                 <span class="text-xs font-black text-amber-900 bg-amber-100/90 border border-amber-200 px-2 py-0.5 rounded-lg">${escapeHtml(displayAmount)}</span>
-                <button type="button" class="btn-restore-sub px-2 py-1 rounded-lg bg-white hover:bg-red-50 text-red-600 border border-stone-200 hover:border-red-200 font-bold text-[11px] transition cursor-pointer flex items-center gap-1" data-orig="${escapeHtml(origName)}" title="Przywróć oryginalny składnik">
+                <button type="button" class="btn-restore-sub px-2.5 py-1 rounded-xl bg-white hover:bg-red-50 text-red-600 border border-stone-200 hover:border-red-200 font-bold text-[11px] transition cursor-pointer flex items-center gap-1 shadow-2xs" data-orig="${escapeHtml(origName)}" title="Przywróć oryginalny składnik">
                   <i class="fa-solid fa-rotate-left text-[10px]"></i> Przywróć
                 </button>
               </div>
@@ -389,7 +438,7 @@ class ModalModule {
             <div class="flex items-center gap-2 shrink-0">
               ${displayAmount ? `<span class="text-xs font-bold text-stone-600 bg-stone-100 px-2 py-0.5 rounded-lg">${escapeHtml(displayAmount)}</span>` : ''}
               ${subInfo ? `
-                <button type="button" class="btn-toggle-sub text-[11px] font-bold text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200/70 px-2 py-0.5 rounded-xl transition flex items-center gap-1.5 cursor-pointer shadow-2xs" data-idx="${idx}" title="Zobacz oficjalne zamienniki dietetyczne z dokładną gramaturą">
+                <button type="button" class="btn-toggle-sub text-[11px] font-bold text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200/70 px-2.5 py-1 rounded-xl transition flex items-center gap-1.5 cursor-pointer shadow-2xs" data-idx="${idx}" title="Zobacz oficjalne zamienniki dietetyczne z dokładną gramaturą">
                   <i class="fa-solid fa-arrows-rotate text-[10px]"></i> Zamienniki
                 </button>
               ` : ''}
@@ -406,7 +455,6 @@ class ModalModule {
 
   renderSubstitutesDrawer(subInfo, idx, originalIng, ratio) {
     const isOpen = this.openSubDrawers.has(idx);
-    const origBaseWeight = originalIng.weight_g || Math.round(subInfo.currentBaseGrams / ratio);
 
     return `
       <div id="sub-drawer-${idx}" class="${isOpen ? '' : 'hidden'} mt-1 mb-2 p-3.5 rounded-2xl bg-amber-50/60 border border-amber-200/80 text-xs">
@@ -433,28 +481,17 @@ class ModalModule {
                 <span class="text-[10px] text-stone-400 block">${escapeHtml(sub.homeMeasure)}</span>
               </div>
 
-              ${this.activeMealPlanEntry ? `
-                <button type="button" class="btn-apply-sub px-2.5 py-1 rounded-lg bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-[10px] transition cursor-pointer shrink-0 shadow-2xs flex items-center gap-1"
-                  data-orig="${escapeHtml(originalIng.name)}"
-                  data-name="${escapeHtml(sub.name)}"
-                  data-amount="${escapeHtml(sub.amount)}"
-                  data-weight="${sub.weight_g}"
-                  data-base-weight="${Math.round(sub.weight_g / ratio)}"
-                  data-dept="${escapeHtml(sub.department)}">
-                  <i class="fa-solid fa-check text-[9px]"></i> Zastosuj
-                </button>
-              ` : `
-                <button type="button" class="btn-apply-to-plan-prompt px-2 py-1 rounded-lg bg-amber-600 hover:bg-amber-700 text-white font-bold text-[10px] transition cursor-pointer shrink-0 flex items-center gap-1"
-                  data-orig="${escapeHtml(originalIng.name)}"
-                  data-name="${escapeHtml(sub.name)}"
-                  data-amount="${escapeHtml(sub.amount)}"
-                  data-weight="${sub.weight_g}"
-                  data-base-weight="${Math.round(sub.weight_g / ratio)}"
-                  data-dept="${escapeHtml(sub.department)}"
-                  title="Wybierz posiłek z jadłospisu, by zastosować tę zamianę">
-                  Zastosuj w dniu...
-                </button>
-              `}
+              <!-- Universal 1-Click Apply Button (Works on both Desktop & Mobile!) -->
+              <button type="button" class="btn-apply-sub px-3 py-1.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-[11px] transition cursor-pointer shrink-0 shadow-2xs flex items-center gap-1"
+                data-orig="${escapeHtml(originalIng.name)}"
+                data-name="${escapeHtml(sub.name)}"
+                data-amount="${escapeHtml(sub.amount)}"
+                data-weight="${sub.weight_g}"
+                data-base-weight="${Math.round(sub.weight_g / ratio)}"
+                data-dept="${escapeHtml(sub.department)}"
+                title="Zastosuj ten zamiennik w przepisie">
+                <i class="fa-solid fa-check text-[10px]"></i> Zastosuj
+              </button>
             </div>
           `).join('')}
         </div>
@@ -484,16 +521,11 @@ class ModalModule {
       });
     });
 
-    // Apply substitution to active meal plan entry
+    // Apply substitution (Works instantly on both Desktop & Mobile!)
     container.querySelectorAll('.btn-apply-sub').forEach(btn => {
       btn.addEventListener('click', async (e) => {
         e.preventDefault();
         e.stopPropagation();
-
-        if (!this.activeMealPlanEntry) {
-          showToast('Wybierz najpierw posiłek z jadłospisu, aby zapisać zamianę.');
-          return;
-        }
 
         const origName = btn.getAttribute('data-orig');
         const repName = btn.getAttribute('data-name');
@@ -502,21 +534,38 @@ class ModalModule {
         const repBaseWeight = Number(btn.getAttribute('data-base-weight')) || repWeight;
         const repDept = btn.getAttribute('data-dept') || 'Inne';
 
-        await store.updateMealPlanSubstitution(this.activeMealPlanEntry.id, origName, {
+        const subData = {
           originalName: origName,
           replacementName: repName,
           amount: repAmount,
           weight_g: repWeight,
           baseWeightG: repBaseWeight,
           department: repDept
-        });
+        };
 
-        // Refresh entry reference
-        this.activeMealPlanEntry = store.getMealPlanEntry(this.activeMealPlanEntry.id);
+        const normKey = origName.toLowerCase().trim();
+        this.localSubstitutions[normKey] = subData;
+
+        // If this meal is planned in a day, persist it immediately to that slot!
+        if (this.activeMealPlanEntry) {
+          await store.updateMealPlanSubstitution(this.activeMealPlanEntry.id, origName, subData);
+          this.activeMealPlanEntry = store.getMealPlanEntry(this.activeMealPlanEntry.id);
+          showToast(`✓ Zastosowano "${repName}" (${repAmount}) w tym posiłku!`);
+        } else {
+          // If recipe exists in exactly 1 planned slot, auto-save to that slot as well
+          const planned = store.getMealPlan().filter(m => m.recipe_id === this.currentRecipe.id);
+          if (planned.length === 1) {
+            this.activeMealPlanEntry = planned[0];
+            await store.updateMealPlanSubstitution(planned[0].id, origName, subData);
+            this.activeMealPlanEntry = store.getMealPlanEntry(planned[0].id);
+            showToast(`✓ Zastosowano "${repName}" (${repAmount}) dla zaplanowanego posiłku!`);
+          } else {
+            showToast(`✓ Zastosowano "${repName}" (${repAmount}) w przepisie!`);
+          }
+        }
+
         this.renderPlanContextBanner();
         this.renderMacrosAndIngredients();
-
-        showToast(`✓ Zamieniono "${origName}" na "${repName}" (${repAmount}) w tym posiłku!`);
       });
     });
 
@@ -526,63 +575,18 @@ class ModalModule {
         e.preventDefault();
         e.stopPropagation();
 
-        if (!this.activeMealPlanEntry) return;
         const origName = btn.getAttribute('data-orig');
+        const normKey = origName.toLowerCase().trim();
+        delete this.localSubstitutions[normKey];
 
-        await store.removeMealPlanSubstitution(this.activeMealPlanEntry.id, origName);
-        this.activeMealPlanEntry = store.getMealPlanEntry(this.activeMealPlanEntry.id);
-        this.renderPlanContextBanner();
-        this.renderMacrosAndIngredients();
+        if (this.activeMealPlanEntry) {
+          await store.removeMealPlanSubstitution(this.activeMealPlanEntry.id, origName);
+          this.activeMealPlanEntry = store.getMealPlanEntry(this.activeMealPlanEntry.id);
+        }
 
         showToast(`✓ Przywrócono oryginalny składnik: "${origName}".`);
-      });
-    });
-
-    // Prompt user to select/create a meal plan entry when applying from catalog
-    container.querySelectorAll('.btn-apply-to-plan-prompt').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-
-        const planned = store.getMealPlan().filter(m => m.recipe_id === this.currentRecipe.id);
-        if (planned.length === 0) {
-          showToast('To danie nie jest jeszcze w Twoim jadłospisie. Kliknij "Dodaj do dnia" na dole modalu.');
-          return;
-        }
-
-        // If planned in exactly 1 meal slot, apply directly
-        if (planned.length === 1) {
-          this.activeMealPlanEntry = planned[0];
-          this.context = { mealPlanId: planned[0].id, dateKey: planned[0].date_key, slotIndex: planned[0].slot_index };
-          const repName = btn.getAttribute('data-name');
-          const repAmount = btn.getAttribute('data-amount');
-          const origName = btn.getAttribute('data-orig');
-          const repWeight = Number(btn.getAttribute('data-weight')) || 0;
-          const repBaseWeight = Number(btn.getAttribute('data-base-weight')) || repWeight;
-          const repDept = btn.getAttribute('data-dept') || 'Inne';
-
-          store.updateMealPlanSubstitution(planned[0].id, origName, {
-            originalName: origName,
-            replacementName: repName,
-            amount: repAmount,
-            weight_g: repWeight,
-            baseWeightG: repBaseWeight,
-            department: repDept
-          }).then(() => {
-            this.activeMealPlanEntry = store.getMealPlanEntry(planned[0].id);
-            this.renderPlanContextBanner();
-            this.renderMacrosAndIngredients();
-            showToast(`✓ Zastosowano "${repName}" (${repAmount}) dla zaplanowanego posiłku!`);
-          });
-          return;
-        }
-
-        // If multiple planned occurrences, scroll to context selector
-        const banner = document.getElementById('modal-plan-context');
-        if (banner) {
-          banner.scrollIntoView({ behavior: 'smooth' });
-          showToast('Wybierz z listy u góry, dla którego dnia chcesz zastosować tę zamianę.');
-        }
+        this.renderPlanContextBanner();
+        this.renderMacrosAndIngredients();
       });
     });
   }
@@ -615,7 +619,7 @@ class ModalModule {
     const r = this.currentRecipe;
     const ratio = this.currentPortions / (r.portions || 1);
     const ings = r.ingredients || [];
-    const activeSubs = (this.activeMealPlanEntry && this.activeMealPlanEntry.substitutions) || {};
+    const activeSubs = this.localSubstitutions || {};
 
     if (ings.length === 0) {
       showToast('Ten przepis nie zawiera składników do dodania.');
