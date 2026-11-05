@@ -1,6 +1,6 @@
 import { store } from './store.js';
 import { escapeHtml, showToast, renderMacroPills } from './utils/dom.js';
-import { findSubstitutesForIngredient } from './utils/substitutes.js';
+import { findSubstitutesForIngredient, formatUnitAndGrams, getHomeMeasureForName } from './utils/substitutes.js';
 
 export function scaleAmount(amountStr, ratio, fallbackWeightG = 0) {
   if (ratio === 1) {
@@ -113,6 +113,16 @@ class ModalModule {
       if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) {
         this.closeModal();
       }
+    });
+
+    // Close open substitute drawers when clicking anywhere outside
+    document.addEventListener('click', (e) => {
+      if (this.openSubDrawers.size === 0) return;
+      if (e.target.closest('.btn-toggle-sub') || e.target.closest('[id^="sub-drawer-"]')) {
+        return;
+      }
+      this.openSubDrawers.clear();
+      document.querySelectorAll('[id^="sub-drawer-"]').forEach(d => d.classList.add('hidden'));
     });
   }
 
@@ -374,45 +384,50 @@ class ModalModule {
       const subInfo = findSubstitutesForIngredient(origName, ing.amount, ing.weight_g, ratio);
 
       if (isSubstituted) {
-        // Render substituted item row
-        let displayAmount = subData.amount || '';
-        if (ratio !== 1 && subData.baseWeightG) {
-          displayAmount = `${Math.round(subData.baseWeightG * ratio)} g`;
+        // Render substituted item row with piece count and gramature
+        const currentWeightG = subData.baseWeightG ? Math.round(subData.baseWeightG * ratio) : (subData.weight_g || 0);
+        const hm = subData.homeMeasure || getHomeMeasureForName(subData.replacementName);
+        let displayAmount = '';
+        if (hm && currentWeightG > 0) {
+          displayAmount = formatUnitAndGrams(currentWeightG, hm);
+        } else if (subData.amount) {
+          displayAmount = subData.amount;
+        } else if (currentWeightG > 0) {
+          displayAmount = `${currentWeightG} g`;
         }
 
         return `
           <div class="ingredient-row p-3 rounded-2xl bg-amber-50/80 border border-amber-300/80 transition space-y-2 mb-2">
-            <div class="flex items-center justify-between gap-3">
-              <label class="flex items-center gap-3 min-w-0 flex-1 cursor-pointer">
-                <input type="checkbox" class="modal-ing-check w-4 h-4 rounded text-brand-600 focus:ring-brand-500 accent-brand-600 cursor-pointer">
-                <div class="min-w-0">
+            <div class="flex items-start justify-between gap-3">
+              <div class="flex items-start gap-3 min-w-0 flex-1">
+                <input type="checkbox" id="modal-ing-check-${idx}" class="modal-ing-check w-4 h-4 rounded text-brand-600 focus:ring-brand-500 accent-brand-600 cursor-pointer mt-0.5 shrink-0">
+                <div class="min-w-0 flex-1">
                   <div class="flex items-center gap-1.5 flex-wrap">
-                    <span class="text-xs sm:text-sm font-extrabold text-amber-950">${escapeHtml(subData.replacementName)}</span>
+                    <label for="modal-ing-check-${idx}" class="text-xs sm:text-sm font-extrabold text-amber-950 cursor-pointer">${escapeHtml(subData.replacementName)}</label>
                     <span class="text-[9px] font-black uppercase text-amber-800 bg-amber-200/80 px-1.5 py-0.2 rounded-md">Zamiennik aktywny</span>
                   </div>
                   <span class="text-[11px] text-stone-500 block">
                     Zamiast: <span class="line-through font-medium text-stone-400">${escapeHtml(origName)}</span>
                   </span>
+                  ${subInfo ? `
+                    <div class="mt-1">
+                      <button type="button" class="btn-toggle-sub inline-flex items-center gap-1.5 text-[11px] font-bold text-amber-800 hover:text-amber-950 bg-amber-100/90 hover:bg-amber-200/90 border border-amber-300/80 px-2.5 py-0.5 rounded-lg transition cursor-pointer shadow-2xs" data-idx="${idx}" title="Zmień na inny zamiennik">
+                        <i class="fa-solid fa-arrows-rotate text-[10px]"></i> Zmień zamiennik (${subInfo.substitutes.length})
+                      </button>
+                    </div>
+                  ` : ''}
                 </div>
-              </label>
+              </div>
 
-              <div class="flex items-center gap-2 shrink-0">
-                <span class="text-xs font-black text-amber-900 bg-amber-100/90 border border-amber-200 px-2 py-0.5 rounded-lg">${escapeHtml(displayAmount)}</span>
+              <div class="flex items-center gap-2 shrink-0 pt-0.5">
+                <span class="text-xs font-black text-amber-900 bg-amber-100/90 border border-amber-200 px-2.5 py-1 rounded-lg">${escapeHtml(displayAmount)}</span>
                 <button type="button" class="btn-restore-sub px-2.5 py-1 rounded-xl bg-white hover:bg-red-50 text-red-600 border border-stone-200 hover:border-red-200 font-bold text-[11px] transition cursor-pointer flex items-center gap-1 shadow-2xs" data-orig="${escapeHtml(origName)}" title="Przywróć oryginalny składnik">
                   <i class="fa-solid fa-rotate-left text-[10px]"></i> Przywróć
                 </button>
               </div>
             </div>
 
-            ${subInfo ? `
-              <div class="pt-1 flex items-center justify-between text-[11px]">
-                <span class="text-stone-400 font-medium">Możesz też wybrać inny z listy:</span>
-                <button type="button" class="btn-toggle-sub font-bold text-amber-800 hover:text-amber-950 flex items-center gap-1 cursor-pointer" data-idx="${idx}">
-                  <i class="fa-solid fa-arrows-rotate text-[10px]"></i> Zmień na inny (${subInfo.substitutes.length})
-                </button>
-              </div>
-              ${this.renderSubstitutesDrawer(subInfo, idx, ing, ratio)}
-            ` : ''}
+            ${subInfo ? this.renderSubstitutesDrawer(subInfo, idx, ing, ratio) : ''}
           </div>
         `;
       }
@@ -427,21 +442,25 @@ class ModalModule {
 
       return `
         <div class="ingredient-row rounded-2xl border border-transparent hover:border-stone-200/90 transition mb-1">
-          <div class="flex items-center justify-between p-2.5 rounded-2xl hover:bg-stone-50 transition select-none group">
-            <label class="flex items-center gap-3 min-w-0 flex-1 cursor-pointer">
-              <input type="checkbox" class="modal-ing-check w-4 h-4 rounded text-brand-600 focus:ring-brand-500 accent-brand-600 cursor-pointer">
-              <span class="text-xs sm:text-sm font-semibold text-stone-800 transition group-has-checked:line-through group-has-checked:text-stone-400">
-                ${escapeHtml(origName)}
-              </span>
-            </label>
+          <div class="flex items-start justify-between p-2.5 rounded-2xl hover:bg-stone-50 transition select-none group gap-3">
+            <div class="flex items-start gap-3 min-w-0 flex-1">
+              <input type="checkbox" id="modal-ing-check-${idx}" class="modal-ing-check w-4 h-4 rounded text-brand-600 focus:ring-brand-500 accent-brand-600 cursor-pointer mt-0.5 shrink-0">
+              <div class="min-w-0 flex-1">
+                <label for="modal-ing-check-${idx}" class="text-xs sm:text-sm font-semibold text-stone-800 transition cursor-pointer block select-none group-has-[:checked]:line-through group-has-[:checked]:text-stone-400">
+                  ${escapeHtml(origName)}
+                </label>
+                ${subInfo ? `
+                  <div class="mt-1">
+                    <button type="button" class="btn-toggle-sub inline-flex items-center gap-1.5 text-[11px] font-bold text-amber-700 hover:text-amber-900 bg-amber-50 hover:bg-amber-100 border border-amber-200/80 px-2.5 py-0.5 rounded-lg transition cursor-pointer shadow-2xs" data-idx="${idx}" title="Zobacz oficjalne zamienniki dietetyczne z dokładną gramaturą">
+                      <i class="fa-solid fa-arrows-rotate text-[10px]"></i> Zamienniki
+                    </button>
+                  </div>
+                ` : ''}
+              </div>
+            </div>
 
-            <div class="flex items-center gap-2 shrink-0">
-              ${displayAmount ? `<span class="text-xs font-bold text-stone-600 bg-stone-100 px-2 py-0.5 rounded-lg">${escapeHtml(displayAmount)}</span>` : ''}
-              ${subInfo ? `
-                <button type="button" class="btn-toggle-sub text-[11px] font-bold text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200/70 px-2.5 py-1 rounded-xl transition flex items-center gap-1.5 cursor-pointer shadow-2xs" data-idx="${idx}" title="Zobacz oficjalne zamienniki dietetyczne z dokładną gramaturą">
-                  <i class="fa-solid fa-arrows-rotate text-[10px]"></i> Zamienniki
-                </button>
-              ` : ''}
+            <div class="flex items-center gap-2 shrink-0 pt-0.5">
+              ${displayAmount ? `<span class="text-xs font-bold text-stone-600 bg-stone-100 px-2.5 py-1 rounded-lg">${escapeHtml(displayAmount)}</span>` : ''}
             </div>
           </div>
 
@@ -457,19 +476,7 @@ class ModalModule {
     const isOpen = this.openSubDrawers.has(idx);
 
     return `
-      <div id="sub-drawer-${idx}" class="${isOpen ? '' : 'hidden'} mt-1 mb-2 p-3.5 rounded-2xl bg-amber-50/60 border border-amber-200/80 text-xs">
-        <div class="flex items-center justify-between pb-2 mb-2.5 border-b border-amber-200/70">
-          <div>
-            <span class="font-black text-amber-950 flex items-center gap-1.5">
-              <span>${subInfo.groupIcon}</span> ${subInfo.groupName} – zamienniki dla: <span class="text-brand-800 underline underline-offset-2">${escapeHtml(subInfo.currentIngredientName)}</span>
-            </span>
-            <span class="text-[10px] text-stone-500 font-medium block">${subInfo.groupDescription}</span>
-          </div>
-          <span class="text-[10px] font-black text-amber-800 bg-amber-100/90 px-2 py-0.5 rounded-full shrink-0">
-            Odpowiednik: ${subInfo.currentBaseGrams} g
-          </span>
-        </div>
-
+      <div id="sub-drawer-${idx}" class="${isOpen ? '' : 'hidden'} mt-1 mb-2 p-2.5 sm:p-3 rounded-2xl bg-amber-50/70 border border-amber-200/90 text-xs">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-64 overflow-y-auto pr-1">
           ${subInfo.substitutes.map(sub => `
             <div class="p-2.5 rounded-xl bg-white border border-amber-200/70 hover:border-amber-400 shadow-2xs flex items-center justify-between gap-2 transition">
@@ -478,16 +485,17 @@ class ModalModule {
                   <span class="font-bold text-stone-900 text-xs truncate" title="${escapeHtml(sub.name)}">${escapeHtml(sub.name)}</span>
                   <span class="font-black text-amber-900 text-xs shrink-0">${escapeHtml(sub.amount)}</span>
                 </div>
-                <span class="text-[10px] text-stone-400 block">${escapeHtml(sub.homeMeasure)}</span>
+                ${sub.homeMeasure ? `<span class="text-[10px] text-stone-400 block truncate">${escapeHtml(sub.homeMeasure)}</span>` : ''}
               </div>
 
               <!-- Universal 1-Click Apply Button (Works on both Desktop & Mobile!) -->
-              <button type="button" class="btn-apply-sub px-3 py-1.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-[11px] transition cursor-pointer shrink-0 shadow-2xs flex items-center gap-1"
+              <button type="button" class="btn-apply-sub px-3 py-1.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-[11px] transition cursor-pointer shrink-0 shadow-2xs flex items-center gap-1 active:scale-95"
                 data-orig="${escapeHtml(originalIng.name)}"
                 data-name="${escapeHtml(sub.name)}"
                 data-amount="${escapeHtml(sub.amount)}"
                 data-weight="${sub.weight_g}"
                 data-base-weight="${Math.round(sub.weight_g / ratio)}"
+                data-home-measure="${escapeHtml(sub.homeMeasure || '')}"
                 data-dept="${escapeHtml(sub.department)}"
                 title="Zastosuj ten zamiennik w przepisie">
                 <i class="fa-solid fa-check text-[10px]"></i> Zastosuj
@@ -511,12 +519,15 @@ class ModalModule {
         const idx = Number(btn.getAttribute('data-idx'));
         if (this.openSubDrawers.has(idx)) {
           this.openSubDrawers.delete(idx);
+          const drawer = document.getElementById(`sub-drawer-${idx}`);
+          if (drawer) drawer.classList.add('hidden');
         } else {
+          // Close any other open drawers so only one drawer is open at a time
+          this.openSubDrawers.clear();
+          container.querySelectorAll('[id^="sub-drawer-"]').forEach(d => d.classList.add('hidden'));
           this.openSubDrawers.add(idx);
-        }
-        const drawer = document.getElementById(`sub-drawer-${idx}`);
-        if (drawer) {
-          drawer.classList.toggle('hidden', !this.openSubDrawers.has(idx));
+          const drawer = document.getElementById(`sub-drawer-${idx}`);
+          if (drawer) drawer.classList.remove('hidden');
         }
       });
     });
@@ -532,6 +543,7 @@ class ModalModule {
         const repAmount = btn.getAttribute('data-amount');
         const repWeight = Number(btn.getAttribute('data-weight')) || 0;
         const repBaseWeight = Number(btn.getAttribute('data-base-weight')) || repWeight;
+        const repHomeMeasure = btn.getAttribute('data-home-measure') || '';
         const repDept = btn.getAttribute('data-dept') || 'Inne';
 
         const subData = {
@@ -540,11 +552,15 @@ class ModalModule {
           amount: repAmount,
           weight_g: repWeight,
           baseWeightG: repBaseWeight,
+          homeMeasure: repHomeMeasure,
           department: repDept
         };
 
         const normKey = origName.toLowerCase().trim();
         this.localSubstitutions[normKey] = subData;
+
+        // Auto-close drawers upon selecting substitute!
+        this.openSubDrawers.clear();
 
         // If this meal is planned in a day, persist it immediately to that slot!
         if (this.activeMealPlanEntry) {
@@ -638,7 +654,11 @@ class ModalModule {
       if (subEntry) {
         const sub = subEntry[1];
         nameToUse = sub.replacementName || sub.name;
-        if (sub.baseWeightG && ratio !== 1) {
+        const curWeight = sub.baseWeightG ? Math.round(sub.baseWeightG * ratio) : (sub.weight_g || 0);
+        const hm = sub.homeMeasure || getHomeMeasureForName(nameToUse);
+        if (hm && curWeight > 0) {
+          amountStr = formatUnitAndGrams(curWeight, hm);
+        } else if (sub.baseWeightG && ratio !== 1) {
           amountStr = `${Math.round(sub.baseWeightG * ratio)} g`;
         } else {
           amountStr = sub.amount;

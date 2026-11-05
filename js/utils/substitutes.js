@@ -195,6 +195,95 @@ export const SUBSTITUTE_GROUPS = [
   }
 ];
 
+// Helper: Format weight and piece/home unit count e.g. "230 g (2 sztuki)"
+export function formatUnitAndGrams(targetGrams, homeMeasureStr) {
+  if (!homeMeasureStr) return `${targetGrams} g`;
+
+  // Pattern A: '[ok. ]<count> <unit> (<grams> g)' or '[ok. ]<count> <unit> (ok. <grams> g)'
+  const cleanStr = homeMeasureStr.replace(/^(?:ok\.|około)\s*/i, '').trim();
+  const m = cleanStr.match(/^(\d+(?:[.,]\d+)?|\d+\/\d+)\s+([a-ząćęłńóśźż\s]+?)\s*(?:\([^)]*\)|\/|$)/i);
+  const gMatch = cleanStr.match(/(\d+(?:[.,]\d+)?)\s*(?:g|ml)\b/i);
+
+  if (m && gMatch) {
+    let baseCount = m[1].includes('/')
+      ? (parseFloat(m[1].split('/')[0]) / parseFloat(m[1].split('/')[1]))
+      : parseFloat(m[1].replace(',', '.'));
+    let unit = m[2].trim().replace(/^(?:płaska|płaskie|płaskich|czubata|czubate|czubatych)\s+/i, '');
+    const baseG = parseFloat(gMatch[1].replace(',', '.'));
+
+    if (baseG > 0 && !['g', 'gram', 'gramy', 'gramów', 'ml'].includes(unit.toLowerCase())) {
+      const ratio = targetGrams / baseG;
+      const scaledCount = Math.round(baseCount * ratio * 10) / 10;
+      let countFormatted = Number.isInteger(scaledCount) ? String(scaledCount) : String(scaledCount).replace('.', ',');
+
+      let displayUnit = unit;
+      if (scaledCount === 1) {
+        if (unit.startsWith('sztuk')) displayUnit = 'sztuka';
+        if (unit.startsWith('kromk')) displayUnit = 'kromka';
+        if (unit.startsWith('garś') || unit.startsWith('garc')) displayUnit = 'garść';
+        if (unit.includes('łyżeczk')) displayUnit = 'łyżeczka';
+        else if (unit.includes('łyżk') || unit.includes('łyżek')) displayUnit = 'łyżka';
+        if (unit.startsWith('plack') || unit.startsWith('placek')) displayUnit = 'placek';
+        if (unit.startsWith('opakowan')) displayUnit = 'opakowanie';
+        if (unit.startsWith('worecz') || unit.startsWith('worek')) displayUnit = 'woreczek';
+        if (unit.startsWith('szklank')) displayUnit = 'szklanka';
+      } else if (scaledCount >= 2 && scaledCount <= 4) {
+        if (unit.startsWith('sztuk')) displayUnit = 'sztuki';
+        if (unit.startsWith('kromk')) displayUnit = 'kromki';
+        if (unit.startsWith('garś') || unit.startsWith('garc')) displayUnit = 'garście';
+        if (unit.includes('łyżeczk')) displayUnit = 'łyżeczki';
+        else if (unit.includes('łyżk') || unit.includes('łyżek')) displayUnit = 'łyżki';
+        if (unit.startsWith('plack') || unit.startsWith('placek')) displayUnit = 'placki';
+        if (unit.startsWith('opakowan')) displayUnit = 'opakowania';
+        if (unit.startsWith('worecz') || unit.startsWith('worek')) displayUnit = 'woreczki';
+        if (unit.startsWith('szklank')) displayUnit = 'szklanki';
+      } else if (scaledCount >= 5) {
+        if (unit.startsWith('sztuk')) displayUnit = 'sztuk';
+        if (unit.startsWith('kromk')) displayUnit = 'kromek';
+        if (unit.startsWith('garś') || unit.startsWith('garc')) displayUnit = 'garści';
+        if (unit.includes('łyżeczk')) displayUnit = 'łyżeczek';
+        else if (unit.includes('łyżk') || unit.includes('łyżek')) displayUnit = 'łyżek';
+        if (unit.startsWith('plack') || unit.startsWith('placek')) displayUnit = 'placków';
+        if (unit.startsWith('opakowan')) displayUnit = 'opakowań';
+        if (unit.startsWith('worecz') || unit.startsWith('worek')) displayUnit = 'woreczków';
+        if (unit.startsWith('szklank')) displayUnit = 'szklanek';
+      } else {
+        // Fractional values (e.g. 0.5, 1.5, 2.5)
+        if (unit.startsWith('sztuk')) displayUnit = 'sztuki';
+        if (unit.startsWith('kromk')) displayUnit = 'kromki';
+        if (unit.startsWith('garś') || unit.startsWith('garc')) displayUnit = 'garści';
+        if (unit.includes('łyżeczk')) displayUnit = 'łyżeczki';
+        else if (unit.includes('łyżk') || unit.includes('łyżek')) displayUnit = 'łyżki';
+        if (unit.startsWith('szklank')) displayUnit = 'szklanki';
+      }
+
+      return `${targetGrams} g (${countFormatted} ${displayUnit})`;
+    }
+  }
+
+  // Pattern B: 'ok. <grams> g (<count> sztuki)'
+  const mSztuki = homeMeasureStr.match(/\((?:ok\.\s*)?(\d+(?:-\d+)?\s*[a-ząćęłńóśźż]+)\)/i);
+  if (mSztuki) {
+    return `${targetGrams} g (${mSztuki[1]})`;
+  }
+
+  return `${targetGrams} g`;
+}
+
+// Helper: Find homeMeasure string for substitute item by its name
+export function getHomeMeasureForName(name) {
+  if (!name) return '';
+  const norm = name.toLowerCase().trim();
+  for (const group of SUBSTITUTE_GROUPS) {
+    for (const item of group.items) {
+      if (item.name.toLowerCase() === norm || item.keywords.some(kw => norm.includes(kw))) {
+        return item.homeMeasure || '';
+      }
+    }
+  }
+  return '';
+}
+
 // Helper: Extract weight in grams from amount string or fallback
 export function parseIngredientGrams(amountStr, fallbackWeightG = 0) {
   if (fallbackWeightG && fallbackWeightG > 0) return fallbackWeightG;
@@ -270,11 +359,8 @@ export function findSubstitutesForIngredient(ingredientName, amountStr = '', wei
       const rawGrams = standardUnitGrams * subItem.ratio * portionRatio;
       const targetGrams = Math.round(rawGrams);
 
-      // Format clean readable amount string
-      let formattedAmount = `${targetGrams} g`;
-      if (portionRatio !== 1) {
-        formattedAmount += ` (${portionRatio}x)`;
-      }
+      // Format clean readable amount string with weight and piece count
+      const formattedAmount = formatUnitAndGrams(targetGrams, subItem.homeMeasure);
 
       // Department inference
       let dept = 'Warzywa i owoce';
