@@ -6,6 +6,7 @@ import { shopping } from './shopping.js';
 import { modal } from './modal.js';
 import { creator } from './creator.js';
 import { initSubstitutesModal } from './substitutesModal.js';
+import { initOffModal } from './offModal.js';
 import { showToast } from './utils/dom.js';
 
 class Application {
@@ -25,6 +26,7 @@ class Application {
     modal.init();
     creator.init();
     initSubstitutesModal();
+    initOffModal();
 
     // 3. Bind navigation & settings
     this.bindNavigation();

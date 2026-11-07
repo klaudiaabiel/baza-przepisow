@@ -1,6 +1,8 @@
 import { store } from './store.js';
 import { CATEGORIES_11 } from './catalog.js';
 import { escapeHtml, showToast } from './utils/dom.js';
+import { openOffSearchModal } from './offModal.js';
+import { resolveIngredientMacros } from './utils/openFoodFacts.js';
 
 export const CREATOR_PIN = '0000';
 
@@ -105,6 +107,11 @@ class CreatorModule {
       exportBtn.addEventListener('click', () => this.exportCleanRecipesJson());
     }
 
+    const autoCalcBtn = document.getElementById('auto-calc-macros-btn');
+    if (autoCalcBtn) {
+      autoCalcBtn.addEventListener('click', () => this.autoCalculateRecipeMacros());
+    }
+
     if (addForm) {
       addForm.addEventListener('submit', (e) => this.handleCreateRecipe(e));
     }
@@ -173,8 +180,11 @@ class CreatorModule {
     const row = document.createElement('div');
     row.className = 'ingredient-row flex items-center gap-2';
     row.innerHTML = `
-      <input type="text" class="new-ing-name flex-1 p-2.5 rounded-xl border border-stone-200 text-xs sm:text-sm outline-none focus:border-brand-500 bg-white" placeholder="Nazwa składnika (np. Pesto zielone)" value="${escapeHtml(name)}">
-      <input type="text" class="new-ing-amount w-36 sm:w-48 p-2.5 rounded-xl border border-stone-200 text-xs sm:text-sm outline-none focus:border-brand-500 bg-white" placeholder="Ilość (np. 7 łyżeczek (35g))" value="${escapeHtml(amount)}">
+      <input type="text" class="new-ing-name flex-1 p-2.5 rounded-xl border border-stone-200 text-xs sm:text-sm outline-none focus:border-orange-500 bg-white" placeholder="Nazwa składnika (np. Pesto zielone)" value="${escapeHtml(name)}">
+      <input type="text" class="new-ing-amount w-32 sm:w-44 p-2.5 rounded-xl border border-stone-200 text-xs sm:text-sm outline-none focus:border-orange-500 bg-white" placeholder="Ilość (np. 7 łyżeczek (35g))" value="${escapeHtml(amount)}">
+      <button type="button" class="new-ing-off-btn w-9 h-9 rounded-xl hover:bg-orange-50 text-stone-400 hover:text-orange-600 border border-stone-200/60 flex items-center justify-center transition cursor-pointer shrink-0" title="Szukaj produktu w Open Food Facts">
+        <i class="fa-solid fa-barcode text-xs"></i>
+      </button>
       <button type="button" class="new-ing-remove w-9 h-9 rounded-xl hover:bg-red-50 text-stone-400 hover:text-red-500 flex items-center justify-center transition cursor-pointer shrink-0" title="Usuń pozycję">
         <i class="fa-solid fa-trash-can text-xs"></i>
       </button>
@@ -184,6 +194,7 @@ class CreatorModule {
     const nameInput = row.querySelector('.new-ing-name');
     const amountInput = row.querySelector('.new-ing-amount');
     const removeBtn = row.querySelector('.new-ing-remove');
+    const offBtn = row.querySelector('.new-ing-off-btn');
 
     nameInput.addEventListener('blur', () => {
       const curName = nameInput.value.trim();
@@ -197,6 +208,21 @@ class CreatorModule {
       }
     });
 
+    if (offBtn) {
+      offBtn.addEventListener('click', () => {
+        openOffSearchModal({
+          initialQuery: nameInput.value.trim(),
+          onSelect: (product) => {
+            nameInput.value = product.brand ? `${product.name} (${product.brand})` : product.name;
+            row.setAttribute('data-kcal100', product.kcal_100g);
+            row.setAttribute('data-prot100', product.protein_100g);
+            row.setAttribute('data-fat100', product.fat_100g);
+            row.setAttribute('data-carbs100', product.carbs_100g);
+          }
+        });
+      });
+    }
+
     removeBtn.addEventListener('click', () => {
       const allRows = container.querySelectorAll('.ingredient-row');
       if (allRows.length > 1) {
@@ -204,10 +230,80 @@ class CreatorModule {
       } else {
         nameInput.value = '';
         amountInput.value = '';
+        row.removeAttribute('data-kcal100');
+        row.removeAttribute('data-prot100');
+        row.removeAttribute('data-fat100');
+        row.removeAttribute('data-carbs100');
       }
     });
 
     container.appendChild(row);
+  }
+
+  autoCalculateRecipeMacros() {
+    const container = document.getElementById('recipe-ingredients-rows');
+    if (!container) return;
+
+    const rows = container.querySelectorAll('.ingredient-row');
+    let totalKcal = 0;
+    let totalProt = 0;
+    let totalFat = 0;
+    let totalCarbs = 0;
+    let matchedCount = 0;
+
+    rows.forEach(row => {
+      const nameInput = row.querySelector('.new-ing-name');
+      const amountInput = row.querySelector('.new-ing-amount');
+      if (!nameInput || !nameInput.value.trim()) return;
+
+      const name = nameInput.value.trim();
+      let weightG = extractWeightG(amountInput ? amountInput.value : '');
+      if (!weightG || weightG <= 0) weightG = 100; // default 100g if not specified
+
+      // Check if custom product was picked from OFF
+      const rowKcal100 = row.getAttribute('data-kcal100');
+      if (rowKcal100 !== null) {
+        const factor = weightG / 100;
+        totalKcal += Number(rowKcal100) * factor;
+        totalProt += (Number(row.getAttribute('data-prot100')) || 0) * factor;
+        totalFat += (Number(row.getAttribute('data-fat100')) || 0) * factor;
+        totalCarbs += (Number(row.getAttribute('data-carbs100')) || 0) * factor;
+        matchedCount++;
+      } else {
+        const res = resolveIngredientMacros(name, weightG);
+        if (res) {
+          totalKcal += res.kcal;
+          totalProt += res.protein;
+          totalFat += res.fat;
+          totalCarbs += res.carbs;
+          matchedCount++;
+        }
+      }
+    });
+
+    const portionsInput = document.getElementById('new-recipe-portions');
+    const portions = portionsInput ? Math.max(1, parseInt(portionsInput.value, 10) || 1) : 1;
+
+    const perPortionKcal = Math.round(totalKcal / portions);
+    const perPortionProt = Math.round((totalProt / portions) * 10) / 10;
+    const perPortionFat = Math.round((totalFat / portions) * 10) / 10;
+    const perPortionCarbs = Math.round((totalCarbs / portions) * 10) / 10;
+
+    const kcalInput = document.getElementById('new-recipe-kcal');
+    const protInput = document.getElementById('new-recipe-prot');
+    const fatInput = document.getElementById('new-recipe-fat');
+    const carbsInput = document.getElementById('new-recipe-carbs');
+
+    if (kcalInput) kcalInput.value = perPortionKcal;
+    if (protInput) protInput.value = perPortionProt;
+    if (fatInput) fatInput.value = perPortionFat;
+    if (carbsInput) carbsInput.value = perPortionCarbs;
+
+    if (matchedCount > 0) {
+      showToast(`✓ Obliczono makro z ${matchedCount} składników: ${perPortionKcal} kcal, ${perPortionProt}g B, ${perPortionFat}g T, ${perPortionCarbs}g W!`);
+    } else {
+      showToast('Wpisz nazwy i gramatury składników, by obliczyć makro.');
+    }
   }
 
   applyBulkIngredients() {

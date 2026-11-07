@@ -54,7 +54,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <!-- Modular Application Entry Point -->
-  <script type="module" src="js/app.js?v=5.1"></script>
+  <script type="module" src="js/app.js?v=5.2"></script>
 </head>
 <body class="bg-[#faf8f5] text-stone-900 min-h-screen flex flex-col antialiased selection:bg-brand-500 selection:text-white pb-20 md:pb-8">
 
@@ -293,6 +293,12 @@
             <span class="hidden sm:inline">Ściąga zamienników</span>
           </button>
 
+          <!-- Open Food Facts Database Button -->
+          <button type="button" id="nav-off-btn" class="p-2.5 rounded-xl border border-stone-200 text-stone-600 hover:text-orange-700 hover:border-orange-300 hover:bg-orange-50 transition-all text-xs font-bold flex items-center gap-1.5 cursor-pointer" title="Baza produktów Open Food Facts Polska">
+            <i class="fa-solid fa-barcode text-orange-600"></i>
+            <span class="hidden sm:inline">Open Food Facts</span>
+          </button>
+
           <!-- Reset Button -->
           <button type="button" id="reset-filters-btn" class="p-2.5 rounded-xl border border-stone-200 text-stone-500 hover:text-stone-800 hover:bg-stone-50 transition text-xs font-medium cursor-pointer" title="Zresetuj filtry">
             <i class="fa-solid fa-rotate-left"></i>
@@ -503,22 +509,30 @@
             </div>
           </div>
 
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-stone-50 p-4 rounded-2xl border border-stone-100">
-            <div>
-              <label class="block text-[11px] font-bold text-stone-600 uppercase mb-1">Kalorie (kcal)</label>
-              <input type="number" id="new-recipe-kcal" value="450" class="w-full p-2.5 rounded-xl border border-stone-200 text-sm font-bold bg-white outline-none">
+          <div class="bg-stone-50 p-4 rounded-2xl border border-stone-100 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold uppercase text-stone-700">Wartości odżywcze potrawy (1 porcja)</span>
+              <button type="button" id="auto-calc-macros-btn" class="px-3 py-1 rounded-xl bg-orange-100 hover:bg-orange-200 text-orange-950 border border-orange-300/80 text-xs font-extrabold transition cursor-pointer flex items-center gap-1.5 shadow-2xs" title="Oblicz automatycznie z gramatur składników i bazy Open Food Facts">
+                <i class="fa-solid fa-wand-magic-sparkles text-orange-600"></i> Auto-oblicz z Open Food Facts
+              </button>
             </div>
-            <div>
-              <label class="block text-[11px] font-bold text-amber-600 uppercase mb-1">Białko (g)</label>
-              <input type="number" step="0.1" id="new-recipe-prot" value="25" class="w-full p-2.5 rounded-xl border border-stone-200 text-sm font-bold bg-white outline-none">
-            </div>
-            <div>
-              <label class="block text-[11px] font-bold text-emerald-600 uppercase mb-1">Tłuszcze (g)</label>
-              <input type="number" step="0.1" id="new-recipe-fat" value="15" class="w-full p-2.5 rounded-xl border border-stone-200 text-sm font-bold bg-white outline-none">
-            </div>
-            <div>
-              <label class="block text-[11px] font-bold text-sky-600 uppercase mb-1">Węglowodany (g)</label>
-              <input type="number" step="0.1" id="new-recipe-carbs" value="50" class="w-full p-2.5 rounded-xl border border-stone-200 text-sm font-bold bg-white outline-none">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div>
+                <label class="block text-[11px] font-bold text-stone-600 uppercase mb-1">Kalorie (kcal)</label>
+                <input type="number" id="new-recipe-kcal" value="450" class="w-full p-2.5 rounded-xl border border-stone-200 text-sm font-bold bg-white outline-none">
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-amber-600 uppercase mb-1">Białko (g)</label>
+                <input type="number" step="0.1" id="new-recipe-prot" value="25" class="w-full p-2.5 rounded-xl border border-stone-200 text-sm font-bold bg-white outline-none">
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-emerald-600 uppercase mb-1">Tłuszcze (g)</label>
+                <input type="number" step="0.1" id="new-recipe-fat" value="15" class="w-full p-2.5 rounded-xl border border-stone-200 text-sm font-bold bg-white outline-none">
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-sky-600 uppercase mb-1">Węglowodany (g)</label>
+                <input type="number" step="0.1" id="new-recipe-carbs" value="50" class="w-full p-2.5 rounded-xl border border-stone-200 text-sm font-bold bg-white outline-none">
+              </div>
             </div>
           </div>
 
@@ -866,6 +880,83 @@
       <div class="p-4 sm:p-6 overflow-y-auto flex-1 custom-scrollbar">
         <div id="substitutes-content-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <!-- Rendered dynamically via substitutesModal.js -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: OPEN FOOD FACTS SEARCH & SCANNER    -->
+  <!-- ========================================== -->
+  <div id="modal-off-search" class="hidden fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+    <div id="modal-off-backdrop" class="fixed inset-0 bg-stone-900/60 backdrop-blur-sm transition-opacity cursor-pointer"></div>
+
+    <div class="relative bg-[#faf8f5] rounded-3xl border border-stone-200 shadow-2xl max-w-4xl w-full max-h-[92vh] overflow-hidden z-10 flex flex-col my-auto">
+      
+      <!-- Modal Header -->
+      <div class="p-4 sm:p-6 bg-white border-b border-stone-200/80 flex items-start justify-between gap-4 shrink-0">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-orange-100 text-orange-700 flex items-center justify-center text-lg shrink-0">
+            <i class="fa-solid fa-barcode"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 class="text-base sm:text-xl font-extrabold text-stone-900 tracking-tight">
+                Open Food Facts Polska
+              </h3>
+              <a href="https://pl.openfoodfacts.org/" target="_blank" rel="noopener" class="text-[10px] font-bold text-orange-700 bg-orange-50 border border-orange-200 px-2 py-0.5 rounded-md hover:bg-orange-100 transition">
+                pl.openfoodfacts.org <i class="fa-solid fa-arrow-up-right-from-square text-[8px]"></i>
+              </a>
+            </div>
+            <p class="text-xs text-stone-500 font-medium mt-0.5">
+              Wyszukuj produkty spożywcze, sprawdzaj Nutri-Score oraz dokładne wartości odżywcze na 100g.
+            </p>
+          </div>
+        </div>
+
+        <button type="button" id="close-off-modal" class="w-9 h-9 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 flex items-center justify-center transition cursor-pointer shrink-0">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
+      </div>
+
+      <!-- Search Bar & Quick Suggestion Chips -->
+      <div class="p-4 bg-white/80 backdrop-blur-md border-b border-stone-200/80 space-y-3 shrink-0">
+        <div class="flex flex-col sm:flex-row gap-2">
+          <div class="relative flex-1">
+            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-stone-400">
+              <i class="fa-solid fa-magnifying-glass text-xs"></i>
+            </div>
+            <input 
+              type="text" 
+              id="off-search-input" 
+              placeholder="Wpisz nazwę produktu lub markę (np. skyr Piątnica, płatki Vitanella, oliwa, kurczak)..." 
+              class="w-full pl-9 pr-10 py-2.5 bg-stone-50 rounded-xl border border-stone-200 text-xs sm:text-sm font-semibold text-stone-900 placeholder-stone-400 focus:outline-none focus:border-orange-500 focus:bg-white transition"
+            >
+            <button id="off-search-clear" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-stone-400 hover:text-stone-600 cursor-pointer">
+              <i class="fa-solid fa-circle-xmark text-xs"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Chips & Status -->
+        <div class="flex items-center justify-between gap-2 flex-wrap">
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <span class="text-[11px] font-bold text-stone-400">Popularne:</span>
+            <button type="button" class="off-quick-chip text-[11px] font-semibold bg-stone-100 hover:bg-orange-50 hover:text-orange-700 text-stone-700 px-2 py-0.5 rounded-lg border border-stone-200/60 transition cursor-pointer" data-query="skyr naturalny">Skyr</button>
+            <button type="button" class="off-quick-chip text-[11px] font-semibold bg-stone-100 hover:bg-orange-50 hover:text-orange-700 text-stone-700 px-2 py-0.5 rounded-lg border border-stone-200/60 transition cursor-pointer" data-query="płatki owsiane">Płatki owsiane</button>
+            <button type="button" class="off-quick-chip text-[11px] font-semibold bg-stone-100 hover:bg-orange-50 hover:text-orange-700 text-stone-700 px-2 py-0.5 rounded-lg border border-stone-200/60 transition cursor-pointer" data-query="twaróg półtłusty">Twaróg</button>
+            <button type="button" class="off-quick-chip text-[11px] font-semibold bg-stone-100 hover:bg-orange-50 hover:text-orange-700 text-stone-700 px-2 py-0.5 rounded-lg border border-stone-200/60 transition cursor-pointer" data-query="pierś z kurczaka">Pierś z kurczaka</button>
+            <button type="button" class="off-quick-chip text-[11px] font-semibold bg-stone-100 hover:bg-orange-50 hover:text-orange-700 text-stone-700 px-2 py-0.5 rounded-lg border border-stone-200/60 transition cursor-pointer" data-query="oliwa z oliwek">Oliwa</button>
+          </div>
+          <div id="off-search-status" class="shrink-0"></div>
+        </div>
+      </div>
+
+      <!-- Results Grid (Scrollable) -->
+      <div class="p-4 sm:p-6 overflow-y-auto flex-1 custom-scrollbar">
+        <div id="off-results-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Rendered dynamically via offModal.js -->
         </div>
       </div>
 

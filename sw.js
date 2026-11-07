@@ -1,5 +1,5 @@
 // BiteCraft Service Worker (PWA Offline Support & Instant Updates)
-const CACHE_NAME = 'baza-przepisow-v5.1-substitutes';
+const CACHE_NAME = 'baza-przepisow-v5.2-openfoodfacts';
 
 const PRECACHE_ASSETS = [
   '/',
@@ -24,9 +24,12 @@ const PRECACHE_ASSETS = [
   '/js/modal.js',
   '/js/creator.js',
   '/js/substitutesModal.js',
+  '/js/offModal.js',
   '/js/utils/dom.js',
   '/js/utils/stemmer.js',
-  '/js/utils/substitutes.js'
+  '/js/utils/substitutes.js',
+  '/js/utils/nutritionDb.js',
+  '/js/utils/openFoodFacts.js'
 ];
 
 self.addEventListener('install', event => {

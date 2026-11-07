@@ -1,6 +1,7 @@
 import { store } from './store.js';
 import { escapeHtml, showToast, renderMacroPills } from './utils/dom.js';
 import { findSubstitutesForIngredient, formatUnitAndGrams, getHomeMeasureForName } from './utils/substitutes.js';
+import { openOffSearchModal } from './offModal.js';
 
 export function scaleAmount(amountStr, ratio, fallbackWeightG = 0) {
   if (ratio === 1) {
@@ -499,13 +500,16 @@ class ModalModule {
                 <label for="modal-ing-check-${idx}" class="text-xs sm:text-sm font-semibold text-stone-800 transition cursor-pointer block select-none group-has-[:checked]:line-through group-has-[:checked]:text-stone-400">
                   ${escapeHtml(origName)}
                 </label>
-                ${subInfo ? `
-                  <div class="mt-1">
+                <div class="mt-1 flex items-center gap-1.5 flex-wrap">
+                  ${subInfo ? `
                     <button type="button" class="btn-toggle-sub inline-flex items-center gap-1.5 text-[11px] font-bold text-amber-700 hover:text-amber-900 bg-amber-50 hover:bg-amber-100 border border-amber-200/80 px-2.5 py-0.5 rounded-lg transition cursor-pointer shadow-2xs" data-idx="${idx}" title="Zobacz oficjalne zamienniki dietetyczne z dokładną gramaturą">
                       <i class="fa-solid fa-arrows-rotate text-[10px]"></i> Zamienniki
                     </button>
-                  </div>
-                ` : ''}
+                  ` : ''}
+                  <button type="button" class="btn-view-off inline-flex items-center gap-1 text-[11px] font-bold text-stone-600 hover:text-orange-700 bg-stone-100 hover:bg-orange-50 border border-stone-200/80 px-2 py-0.5 rounded-lg transition cursor-pointer shadow-2xs" data-name="${escapeHtml(origName)}" title="Sprawdź produkt w Open Food Facts Polska">
+                    <i class="fa-solid fa-barcode text-[10px] text-orange-600"></i> Open Food Facts
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -579,6 +583,16 @@ class ModalModule {
           const drawer = document.getElementById(`sub-drawer-${idx}`);
           if (drawer) drawer.classList.remove('hidden');
         }
+      });
+    });
+
+    // Open Food Facts product inspection
+    container.querySelectorAll('.btn-view-off').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const name = btn.getAttribute('data-name');
+        openOffSearchModal({ initialQuery: name });
       });
     });
 
