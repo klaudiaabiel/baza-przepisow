@@ -232,12 +232,17 @@ class AuthModule {
         email,
         password,
         options: {
-          data: { username }
+          data: { username },
+          emailRedirectTo: window.location.origin
         }
       });
       if (error) throw error;
 
-      showToast('✓ Konto utworzone pomyślnie!');
+      if (data?.session) {
+        showToast('✓ Konto utworzone i zalogowano pomyślnie!');
+      } else {
+        showToast('✓ Konto utworzone! Sprawdź email, aby potwierdzić rejestrację.');
+      }
       this.closeModal();
       document.getElementById('auth-form-register').reset();
     } catch (err) {
