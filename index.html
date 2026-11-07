@@ -54,7 +54,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <!-- Modular Application Entry Point -->
-  <script type="module" src="js/app.js?v=4.2"></script>
+  <script type="module" src="js/app.js?v=5.0"></script>
 </head>
 <body class="bg-[#faf8f5] text-stone-900 min-h-screen flex flex-col antialiased selection:bg-brand-500 selection:text-white pb-20 md:pb-8">
 
@@ -126,8 +126,24 @@
           </button>
         </nav>
 
-        <!-- Right Side: Creator status pill -->
+        <!-- Right Side: Auth status & Creator pill -->
         <div class="flex items-center space-x-2">
+          <!-- Auth Pill / Button -->
+          <div id="auth-header-container" class="flex items-center">
+            <button type="button" id="auth-open-btn" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-brand-600 hover:bg-brand-700 text-white shadow-xs transition flex items-center gap-1.5 cursor-pointer">
+              <i class="fa-solid fa-user"></i> <span>Zaloguj się</span>
+            </button>
+            <div id="auth-user-pill" class="hidden flex items-center gap-2 bg-stone-100 pl-2.5 pr-1.5 py-1 rounded-xl border border-stone-200/70">
+              <span class="text-xs font-extrabold text-stone-800 flex items-center gap-1.5">
+                <i class="fa-solid fa-circle-user text-brand-600"></i>
+                <span id="auth-user-name">Użytkownik</span>
+              </span>
+              <button type="button" id="auth-logout-btn" class="w-6 h-6 rounded-lg hover:bg-stone-200 text-stone-400 hover:text-red-600 flex items-center justify-center transition cursor-pointer" title="Wyloguj się">
+                <i class="fa-solid fa-arrow-right-from-bracket text-[10px]"></i>
+              </button>
+            </div>
+          </div>
+
           <div id="creator-status-badge">
             <span class="text-xs font-bold text-stone-500 bg-stone-100 px-2.5 py-1 rounded-xl flex items-center gap-1.5"><i class="fa-solid fa-lock"></i> Tryb czytelnika</span>
           </div>
@@ -197,10 +213,20 @@
 
       <!-- CATALOG CONTROLS TOOLBAR -->
       <div class="flex flex-wrap items-center justify-between gap-3 bg-white p-3.5 rounded-2xl border border-stone-200/80 shadow-xs">
-        <div class="flex items-center gap-2">
-          <span class="text-xs font-bold text-stone-500">Znaleziono:</span>
-          <span id="results-count" class="text-xs font-extrabold text-stone-900 px-2 py-0.5 rounded-lg bg-stone-100">0</span>
-          <span class="text-xs text-stone-400">przepisów</span>
+        <div class="flex items-center gap-3 flex-wrap">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold text-stone-500">Znaleziono:</span>
+            <span id="results-count" class="text-xs font-extrabold text-stone-900 px-2 py-0.5 rounded-lg bg-stone-100">0</span>
+            <span class="text-xs text-stone-400">przepisów</span>
+          </div>
+
+          <!-- Source Filter Buttons -->
+          <div class="flex items-center gap-1 bg-stone-100 p-1 rounded-xl text-xs font-semibold text-stone-600">
+            <button type="button" id="source-filter-all" class="px-2.5 py-1 rounded-lg bg-white text-stone-900 shadow-2xs font-extrabold cursor-pointer transition">Wszystkie</button>
+            <button type="button" id="source-filter-official" class="px-2.5 py-1 rounded-lg text-stone-500 hover:text-stone-900 cursor-pointer transition">Oficjalne (229)</button>
+            <button type="button" id="source-filter-community" class="px-2.5 py-1 rounded-lg text-stone-500 hover:text-stone-900 cursor-pointer transition flex items-center gap-1"><i class="fa-solid fa-users text-orange-500"></i> Społeczność</button>
+            <button type="button" id="source-filter-mine" class="px-2.5 py-1 rounded-lg text-stone-500 hover:text-stone-900 cursor-pointer transition flex items-center gap-1"><i class="fa-solid fa-bookmark text-brand-600"></i> Moje</button>
+          </div>
         </div>
 
         <div class="flex items-center gap-2 flex-wrap">
@@ -429,6 +455,35 @@
           <div>
             <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Sposób przygotowania (kroki, jeden na linijkę)</label>
             <textarea id="new-recipe-instructions" rows="4" required placeholder="1. Na patelni rozgrzej oliwę z oliwek.&#10;2. Dodaj pomidory i duś na wolnym ogniu przez 5 minut.&#10;3. Wbij jajka, przykryj pokrywką i smaż do ścięcia białka." class="w-full p-3 rounded-xl border border-stone-200 focus:border-brand-500 text-xs sm:text-sm outline-none"></textarea>
+          </div>
+
+          <!-- PUBLIC / PRIVATE VISIBILITY TOGGLE -->
+          <div class="p-4 rounded-2xl bg-amber-50/70 border border-amber-200/80 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <i class="fa-solid fa-earth-americas text-amber-600 text-lg"></i>
+              <div>
+                <span class="font-extrabold text-sm text-stone-900 block">Przepis publiczny (Społeczność)</span>
+                <span class="text-xs text-stone-500 font-medium">Udostępnij przepis wszystkim użytkownikom w katalogu ze swoim loginem</span>
+              </div>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" id="new-recipe-is-public" class="sr-only peer" checked>
+              <div class="w-11 h-6 bg-stone-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-600"></div>
+            </label>
+          </div>
+
+          <!-- OPTIONAL PHOTO UPLOAD -->
+          <div class="space-y-2">
+            <label class="block text-xs font-bold text-stone-700 uppercase">Zdjęcie dania (opcjonalnie)</label>
+            <div class="flex items-center gap-4">
+              <div id="new-recipe-image-preview" class="w-20 h-20 rounded-2xl bg-stone-100 border border-stone-200 overflow-hidden flex items-center justify-center shrink-0">
+                <i class="fa-solid fa-camera text-stone-300 text-xl"></i>
+              </div>
+              <div class="flex-1">
+                <input type="file" id="new-recipe-image-file" accept="image/*" class="block w-full text-xs text-stone-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100 cursor-pointer">
+                <p class="text-[11px] text-stone-400 mt-1">Zrób zdjęcie lub wybierz plik. Zostanie zoptymalizowane do formatu WebP.</p>
+              </div>
+            </div>
           </div>
 
           <div class="pt-3">
@@ -696,6 +751,74 @@
       <span class="text-[10px] mt-0.5">Ustawienia</span>
     </button>
   </nav>
+
+  <!-- ========================================== -->
+  <!-- MODAL: AUTHENTICATION (LOGOWANIE / REJESTRACJA) -->
+  <!-- ========================================== -->
+  <div id="modal-auth" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div id="modal-auth-backdrop" class="fixed inset-0 bg-stone-900/60 backdrop-blur-sm cursor-pointer"></div>
+    <div class="relative bg-white rounded-3xl border border-stone-200 shadow-2xl max-w-sm w-full p-6 z-10 space-y-4">
+      
+      <div class="flex items-center justify-between pb-2 border-b border-stone-100">
+        <div>
+          <span class="text-[11px] font-bold uppercase tracking-wider text-brand-600 block">Konto BiteCraft</span>
+          <h3 class="font-black text-lg text-stone-900">Synchronizacja Chmury</h3>
+        </div>
+        <button type="button" id="close-auth-modal" class="w-8 h-8 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 flex items-center justify-center transition cursor-pointer">
+          <i class="fa-solid fa-xmark text-xs"></i>
+        </button>
+      </div>
+
+      <!-- TABS: LOGOWANIE / REJESTRACJA -->
+      <div class="flex border-b border-stone-200">
+        <button type="button" id="auth-tab-login" class="flex-1 py-2.5 text-xs sm:text-sm font-extrabold text-brand-700 border-b-2 border-brand-600 cursor-pointer text-center">
+          Zaloguj się
+        </button>
+        <button type="button" id="auth-tab-register" class="flex-1 py-2.5 text-xs sm:text-sm font-semibold text-stone-500 hover:text-stone-800 border-b-2 border-transparent cursor-pointer text-center">
+          Zarejestruj się
+        </button>
+      </div>
+
+      <!-- ERROR MESSAGE ALERT -->
+      <div id="auth-error-msg" class="hidden p-3 rounded-xl bg-red-50 border border-red-200 text-red-600 text-xs font-semibold"></div>
+
+      <!-- FORM 1: LOGIN -->
+      <form id="auth-form-login" class="space-y-3">
+        <div>
+          <label class="block text-[11px] font-bold text-stone-600 uppercase mb-1">Adres Email</label>
+          <input type="email" id="auth-login-email" required placeholder="twoj@email.com" class="w-full p-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm outline-none focus:border-brand-500">
+        </div>
+        <div>
+          <label class="block text-[11px] font-bold text-stone-600 uppercase mb-1">Hasło</label>
+          <input type="password" id="auth-login-password" required placeholder="••••••••" class="w-full p-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm outline-none focus:border-brand-500">
+        </div>
+        <button type="submit" id="auth-login-submit-btn" class="w-full py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-xs transition shadow-xs cursor-pointer">
+          Zaloguj się
+        </button>
+        <p class="text-[11px] text-stone-400 text-center">Dostęp do Twoich dań, jadłospisu i listy zakupów na każdym urządzeniu.</p>
+      </form>
+
+      <!-- FORM 2: REGISTER -->
+      <form id="auth-form-register" class="hidden space-y-3">
+        <div>
+          <label class="block text-[11px] font-bold text-stone-600 uppercase mb-1">Nazwa użytkownika (login)</label>
+          <input type="text" id="auth-reg-username" required placeholder="np. klaudia" class="w-full p-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm outline-none focus:border-brand-500">
+        </div>
+        <div>
+          <label class="block text-[11px] font-bold text-stone-600 uppercase mb-1">Adres Email</label>
+          <input type="email" id="auth-reg-email" required placeholder="twoj@email.com" class="w-full p-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm outline-none focus:border-brand-500">
+        </div>
+        <div>
+          <label class="block text-[11px] font-bold text-stone-600 uppercase mb-1">Hasło (min. 6 znaków)</label>
+          <input type="password" id="auth-reg-password" minlength="6" required placeholder="••••••••" class="w-full p-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm outline-none focus:border-brand-500">
+        </div>
+        <button type="submit" id="auth-reg-submit-btn" class="w-full py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-xs transition shadow-xs cursor-pointer">
+          Zarejestruj się
+        </button>
+      </form>
+
+    </div>
+  </div>
 
 </body>
 </html>

@@ -38,6 +38,7 @@ class CatalogModule {
       prepTimes: [], // e.g. [15, 30]
       ingredients: [],
       onlyFavorites: false,
+      sourceFilter: 'all', // 'all' | 'official' | 'community' | 'mine'
       sortBy: 'title'
     };
     this.visibleCount = 24;
@@ -143,6 +144,31 @@ class CatalogModule {
     if (resetBtn) {
       resetBtn.addEventListener('click', () => this.resetFilters());
     }
+
+    // Source filter buttons (All, Official, Community, Mine)
+    ['all', 'official', 'community', 'mine'].forEach(src => {
+      const btn = document.getElementById(`source-filter-${src}`);
+      if (btn) {
+        btn.addEventListener('click', () => {
+          this.filters.sourceFilter = src;
+          this.updateSourceFilterButtonsUI();
+          this.applyFilters();
+        });
+      }
+    });
+  }
+
+  updateSourceFilterButtonsUI() {
+    ['all', 'official', 'community', 'mine'].forEach(src => {
+      const btn = document.getElementById(`source-filter-${src}`);
+      if (!btn) return;
+      const isActive = this.filters.sourceFilter === src;
+      if (isActive) {
+        btn.className = 'px-2.5 py-1 rounded-lg bg-white text-stone-900 shadow-2xs font-extrabold cursor-pointer transition';
+      } else {
+        btn.className = 'px-2.5 py-1 rounded-lg text-stone-500 hover:text-stone-900 font-medium cursor-pointer transition';
+      }
+    });
   }
 
   resetFilters() {
@@ -280,6 +306,16 @@ class CatalogModule {
       list = list.filter(r => store.isFavorite(r.id));
     }
 
+    // 5. Source Filter (all | official | community | mine)
+    if (this.filters.sourceFilter === 'official') {
+      list = list.filter(r => !r.author_name);
+    } else if (this.filters.sourceFilter === 'community') {
+      list = list.filter(r => r.author_name && r.is_public);
+    } else if (this.filters.sourceFilter === 'mine') {
+      const u = store.currentUser;
+      list = list.filter(r => u && (r.user_id === u.id || r.author_name === u.username));
+    }
+
     // 6. Sorting
     list = [...list];
     switch (this.filters.sortBy) {
@@ -348,6 +384,15 @@ class CatalogModule {
         <div class="relative w-full aspect-[4/3] bg-stone-100 overflow-hidden">
           <img src="${r.image}" alt="${escapeHtml(r.title)}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" onerror="this.onerror=null;this.src='images/placeholder.svg';">
           
+          <!-- Author / Community Badge -->
+          ${r.author_name ? `
+            <div class="absolute top-3 left-3 bg-stone-900/85 text-white backdrop-blur-md px-2.5 py-1 rounded-xl text-[10px] font-bold shadow-sm flex items-center gap-1.5 z-10">
+              <i class="fa-solid fa-users text-orange-400"></i>
+              <span>@${escapeHtml(r.author_name)}</span>
+              ${!r.is_public ? '<span class="text-amber-300 ml-0.5">(Prywatny)</span>' : ''}
+            </div>
+          ` : ''}
+
           <!-- Favorite button -->
           <button type="button" data-fav-id="${r.id}" class="card-fav-btn absolute top-3 right-3 w-8 h-8 rounded-full bg-white/85 hover:bg-white text-stone-400 backdrop-blur-md shadow-sm flex items-center justify-center transition-all cursor-pointer ${isFav ? 'text-red-500' : 'hover:text-red-500'}">
             <i class="fa-solid fa-heart ${isFav ? 'text-red-500' : ''}"></i>
@@ -403,7 +448,13 @@ class CatalogModule {
             <img src="${r.image}" alt="${escapeHtml(r.title)}" class="w-full h-full object-cover group-hover:scale-105 transition" loading="lazy" onerror="this.onerror=null;this.src='images/placeholder.svg';">
           </div>
           <div class="min-w-0 flex-1">
-            <div class="flex items-center gap-2 mb-1">
+            <div class="flex items-center gap-2 mb-1 flex-wrap">
+              ${r.author_name ? `
+                <span class="text-[10px] font-bold text-orange-800 bg-orange-100/90 border border-orange-200/80 px-2 py-0.5 rounded-md flex items-center gap-1">
+                  <i class="fa-solid fa-users text-orange-600"></i> @${escapeHtml(r.author_name)}
+                  ${!r.is_public ? '<span class="text-amber-600 font-semibold">(Prywatny)</span>' : ''}
+                </span>
+              ` : ''}
               <span class="text-[11px] font-bold text-stone-600 bg-stone-100 px-2 py-0.5 rounded-md flex items-center gap-1">
                 ${icon} ${escapeHtml(r.category)}
               </span>

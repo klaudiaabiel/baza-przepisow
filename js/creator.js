@@ -108,6 +108,23 @@ class CreatorModule {
     if (addForm) {
       addForm.addEventListener('submit', (e) => this.handleCreateRecipe(e));
     }
+
+    // Image preview listener
+    const fileInput = document.getElementById('new-recipe-image-file');
+    const previewEl = document.getElementById('new-recipe-image-preview');
+    if (fileInput && previewEl) {
+      fileInput.addEventListener('change', () => {
+        if (fileInput.files && fileInput.files[0]) {
+          const reader = new FileReader();
+          reader.onload = (ev) => {
+            previewEl.innerHTML = `<img src="${ev.target.result}" class="w-full h-full object-cover rounded-2xl">`;
+          };
+          reader.readAsDataURL(fileInput.files[0]);
+        } else {
+          previewEl.innerHTML = '<i class="fa-solid fa-camera text-stone-300 text-xl"></i>';
+        }
+      });
+    }
   }
 
   initIngredientsUI() {
@@ -328,6 +345,12 @@ class CreatorModule {
     const stepsRaw = document.getElementById('new-recipe-instructions').value.split('\n').filter(l => l.trim());
     const instructions = stepsRaw.map(s => s.replace(/^\d+[\.\)]\s*/, '').trim());
 
+    const isPublicEl = document.getElementById('new-recipe-is-public');
+    const isPublic = isPublicEl ? isPublicEl.checked : false;
+
+    const fileInput = document.getElementById('new-recipe-image-file');
+    const imageFile = fileInput && fileInput.files && fileInput.files[0] ? fileInput.files[0] : null;
+
     const recipe = {
       title: title,
       category: category,
@@ -341,13 +364,16 @@ class CreatorModule {
       image: 'images/placeholder.svg',
       ingredients: ingredients,
       instructions: instructions,
-      tags: ['Własne']
+      tags: ['Własne'],
+      is_public: isPublic
     };
 
-    // Persists into IndexedDB (never lost on refresh)
-    await store.addCustomRecipe(recipe);
+    // Persists into IndexedDB and Supabase Cloud
+    await store.addCustomRecipe(recipe, imageFile);
 
     document.getElementById('add-recipe-form').reset();
+    const previewEl = document.getElementById('new-recipe-image-preview');
+    if (previewEl) previewEl.innerHTML = '<i class="fa-solid fa-camera text-stone-300 text-xl"></i>';
     this.resetIngredientRows();
     showToast(`✓ Przepis "${title}" został pomyślnie dodany i zapisany w bazie!`);
 

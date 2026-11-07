@@ -1,4 +1,5 @@
 import { store } from './store.js';
+import { auth } from './auth.js';
 import { catalog } from './catalog.js';
 import { planner } from './planner.js';
 import { shopping } from './shopping.js';
@@ -12,8 +13,9 @@ class Application {
   }
 
   async start() {
-    // 1. Initialize central reactive store
+    // 1. Initialize central reactive store & auth
     await store.init();
+    await auth.init();
 
     // 2. Initialize UI modules
     catalog.init();

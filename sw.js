@@ -1,5 +1,5 @@
 // BiteCraft Service Worker (PWA Offline Support & Instant Updates)
-const CACHE_NAME = 'baza-przepisow-v4.2';
+const CACHE_NAME = 'baza-przepisow-v5.0-cloud';
 
 const PRECACHE_ASSETS = [
   '/',
@@ -14,6 +14,8 @@ const PRECACHE_ASSETS = [
   '/favicon.ico',
   '/favicon-32x32.png',
   '/favicon-16x16.png',
+  '/js/supabaseClient.js',
+  '/js/auth.js',
   '/js/app.js',
   '/js/store.js',
   '/js/catalog.js',
@@ -54,6 +56,9 @@ self.addEventListener('fetch', event => {
   if (req.method !== 'GET') return;
 
   const url = new URL(req.url);
+
+  // Bypass cross-origin requests (e.g. Supabase API & Auth, Supabase Storage)
+  if (url.origin !== location.origin) return;
 
   // 1. Navigation requests (HTML): Network first, fallback to cached index.html
   if (req.mode === 'navigate') {
