@@ -209,7 +209,7 @@ class ShoppingModule {
       if (!recipe || !recipe.ingredients) return;
 
       const portions = planItem.portions || 1;
-      const basePortions = recipe.portions || 1;
+      const basePortions = recipe.portions_yield || recipe.portions || 1;
       const ratio = portions / basePortions;
 
       recipe.ingredients.forEach(ing => {

@@ -1,5 +1,5 @@
 // BiteCraft Service Worker (PWA Offline Support & Instant Updates)
-const CACHE_NAME = 'baza-przepisow-v4.1';
+const CACHE_NAME = 'baza-przepisow-v4.2';
 
 const PRECACHE_ASSETS = [
   '/',

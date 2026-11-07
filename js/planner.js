@@ -1,5 +1,6 @@
 import { store } from './store.js';
 import { escapeHtml, showToast, renderMacroPills } from './utils/dom.js';
+import { CATEGORIES_11, CATEGORY_ICONS } from './catalog.js';
 
 export const MEAL_SLOT_NAMES = {
   3: ['Śniadanie', 'Obiad', 'Kolacja'],
@@ -16,6 +17,9 @@ class PlannerModule {
     this.targetDateKey = null;
     this.targetSlotIndex = 0;
     this.targetRecipeId = null;
+    this.pickerCategory = 'Wszystkie';
+    this.pickerMaxTime = 0; // 0 = all
+    this.pickerQuery = '';
   }
 
   init() {
@@ -81,6 +85,15 @@ class PlannerModule {
     const closeDishPickerBtn = document.getElementById('close-dish-picker-modal');
     if (closeDishPickerBtn) {
       closeDishPickerBtn.addEventListener('click', () => this.closeDishPickerModal());
+    }
+
+    const dishPickerModal = document.getElementById('modal-planner-dish-picker');
+    if (dishPickerModal) {
+      dishPickerModal.addEventListener('click', (e) => {
+        if (e.target === dishPickerModal || e.target.classList.contains('backdrop-blur-sm')) {
+          this.closeDishPickerModal();
+        }
+      });
     }
   }
 
@@ -415,6 +428,9 @@ class PlannerModule {
   openDishPickerModal(dateKey, slotIndex) {
     this.targetDateKey = dateKey;
     this.targetSlotIndex = slotIndex;
+    this.pickerCategory = 'Wszystkie';
+    this.pickerMaxTime = 0;
+    this.pickerQuery = '';
 
     const modal = document.getElementById('modal-planner-dish-picker');
     if (!modal) return;
@@ -430,40 +446,136 @@ class PlannerModule {
       label.innerText = `${targetDay.dayName} • ${slotName}`;
     }
 
+    const searchInput = document.getElementById('planner-dish-search');
+    if (searchInput) searchInput.value = '';
+
+    this.renderDishPickerFilters();
     this.renderDishPickerList();
     modal.classList.remove('hidden');
   }
 
-  renderDishPickerList(query = '', category = 'Wszystkie') {
+  renderDishPickerFilters() {
+    // 1. Categories
+    const catContainer = document.getElementById('planner-picker-categories');
+    if (catContainer) {
+      const allCats = ['Wszystkie', ...CATEGORIES_11];
+      catContainer.innerHTML = allCats.map(cat => {
+        const isAll = cat === 'Wszystkie';
+        const icon = isAll ? '🍽️' : (CATEGORY_ICONS[cat] || '🍲');
+        const isActive = this.pickerCategory === cat;
+        return `
+          <button type="button" class="btn-picker-cat px-3 py-1.5 rounded-xl font-bold whitespace-nowrap transition cursor-pointer flex items-center gap-1.5 text-xs ${
+            isActive 
+              ? 'bg-brand-600 text-white shadow-xs' 
+              : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
+          }" data-cat="${escapeHtml(cat)}">
+            <span>${icon}</span>
+            <span>${escapeHtml(cat)}</span>
+          </button>
+        `;
+      }).join('');
+
+      catContainer.querySelectorAll('.btn-picker-cat').forEach(btn => {
+        btn.addEventListener('click', () => {
+          this.pickerCategory = btn.getAttribute('data-cat');
+          this.renderDishPickerFilters();
+          this.renderDishPickerList();
+        });
+      });
+    }
+
+    // 2. Prep times
+    const timeContainer = document.getElementById('planner-picker-times');
+    if (timeContainer) {
+      const times = [
+        { label: 'Wszystkie czasy', value: 0 },
+        { label: '⏱️ do 15 min', value: 15 },
+        { label: '⏱️ do 30 min', value: 30 },
+        { label: '⏱️ do 60 min', value: 60 }
+      ];
+      timeContainer.innerHTML = times.map(t => {
+        const isActive = this.pickerMaxTime === t.value;
+        return `
+          <button type="button" class="btn-picker-time px-2.5 py-1 rounded-lg font-bold whitespace-nowrap transition cursor-pointer text-[11px] ${
+            isActive
+              ? 'bg-amber-600 text-white shadow-xs'
+              : 'bg-stone-100 hover:bg-stone-200 text-stone-600'
+          }" data-time="${t.value}">
+            ${t.label}
+          </button>
+        `;
+      }).join('');
+
+      timeContainer.querySelectorAll('.btn-picker-time').forEach(btn => {
+        btn.addEventListener('click', () => {
+          this.pickerMaxTime = Number(btn.getAttribute('data-time'));
+          this.renderDishPickerFilters();
+          this.renderDishPickerList();
+        });
+      });
+    }
+  }
+
+  renderDishPickerList() {
     const listEl = document.getElementById('planner-picker-list');
     if (!listEl) return;
 
     let recipes = store.getRecipes();
-    if (category && category !== 'Wszystkie') {
-      recipes = recipes.filter(r => r.category === category);
-    }
-    if (query && query.trim()) {
-      const q = query.trim().toLowerCase();
-      recipes = recipes.filter(r => r.title.toLowerCase().includes(q));
+
+    // Category filter
+    if (this.pickerCategory && this.pickerCategory !== 'Wszystkie') {
+      recipes = recipes.filter(r => r.category === this.pickerCategory);
     }
 
-    listEl.innerHTML = recipes.slice(0, 50).map(r => `
-      <div class="picker-dish-item p-2.5 rounded-2xl bg-white hover:bg-brand-50 border border-stone-200 hover:border-brand-500 transition flex items-center justify-between gap-3 cursor-pointer" data-id="${r.id}">
+    // Prep time filter
+    if (this.pickerMaxTime > 0) {
+      recipes = recipes.filter(r => (r.prep_time_minutes || 15) <= this.pickerMaxTime);
+    }
+
+    // Search query filter
+    if (this.pickerQuery && this.pickerQuery.trim()) {
+      const q = this.pickerQuery.trim().toLowerCase();
+      recipes = recipes.filter(r => {
+        const titleNorm = (r.title || '').toLowerCase();
+        return titleNorm.includes(q) || (r.ingredients && r.ingredients.some(i => (i.name || '').toLowerCase().includes(q)));
+      });
+    }
+
+    if (recipes.length === 0) {
+      listEl.innerHTML = `
+        <div class="py-10 text-center text-stone-400">
+          <i class="fa-solid fa-magnifying-glass text-2xl mb-2 text-stone-300 block"></i>
+          <p class="text-xs font-bold text-stone-600">Brak dań spełniających kryteria</p>
+          <p class="text-[11px] text-stone-400 mt-0.5">Zmień filtry lub wyszukiwaną frazę</p>
+        </div>
+      `;
+      return;
+    }
+
+    listEl.innerHTML = recipes.slice(0, 60).map(r => `
+      <div class="picker-dish-item p-2.5 rounded-2xl bg-white hover:bg-brand-50/70 border border-stone-200 hover:border-brand-500 transition flex items-center justify-between gap-3 cursor-pointer shadow-2xs group" data-id="${r.id}">
         <div class="flex items-center gap-3 min-w-0 flex-1">
-          <div class="w-12 h-12 rounded-xl overflow-hidden bg-stone-100 shrink-0">
-            <img src="${r.image}" alt="${escapeHtml(r.title)}" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='images/placeholder.svg';">
+          <div class="w-12 h-12 rounded-xl overflow-hidden bg-stone-100 shrink-0 border border-stone-100">
+            <img src="${r.image}" alt="${escapeHtml(r.title)}" class="w-full h-full object-cover group-hover:scale-105 transition" onerror="this.onerror=null;this.src='images/placeholder.svg';">
           </div>
           <div class="min-w-0 flex-1">
-            <h4 class="font-extrabold text-stone-900 text-xs sm:text-sm truncate">${escapeHtml(r.title)}</h4>
-            <div class="flex items-center gap-2 text-[11px] font-semibold text-stone-500 mt-0.5">
+            <h4 class="font-extrabold text-stone-900 text-xs sm:text-sm truncate group-hover:text-brand-600 transition">${escapeHtml(r.title)}</h4>
+            <div class="flex items-center gap-1.5 flex-wrap text-[11px] font-semibold text-stone-500 mt-0.5">
               <span class="font-bold text-stone-800">${r.calories} kcal</span>
               <span>•</span>
-              <span>${r.category}</span>
+              <span class="text-stone-400">⏱️ ${r.prep_time_minutes || 15} min</span>
+              <span>•</span>
+              <span class="text-stone-600">${CATEGORY_ICONS[r.category] || ''} ${escapeHtml(r.category)}</span>
+              ${r.portions_yield && r.portions_yield > 1 ? `
+                <span class="text-[9px] font-black text-amber-800 bg-amber-100/90 border border-amber-200/80 px-1.5 py-0.2 rounded">
+                  🥮 Wypiek: ${r.portions_yield} porcje
+                </span>
+              ` : ''}
             </div>
           </div>
         </div>
 
-        <button type="button" class="px-3 py-1.5 rounded-xl bg-brand-600 text-white font-extrabold text-xs shadow-sm">
+        <button type="button" class="px-3 py-1.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-xs shadow-sm shrink-0 cursor-pointer transition">
           Wybierz
         </button>
       </div>
@@ -485,7 +597,8 @@ class PlannerModule {
     if (searchInput && !searchInput._bound) {
       searchInput._bound = true;
       searchInput.addEventListener('input', (e) => {
-        this.renderDishPickerList(e.target.value);
+        this.pickerQuery = e.target.value;
+        this.renderDishPickerList();
       });
     }
   }

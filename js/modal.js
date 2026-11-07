@@ -193,6 +193,7 @@ class ModalModule {
 
     this.updateFavBtnUI();
     this.renderPlanContextBanner();
+    this.renderBatchContextBanner();
     this.renderMacrosAndIngredients();
     this.renderInstructions();
 
@@ -310,20 +311,67 @@ class ModalModule {
     banner.innerHTML = '';
   }
 
-  adjustPortions(delta) {
-    if (!this.currentRecipe) return;
-    const newP = this.currentPortions + delta;
-    if (newP < 1 || newP > 20) return;
+  renderBatchContextBanner() {
+    const banner = document.getElementById('modal-batch-context');
+    if (!banner || !this.currentRecipe) return;
 
-    this.currentPortions = newP;
+    const r = this.currentRecipe;
+    if (r.portions_yield && r.portions_yield > 1) {
+      banner.className = 'mt-3 p-3 rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50/70 border border-amber-200/90 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-2xs';
+      banner.innerHTML = `
+        <div class="flex items-center gap-2.5 min-w-0">
+          <span class="text-xl shrink-0">🥮</span>
+          <div class="min-w-0">
+            <span class="font-black text-xs text-amber-950 block leading-tight">
+              Danie z formy / blachy (wypiek na ${r.portions_yield} porcje)
+            </span>
+            <span class="text-[11px] text-stone-500 font-medium">
+              Wartości makro podane są dla <strong>1 porcji (${r.calories} kcal)</strong>.
+            </span>
+          </div>
+        </div>
+        <div class="flex items-center gap-1.5 shrink-0 w-full sm:w-auto justify-end">
+          <button type="button" class="btn-quick-yield px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer shadow-2xs ${this.currentPortions === 1 ? 'bg-brand-600 text-white' : 'bg-white hover:bg-stone-50 text-stone-700 border border-stone-200'}" data-portion="1">
+            1 porcja
+          </button>
+          <button type="button" class="btn-quick-yield px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer shadow-2xs ${this.currentPortions === r.portions_yield ? 'bg-brand-600 text-white' : 'bg-white hover:bg-stone-50 text-stone-700 border border-stone-200'}" data-portion="${r.portions_yield}">
+            Cała forma (${r.portions_yield} porcje)
+          </button>
+        </div>
+      `;
+      banner.classList.remove('hidden');
+
+      banner.querySelectorAll('.btn-quick-yield').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const p = Number(btn.getAttribute('data-portion'));
+          this.setPortions(p);
+        });
+      });
+    } else {
+      banner.className = 'hidden';
+      banner.innerHTML = '';
+    }
+  }
+
+  setPortions(p) {
+    if (!this.currentRecipe) return;
+    if (p < 1 || p > 20) return;
+
+    this.currentPortions = p;
 
     // If this is an active meal plan entry, save portion count
     if (this.activeMealPlanEntry) {
-      this.activeMealPlanEntry.portions = newP;
+      this.activeMealPlanEntry.portions = p;
       store.idbPut('meal_plan', this.activeMealPlanEntry);
     }
 
+    this.renderBatchContextBanner();
     this.renderMacrosAndIngredients();
+  }
+
+  adjustPortions(delta) {
+    if (!this.currentRecipe) return;
+    this.setPortions(this.currentPortions + delta);
   }
 
   updateFavBtnUI() {
@@ -341,7 +389,9 @@ class ModalModule {
     if (!this.currentRecipe) return;
     const r = this.currentRecipe;
     const baseP = r.portions || 1;
-    const ratio = this.currentPortions / baseP;
+    const baseYield = r.portions_yield || baseP;
+    const macroRatio = this.currentPortions / baseP;
+    const ratio = this.currentPortions / baseYield;
 
     // Portion count display
     const portionCountEl = document.getElementById('modal-portion-count');
@@ -353,10 +403,10 @@ class ModalModule {
     const fatEl = document.getElementById('modal-fat');
     const carbsEl = document.getElementById('modal-carbs');
 
-    if (kcalEl) kcalEl.innerText = Math.round(r.calories * ratio);
-    if (protEl) protEl.innerText = `${Math.round(r.protein * ratio * 10) / 10}g`;
-    if (fatEl) fatEl.innerText = `${Math.round(r.fat * ratio * 10) / 10}g`;
-    if (carbsEl) carbsEl.innerText = `${Math.round(r.carbs * ratio * 10) / 10}g`;
+    if (kcalEl) kcalEl.innerText = Math.round(r.calories * macroRatio);
+    if (protEl) protEl.innerText = `${Math.round(r.protein * macroRatio * 10) / 10}g`;
+    if (fatEl) fatEl.innerText = `${Math.round(r.fat * macroRatio * 10) / 10}g`;
+    if (carbsEl) carbsEl.innerText = `${Math.round(r.carbs * macroRatio * 10) / 10}g`;
 
     // Ingredients rendering with universal scaler & substitutes engine
     const ingContainer = document.getElementById('modal-ingredients');
@@ -633,7 +683,7 @@ class ModalModule {
   addIngredientsToShoppingList() {
     if (!this.currentRecipe) return;
     const r = this.currentRecipe;
-    const ratio = this.currentPortions / (r.portions || 1);
+    const ratio = this.currentPortions / (r.portions_yield || r.portions || 1);
     const ings = r.ingredients || [];
     const activeSubs = this.localSubstitutions || {};
 

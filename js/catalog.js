@@ -371,6 +371,13 @@ class CatalogModule {
             <h3 class="font-extrabold text-stone-900 text-sm sm:text-base leading-snug line-clamp-2 group-hover:text-brand-600 transition-colors" title="${escapeHtml(r.title)}">
               ${escapeHtml(r.title)}
             </h3>
+            ${r.portions_yield && r.portions_yield > 1 ? `
+              <div class="mt-1">
+                <span class="text-[10px] font-black text-amber-800 bg-amber-100/90 border border-amber-200/80 px-2 py-0.5 rounded-md inline-flex items-center gap-1">
+                  🥮 Wypiek: ${r.portions_yield} porcje
+                </span>
+              </div>
+            ` : ''}
           </div>
 
           <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between gap-2">
@@ -405,6 +412,13 @@ class CatalogModule {
             <h3 class="font-extrabold text-stone-900 text-sm sm:text-base truncate group-hover:text-brand-600 transition" title="${escapeHtml(r.title)}">
               ${escapeHtml(r.title)}
             </h3>
+            ${r.portions_yield && r.portions_yield > 1 ? `
+              <div class="mt-0.5">
+                <span class="text-[9px] font-black text-amber-800 bg-amber-100/90 border border-amber-200/80 px-1.5 py-0.2 rounded inline-flex items-center gap-1">
+                  🥮 Wypiek: ${r.portions_yield} porcje
+                </span>
+              </div>
+            ` : ''}
             <div class="mt-1">
               ${renderMacroPills(r.calories, r.protein, r.fat, r.carbs)}
             </div>
