@@ -3112,15 +3112,15 @@
       },
       {
         "name": "Pasta z orzechów laskowych 100 %",
-        "amount": "1.5 łyżeczki (15 g) Pudding proteinowy o smaku czekoladowym Go",
+        "amount": "1.5 łyżeczki (15 g)",
         "weight_g": 15,
         "department": "Spiżarnia i przyprawy"
       },
       {
-        "name": "Active",
+        "name": "Pudding proteinowy o smaku czekoladowym Go Active",
         "amount": "10 łyżek (150 g)",
         "weight_g": 150,
-        "department": "Inne"
+        "department": "Nabiał i jaja"
       },
       {
         "name": "Erytrol",
@@ -4379,7 +4379,7 @@
   },
   {
     "id": 61,
-    "title": "Jajecznica ze szpinakiem oraz suszonymi",
+    "title": "Jajecznica ze szpinakiem oraz suszonymi pomidorami",
     "category": "Jajka",
     "calories": 409,
     "protein": 19,
@@ -8674,7 +8674,7 @@
   {
     "id": 122,
     "title": "Nasiona chia bowl z kiwi oraz pomarańczą",
-    "category": "Naleśniki, gofry i placki",
+    "category": "Owsianki, puddingi i kasze",
     "calories": 415,
     "protein": 27,
     "fat": 16,
@@ -8740,7 +8740,7 @@
   {
     "id": 123,
     "title": "Nocna owsianka a la Monte z puddingiem",
-    "category": "Jajka",
+    "category": "Owsianki, puddingi i kasze",
     "calories": 396,
     "protein": 30,
     "fat": 13,
@@ -8763,15 +8763,15 @@
       },
       {
         "name": "Nasiona chia",
-        "amount": "1 łyżeczka (5 g) Pudding proteinowy o smaku czekoladowym Go",
+        "amount": "1 łyżeczka (5 g)",
         "weight_g": 5,
         "department": "Spiżarnia i przyprawy"
       },
       {
-        "name": "Active",
+        "name": "Pudding proteinowy o smaku czekoladowym Go Active",
         "amount": "0.5 opakowania (100 g)",
         "weight_g": 100,
-        "department": "Inne"
+        "department": "Nabiał i jaja"
       },
       {
         "name": "Erytrol",
@@ -8806,7 +8806,7 @@
   {
     "id": 124,
     "title": "Nocna owsianka pistacjowa",
-    "category": "Jajka",
+    "category": "Owsianki, puddingi i kasze",
     "calories": 420,
     "protein": 22,
     "fat": 20,
@@ -8876,7 +8876,7 @@
   {
     "id": 125,
     "title": "Omlet mleczna kanapka",
-    "category": "Kanapki i tosty",
+    "category": "Jajka",
     "calories": 406,
     "protein": 25,
     "fat": 16,
@@ -10331,7 +10331,7 @@
   },
   {
     "id": 147,
-    "title": "Pasta jajeczna ze szczypiorkiem, suszonym",
+    "title": "Pasta jajeczna ze szczypiorkiem i suszonymi pomidorami",
     "category": "Kanapki i tosty",
     "calories": 407,
     "protein": 20,
@@ -11185,7 +11185,7 @@
   },
   {
     "id": 158,
-    "title": "Pierogi serowo-jagodowe [Biedronka]",
+    "title": "Pierogi serowo-jagodowe (Biedronka)",
     "category": "Szybkie gotowce (SOS)",
     "calories": 614,
     "protein": 39,
@@ -14790,7 +14790,7 @@
   },
   {
     "id": 211,
-    "title": "Tost z mozzarellą, szynką z indyka oraz suszonymi",
+    "title": "Tost z mozzarellą, szynką z indyka oraz suszonymi pomidorami",
     "category": "Kanapki i tosty",
     "calories": 429,
     "protein": 23,
@@ -15374,15 +15374,15 @@
       },
       {
         "name": "Biszkopty",
-        "amount": "5 sztuk (25 g) Pudding proteinowy o smaku czekoladowym Go",
+        "amount": "5 sztuk (25 g)",
         "weight_g": 25,
-        "department": "Inne"
+        "department": "Pieczywo i zboża"
       },
       {
-        "name": "Active",
+        "name": "Pudding proteinowy o smaku czekoladowym Go Active",
         "amount": "0.5 opakowania (100 g)",
         "weight_g": 100,
-        "department": "Inne"
+        "department": "Nabiał i jaja"
       },
       {
         "name": "Czekolada gorzka 70%",
@@ -16144,7 +16144,7 @@
   {
     "id": 228,
     "title": "Zawijasy z fetą i żurawiną",
-    "category": "Kanapki i tosty",
+    "category": "Wrapy, tortille i fit fast food",
     "calories": 401,
     "protein": 12,
     "fat": 21,
@@ -16239,7 +16239,7 @@
   },
   {
     "id": 229,
-    "title": "kurczak Fajita",
+    "title": "Kurczak Fajita",
     "category": "Dania główne i obiady",
     "calories": 580,
     "protein": 28,

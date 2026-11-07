@@ -55,11 +55,18 @@ class CatalogModule {
     // Subscribe to store events
     store.addEventListener('ready', () => {
       this.renderCategoryPills();
+      this.updateSourceFilterButtonsUI();
       this.applyFilters();
     });
 
     store.addEventListener('recipes_updated', () => {
       this.renderCategoryPills();
+      this.updateSourceFilterButtonsUI();
+      this.applyFilters();
+    });
+
+    store.addEventListener('auth_changed', () => {
+      this.updateSourceFilterButtonsUI();
       this.applyFilters();
     });
 
@@ -159,14 +166,32 @@ class CatalogModule {
   }
 
   updateSourceFilterButtonsUI() {
+    const allRecipes = store.getRecipes();
+    const u = store.currentUser;
+    const officialCount = allRecipes.filter(r => !r.author_name).length;
+    const communityCount = allRecipes.filter(r => r.author_name && r.is_public).length;
+    const mineCount = u ? allRecipes.filter(r => r.user_id === u.id || r.author_name === u.username).length : 0;
+
+    const countEls = {
+      all: document.getElementById('count-src-all'),
+      official: document.getElementById('count-src-official'),
+      community: document.getElementById('count-src-community'),
+      mine: document.getElementById('count-src-mine')
+    };
+
+    if (countEls.all) countEls.all.innerText = `(${allRecipes.length})`;
+    if (countEls.official) countEls.official.innerText = `(${officialCount})`;
+    if (countEls.community) countEls.community.innerText = `(${communityCount})`;
+    if (countEls.mine) countEls.mine.innerText = `(${mineCount})`;
+
     ['all', 'official', 'community', 'mine'].forEach(src => {
       const btn = document.getElementById(`source-filter-${src}`);
       if (!btn) return;
       const isActive = this.filters.sourceFilter === src;
       if (isActive) {
-        btn.className = 'px-2.5 py-1 rounded-lg bg-white text-stone-900 shadow-2xs font-extrabold cursor-pointer transition';
+        btn.className = 'px-3.5 py-1.5 rounded-xl text-xs font-black transition cursor-pointer bg-stone-900 text-white shadow-xs';
       } else {
-        btn.className = 'px-2.5 py-1 rounded-lg text-stone-500 hover:text-stone-900 font-medium cursor-pointer transition';
+        btn.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer bg-white text-stone-700 hover:bg-orange-50 border border-orange-200/70 shadow-2xs';
       }
     });
   }

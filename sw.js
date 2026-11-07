@@ -1,5 +1,5 @@
 // BiteCraft Service Worker (PWA Offline Support & Instant Updates)
-const CACHE_NAME = 'baza-przepisow-v5.0-cloud';
+const CACHE_NAME = 'baza-przepisow-v5.1-substitutes';
 
 const PRECACHE_ASSETS = [
   '/',
@@ -23,6 +23,7 @@ const PRECACHE_ASSETS = [
   '/js/shopping.js',
   '/js/modal.js',
   '/js/creator.js',
+  '/js/substitutesModal.js',
   '/js/utils/dom.js',
   '/js/utils/stemmer.js',
   '/js/utils/substitutes.js'

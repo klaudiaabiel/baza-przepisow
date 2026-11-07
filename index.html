@@ -54,7 +54,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <!-- Modular Application Entry Point -->
-  <script type="module" src="js/app.js?v=5.0"></script>
+  <script type="module" src="js/app.js?v=5.1"></script>
 </head>
 <body class="bg-[#faf8f5] text-stone-900 min-h-screen flex flex-col antialiased selection:bg-brand-500 selection:text-white pb-20 md:pb-8">
 
@@ -121,19 +121,16 @@
           <button id="nav-add" class="nav-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all text-stone-600 hover:text-stone-900 hover:bg-stone-100 cursor-pointer">
             <i class="fa-solid fa-plus mr-2"></i>Dodaj przepis
           </button>
-          <button id="nav-settings" class="nav-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all text-stone-600 hover:text-stone-900 hover:bg-stone-100 cursor-pointer">
-            <i class="fa-solid fa-gear mr-2"></i>Ustawienia
-          </button>
         </nav>
 
         <!-- Right Side: Auth status & Creator pill -->
         <div class="flex items-center space-x-2">
           <!-- Auth Pill / Button -->
           <div id="auth-header-container" class="flex items-center">
-            <button type="button" id="auth-open-btn" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-brand-600 hover:bg-brand-700 text-white shadow-xs transition flex items-center gap-1.5 cursor-pointer">
+            <button type="button" id="auth-open-btn" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-brand-600 hover:bg-brand-700 text-white shadow-xs transition flex items-center gap-1.5 cursor-pointer" title="Konto i Ustawienia">
               <i class="fa-solid fa-user"></i> <span>Zaloguj się</span>
             </button>
-            <div id="auth-user-pill" class="hidden flex items-center gap-2 bg-stone-100 pl-2.5 pr-1.5 py-1 rounded-xl border border-stone-200/70">
+            <div id="auth-user-pill" class="hidden flex items-center gap-2 bg-stone-100 pl-2.5 pr-1.5 py-1 rounded-xl border border-stone-200/70 hover:bg-stone-200/70 transition cursor-pointer" title="Konto i Ustawienia">
               <span class="text-xs font-extrabold text-stone-800 flex items-center gap-1.5">
                 <i class="fa-solid fa-circle-user text-brand-600"></i>
                 <span id="auth-user-name">Użytkownik</span>
@@ -172,8 +169,27 @@
           </p>
         </div>
 
+        <!-- 1. SOURCE SELECTOR (WSZYSTKIE, OFICJALNE, SPOŁECZNOŚĆ, MOJE) -->
+        <div class="mt-5 flex items-center gap-1.5 sm:gap-2 flex-wrap">
+          <span class="text-xs font-bold text-stone-600 mr-1 flex items-center gap-1">
+            <i class="fa-solid fa-layer-group text-orange-600"></i> Kolekcja:
+          </span>
+          <button type="button" id="source-filter-all" class="px-3.5 py-1.5 rounded-xl text-xs font-black transition cursor-pointer bg-stone-900 text-white shadow-xs">
+            ✨ Wszystkie <span id="count-src-all" class="text-[10px] ml-1 opacity-80">(229)</span>
+          </button>
+          <button type="button" id="source-filter-official" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer bg-white text-stone-700 hover:bg-orange-50 border border-orange-200/70 shadow-2xs">
+            📖 Oficjalne <span id="count-src-official" class="text-[10px] ml-1 opacity-80">(229)</span>
+          </button>
+          <button type="button" id="source-filter-community" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer bg-white text-stone-700 hover:bg-orange-50 border border-orange-200/70 shadow-2xs">
+            🌍 Społeczność <span id="count-src-community" class="text-[10px] ml-1 opacity-80">(0)</span>
+          </button>
+          <button type="button" id="source-filter-mine" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer bg-white text-stone-700 hover:bg-orange-50 border border-orange-200/70 shadow-2xs">
+            👤 Moje <span id="count-src-mine" class="text-[10px] ml-1 opacity-80">(0)</span>
+          </button>
+        </div>
+
         <!-- SEARCH BAR & TIME MULTI-SELECT -->
-        <div class="mt-6 flex flex-col md:flex-row gap-3">
+        <div class="mt-4 flex flex-col md:flex-row gap-3">
           <div class="relative flex-1">
             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-stone-400">
               <i class="fa-solid fa-magnifying-glass"></i>
@@ -203,7 +219,43 @@
           </div>
         </div>
 
-        <!-- 11 CATEGORIES PILL BAR (NO-SCROLL FLEX-WRAP) -->
+        <!-- 2. KCAL FILTERS BAR (QUICK CHIPS + MANUAL RANGE) -->
+        <div class="mt-3.5 pt-3.5 border-t border-orange-200/60 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+            <span class="text-xs font-bold text-stone-600 mr-1 flex items-center gap-1">
+              <i class="fa-solid fa-fire text-orange-600"></i> Kalorie:
+            </span>
+            <button type="button" data-kcal="all" class="hero-kcal-pill px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-extrabold transition cursor-pointer bg-orange-600 text-white shadow-2xs">
+              Wszystkie
+            </button>
+            <button type="button" data-kcal="under_200" class="hero-kcal-pill px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer bg-white text-stone-800 hover:bg-orange-50 border border-orange-200/70 shadow-2xs">
+              🟢 do 200 kcal
+            </button>
+            <button type="button" data-kcal="under_300" class="hero-kcal-pill px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer bg-white text-stone-800 hover:bg-orange-50 border border-orange-200/70 shadow-2xs">
+              🟡 do 300 kcal
+            </button>
+            <button type="button" data-kcal="under_400" class="hero-kcal-pill px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer bg-white text-stone-800 hover:bg-orange-50 border border-orange-200/70 shadow-2xs">
+              🟠 do 400 kcal
+            </button>
+            <button type="button" data-kcal="under_500" class="hero-kcal-pill px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer bg-white text-stone-800 hover:bg-orange-50 border border-orange-200/70 shadow-2xs">
+              🔴 do 500 kcal
+            </button>
+            <button type="button" data-kcal="over_500" class="hero-kcal-pill px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer bg-white text-stone-800 hover:bg-orange-50 border border-orange-200/70 shadow-2xs">
+              ⚡ reszta (> 500)
+            </button>
+          </div>
+
+          <!-- MANUAL RANGE INPUTS -->
+          <div class="flex items-center gap-1.5 text-xs font-bold text-stone-700 bg-white px-2.5 py-1 rounded-xl border border-orange-200/70 shadow-2xs">
+            <span class="text-[11px] text-stone-400">od</span>
+            <input type="number" id="kcal-min-input" min="0" max="3000" step="50" placeholder="min" class="w-16 px-1.5 py-0.5 rounded-lg bg-stone-50 border border-stone-200 text-xs font-bold text-stone-900 outline-none focus:border-orange-500">
+            <span class="text-[11px] text-stone-400">do</span>
+            <input type="number" id="kcal-max-input" min="0" max="3000" step="50" placeholder="max" class="w-16 px-1.5 py-0.5 rounded-lg bg-stone-50 border border-stone-200 text-xs font-bold text-stone-900 outline-none focus:border-orange-500">
+            <span class="text-[11px] text-stone-400">kcal</span>
+          </div>
+        </div>
+
+        <!-- CATEGORIES PILL BAR (DYNAMIC: 11 Baza vs 3 Rozalia) -->
         <div class="mt-4 pt-4 border-t border-orange-200/70">
           <div id="hero-category-pills" class="flex flex-wrap items-center gap-1.5 sm:gap-2">
             <!-- Rendered dynamically via catalog.js -->
@@ -213,20 +265,10 @@
 
       <!-- CATALOG CONTROLS TOOLBAR -->
       <div class="flex flex-wrap items-center justify-between gap-3 bg-white p-3.5 rounded-2xl border border-stone-200/80 shadow-xs">
-        <div class="flex items-center gap-3 flex-wrap">
-          <div class="flex items-center gap-2">
-            <span class="text-xs font-bold text-stone-500">Znaleziono:</span>
-            <span id="results-count" class="text-xs font-extrabold text-stone-900 px-2 py-0.5 rounded-lg bg-stone-100">0</span>
-            <span class="text-xs text-stone-400">przepisów</span>
-          </div>
-
-          <!-- Source Filter Buttons -->
-          <div class="flex items-center gap-1 bg-stone-100 p-1 rounded-xl text-xs font-semibold text-stone-600">
-            <button type="button" id="source-filter-all" class="px-2.5 py-1 rounded-lg bg-white text-stone-900 shadow-2xs font-extrabold cursor-pointer transition">Wszystkie</button>
-            <button type="button" id="source-filter-official" class="px-2.5 py-1 rounded-lg text-stone-500 hover:text-stone-900 cursor-pointer transition">Oficjalne (229)</button>
-            <button type="button" id="source-filter-community" class="px-2.5 py-1 rounded-lg text-stone-500 hover:text-stone-900 cursor-pointer transition flex items-center gap-1"><i class="fa-solid fa-users text-orange-500"></i> Społeczność</button>
-            <button type="button" id="source-filter-mine" class="px-2.5 py-1 rounded-lg text-stone-500 hover:text-stone-900 cursor-pointer transition flex items-center gap-1"><i class="fa-solid fa-bookmark text-brand-600"></i> Moje</button>
-          </div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-bold text-stone-500">Znaleziono:</span>
+          <span id="results-count" class="text-xs font-extrabold text-stone-900 px-2 py-0.5 rounded-lg bg-stone-100">0</span>
+          <span class="text-xs text-stone-400">przepisów</span>
         </div>
 
         <div class="flex items-center gap-2 flex-wrap">
@@ -243,6 +285,12 @@
           <button type="button" id="fav-toggle-btn" class="p-2.5 rounded-xl border border-stone-200 text-stone-500 hover:text-red-500 hover:border-red-200 hover:bg-red-50 transition-all text-xs font-medium flex items-center gap-1.5 cursor-pointer">
             <i class="fa-solid fa-heart"></i>
             <span class="hidden sm:inline">Ulubione</span>
+          </button>
+
+          <!-- Dietary Substitutes Cheat Sheet Button -->
+          <button type="button" id="nav-substitutes-btn" class="p-2.5 rounded-xl border border-stone-200 text-stone-600 hover:text-amber-800 hover:border-amber-300 hover:bg-amber-50 transition-all text-xs font-bold flex items-center gap-1.5 cursor-pointer" title="Kliniczna ściąga zamienników dietetycznych">
+            <i class="fa-solid fa-scale-balanced text-amber-600"></i>
+            <span class="hidden sm:inline">Ściąga zamienników</span>
           </button>
 
           <!-- Reset Button -->
@@ -280,6 +328,22 @@
 
     <!-- TAB 2: PLANNER (JADŁOSPIS) -->
     <section id="tab-planner" class="hidden space-y-6">
+
+      <!-- GUEST INFO BANNER FOR PLANNER -->
+      <div id="planner-guest-banner" class="hidden p-4 rounded-2xl bg-amber-50/90 border border-amber-200/80 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-amber-900">
+        <div class="flex items-start gap-3">
+          <div class="w-8 h-8 rounded-xl bg-amber-100 flex items-center justify-center shrink-0 text-amber-700 text-sm mt-0.5">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+          </div>
+          <div class="text-xs">
+            <p class="font-extrabold text-amber-900 text-sm">Jadłospis w trybie gościa</p>
+            <p class="text-amber-800/90 mt-0.5">Pełna synchronizacja w chmurze dostępna jest po zalogowaniu. Jeśli dodasz posiłki bez konta, dane zostaną wyczyszczone po zakończeniu sesji przeglądarki.</p>
+          </div>
+        </div>
+        <button type="button" class="banner-login-btn px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-extrabold shadow-xs transition cursor-pointer shrink-0 self-start sm:self-auto">
+          Zaloguj się / Załóż konto
+        </button>
+      </div>
       
       <!-- PLANNER TOOLBAR -->
       <div class="bg-white p-4 rounded-3xl border border-stone-200/80 shadow-xs flex flex-wrap items-center justify-between gap-4">
@@ -288,18 +352,23 @@
           <h2 id="planner-week-range" class="text-lg sm:text-xl font-extrabold text-stone-900">Ładowanie tygodnia...</h2>
         </div>
 
-        <div class="flex items-center gap-2">
-          <button id="planner-prev-week" class="p-2 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-700 transition cursor-pointer">
+        <div class="flex items-center gap-2 flex-wrap">
+          <button id="planner-prev-week" class="p-2 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-700 transition cursor-pointer" title="Poprzedni tydzień">
             <i class="fa-solid fa-chevron-left text-xs"></i>
           </button>
           <button id="planner-today-btn" class="px-3.5 py-2 rounded-xl bg-brand-50 hover:bg-brand-100 text-brand-700 border border-brand-200 text-xs font-black transition cursor-pointer">
             Dzisiaj
           </button>
-          <button id="planner-next-week" class="p-2 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-700 transition cursor-pointer">
+          <button id="planner-next-week" class="p-2 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-700 transition cursor-pointer" title="Następny tydzień">
             <i class="fa-solid fa-chevron-right text-xs"></i>
           </button>
           
           <input type="date" id="planner-date-input" class="px-3 py-2 bg-white border border-stone-200 rounded-xl text-xs font-bold text-stone-800 outline-none focus:border-brand-500 shadow-2xs cursor-pointer">
+
+          <button id="planner-clear-all-btn" class="px-3 py-2 rounded-xl bg-white hover:bg-red-50 border border-stone-200 hover:border-red-200 text-stone-600 hover:text-red-600 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-2xs ml-auto sm:ml-2" title="Wyczyść cały jadłospis">
+            <i class="fa-regular fa-trash-can text-stone-400"></i>
+            <span>Wyczyść jadłospis</span>
+          </button>
         </div>
       </div>
 
@@ -312,6 +381,22 @@
 
     <!-- TAB 3: SHOPPING LIST (LISTA ZAKUPÓW) -->
     <section id="tab-shopping" class="hidden space-y-6">
+
+      <!-- GUEST INFO BANNER FOR SHOPPING -->
+      <div id="shopping-guest-banner" class="hidden p-4 rounded-2xl bg-amber-50/90 border border-amber-200/80 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-amber-900">
+        <div class="flex items-start gap-3">
+          <div class="w-8 h-8 rounded-xl bg-amber-100 flex items-center justify-center shrink-0 text-amber-700 text-sm mt-0.5">
+            <i class="fa-solid fa-cart-shopping"></i>
+          </div>
+          <div class="text-xs">
+            <p class="font-extrabold text-amber-900 text-sm">Lista zakupów w trybie gościa</p>
+            <p class="text-amber-800/90 mt-0.5">Twoja lista zakupów synchronizuje się trwale po zalogowaniu. W trybie gościa po zakończeniu sesji dane zostaną wyczyszczone.</p>
+          </div>
+        </div>
+        <button type="button" class="banner-login-btn px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-extrabold shadow-xs transition cursor-pointer shrink-0 self-start sm:self-auto">
+          Zaloguj się / Załóż konto
+        </button>
+      </div>
       
       <!-- SHOPPING CONTROLS TOOLBAR -->
       <div class="bg-white p-4 sm:p-6 rounded-3xl border border-stone-200/80 shadow-xs">
@@ -382,6 +467,20 @@
         </div>
 
         <form id="add-recipe-form" class="space-y-4">
+          <!-- COLLECTION / TYPE SELECTOR -->
+          <div>
+            <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Typ / Kolekcja dania *</label>
+            <div class="grid grid-cols-2 gap-2 p-1 bg-stone-100 rounded-xl">
+              <button type="button" id="btn-add-type-standard" class="py-2.5 rounded-lg text-xs font-extrabold transition bg-white text-stone-900 shadow-xs cursor-pointer text-center">
+                ✍️ Standardowy własny
+              </button>
+              <button type="button" id="btn-add-type-rozalia" class="py-2.5 rounded-lg text-xs font-bold transition text-stone-600 hover:text-stone-900 cursor-pointer text-center">
+                🌸 Dieta Rozalia
+              </button>
+            </div>
+            <input type="hidden" id="new-recipe-source" value="custom">
+          </div>
+
           <div>
             <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Nazwa potrawy *</label>
             <input type="text" id="new-recipe-title" required placeholder="np. Domowa szakszuka z pomidorami i fetą" class="w-full p-3 rounded-xl border border-stone-200 focus:border-brand-500 text-sm outline-none">
@@ -495,53 +594,6 @@
       </div>
     </section>
 
-    <!-- TAB 5: SETTINGS (USTAWIENIA & TRYB TWÓRCY) -->
-    <section id="tab-settings" class="hidden space-y-6">
-      <div class="bg-white p-6 sm:p-8 rounded-3xl border border-stone-200/80 shadow-xs max-w-2xl mx-auto space-y-6">
-        <div>
-          <span class="text-xs font-bold uppercase tracking-wider text-brand-600 block">Personalizacja</span>
-          <h2 class="text-xl font-extrabold text-stone-900">Ustawienia Jadłospisu</h2>
-          <p class="text-xs text-stone-500 mt-1">Dostosuj liczbę slotów posiłków w tygodniowym planerze.</p>
-        </div>
-
-        <!-- 3-6 MEALS OPTIONS -->
-        <div id="settings-meal-options" class="space-y-3">
-          <!-- Rendered dynamically via app.js -->
-        </div>
-
-        <!-- CREATOR & ADMIN CONTROLS -->
-        <div class="pt-6 border-t border-stone-100">
-          <div class="flex items-center justify-between mb-4">
-            <div>
-              <h3 class="font-extrabold text-stone-900 text-sm">Uprawnienia Twórcy / Administratora</h3>
-              <p class="text-xs text-stone-400">PIN: 0000 odblokowuje usuwanie dań i eksport czystej bazy.</p>
-            </div>
-            <div>
-              <button type="button" id="unlock-creator-btn" class="px-4 py-2 rounded-xl bg-stone-900 text-white font-extrabold text-xs transition cursor-pointer">
-                Odblokuj PIN
-              </button>
-              <button type="button" id="lock-creator-btn" class="hidden px-4 py-2 rounded-xl bg-stone-100 text-stone-700 font-bold text-xs transition cursor-pointer">
-                Zablokuj
-              </button>
-            </div>
-          </div>
-
-          <!-- EXPORT CLEAN RECIPES.JSON -->
-          <div class="creator-only hidden p-4 rounded-2xl bg-amber-50 border border-amber-200 space-y-3">
-            <h4 class="text-xs font-extrabold text-amber-900 flex items-center gap-2">
-              <i class="fa-solid fa-cloud-arrow-down"></i> Eksport czystej bazy dla Cloudflare / GitHub
-            </h4>
-            <p class="text-[11px] text-amber-800 leading-relaxed font-medium">
-              Pobierz plik <code class="font-bold">recipes.json</code> zawierający wszystkie aktualne przepisy z uwzględnieniem dodanych i usuniętych pozycji. Możesz go bezpośrednio przeciągnąć do folderu <code class="font-bold">cloudflare_build/</code> na GitHubie.
-            </p>
-            <button type="button" id="export-recipes-json-btn" class="px-4 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-extrabold text-xs shadow-xs transition cursor-pointer flex items-center gap-2">
-              <i class="fa-solid fa-download"></i> Pobierz czyste recipes.json
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-
   </main>
 
   <!-- ========================================== -->
@@ -628,7 +680,12 @@
             <h3 class="font-extrabold text-sm uppercase text-stone-900 flex items-center gap-2">
               <i class="fa-solid fa-basket-shopping text-brand-600"></i> Składniki
             </h3>
-            <span id="modal-ing-count" class="text-xs text-stone-400 font-bold">0 pozycji</span>
+            <div class="flex items-center gap-2">
+              <button type="button" id="modal-open-substitutes-btn" class="px-2.5 py-1 rounded-xl text-[11px] font-bold text-amber-800 bg-amber-50 hover:bg-amber-100 border border-amber-200/80 transition flex items-center gap-1.5 cursor-pointer" title="Otwórz pełną ściągę zamienników dietetycznych">
+                <i class="fa-solid fa-scale-balanced text-amber-600"></i> Ściąga zamienników
+              </button>
+              <span id="modal-ing-count" class="text-xs text-stone-400 font-bold">0 pozycji</span>
+            </div>
           </div>
           <div id="modal-ingredients" class="space-y-1">
             <!-- Rendered dynamically via modal.js -->
@@ -746,76 +803,210 @@
       <i class="fa-solid fa-plus text-lg"></i>
       <span class="text-[10px] mt-0.5">Dodaj</span>
     </button>
-    <button id="mob-settings" class="mob-btn flex flex-col items-center py-1 px-3 text-stone-400 hover:text-stone-600 font-medium cursor-pointer">
-      <i class="fa-solid fa-gear text-lg"></i>
-      <span class="text-[10px] mt-0.5">Ustawienia</span>
+    <button id="mob-auth-btn" class="mob-btn flex flex-col items-center py-1 px-3 text-stone-400 hover:text-stone-600 font-medium cursor-pointer" title="Konto i Ustawienia">
+      <i class="fa-solid fa-circle-user text-lg"></i>
+      <span class="text-[10px] mt-0.5">Konto</span>
     </button>
   </nav>
 
   <!-- ========================================== -->
-  <!-- MODAL: AUTHENTICATION (LOGOWANIE / REJESTRACJA) -->
+  <!-- MODAL: DIETARY SUBSTITUTES CHEAT SHEET     -->
+  <!-- ========================================== -->
+  <div id="modal-substitutes" class="hidden fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+    <div id="modal-substitutes-backdrop" class="fixed inset-0 bg-stone-900/60 backdrop-blur-sm transition-opacity cursor-pointer"></div>
+
+    <div class="relative bg-[#faf8f5] rounded-3xl border border-stone-200 shadow-2xl max-w-4xl w-full max-h-[92vh] overflow-hidden z-10 flex flex-col my-auto">
+      
+      <!-- Modal Header -->
+      <div class="p-4 sm:p-6 bg-white border-b border-stone-200/80 flex items-start justify-between gap-4 shrink-0">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center text-lg shrink-0">
+            <i class="fa-solid fa-scale-balanced"></i>
+          </div>
+          <div>
+            <h3 class="text-base sm:text-xl font-extrabold text-stone-900 tracking-tight flex items-center gap-2">
+              Kliniczna Ściąga Zamienników Dietetycznych
+            </h3>
+            <p class="text-xs text-stone-500 font-medium mt-0.5">
+              Oficjalne zasady i gramatury równoważników klinicznych. Zamieniaj produkty bez zaburzania bilansu makroskładników.
+            </p>
+          </div>
+        </div>
+
+        <button type="button" id="close-substitutes-modal" class="w-9 h-9 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 flex items-center justify-center transition cursor-pointer shrink-0">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
+      </div>
+
+      <!-- Search & Category Filters -->
+      <div class="p-4 bg-white/70 backdrop-blur-md border-b border-stone-200/80 space-y-3 shrink-0">
+        <!-- Search bar -->
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-stone-400">
+            <i class="fa-solid fa-magnifying-glass text-xs"></i>
+          </div>
+          <input 
+            type="text" 
+            id="substitutes-search-input" 
+            placeholder="Szukaj produktu (np. banan, batat, płatki owsiane, łosoś, oliwa)..." 
+            class="w-full pl-9 pr-10 py-2.5 bg-stone-50 rounded-xl border border-stone-200 text-xs sm:text-sm font-semibold text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500 focus:bg-white transition"
+          >
+          <button id="substitutes-search-clear" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-stone-400 hover:text-stone-600 cursor-pointer">
+            <i class="fa-solid fa-circle-xmark text-xs"></i>
+          </button>
+        </div>
+
+        <!-- Horizontal category pills -->
+        <div id="substitutes-category-tabs" class="flex items-center gap-1.5 overflow-x-auto pb-1 custom-scrollbar">
+          <!-- Rendered dynamically via substitutesModal.js -->
+        </div>
+      </div>
+
+      <!-- Substitutes Content (Scrollable Grid) -->
+      <div class="p-4 sm:p-6 overflow-y-auto flex-1 custom-scrollbar">
+        <div id="substitutes-content-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Rendered dynamically via substitutesModal.js -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: KONTO & USTAWIENIA                  -->
   <!-- ========================================== -->
   <div id="modal-auth" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
     <div id="modal-auth-backdrop" class="fixed inset-0 bg-stone-900/60 backdrop-blur-sm cursor-pointer"></div>
-    <div class="relative bg-white rounded-3xl border border-stone-200 shadow-2xl max-w-sm w-full p-6 z-10 space-y-4">
+    <div class="relative bg-white rounded-3xl border border-stone-200 shadow-2xl max-w-md w-full max-h-[92vh] overflow-y-auto p-6 z-10 space-y-5 custom-scrollbar">
       
-      <div class="flex items-center justify-between pb-2 border-b border-stone-100">
+      <!-- MODAL HEADER -->
+      <div class="flex items-center justify-between pb-3 border-b border-stone-100">
         <div>
-          <span class="text-[11px] font-bold uppercase tracking-wider text-brand-600 block">Konto BiteCraft</span>
-          <h3 class="font-black text-lg text-stone-900">Synchronizacja Chmury</h3>
+          <span class="text-[11px] font-bold uppercase tracking-wider text-brand-600 block">BiteCraft</span>
+          <h3 class="font-black text-lg text-stone-900">Konto i Ustawienia</h3>
         </div>
         <button type="button" id="close-auth-modal" class="w-8 h-8 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 flex items-center justify-center transition cursor-pointer">
           <i class="fa-solid fa-xmark text-xs"></i>
         </button>
       </div>
 
-      <!-- TABS: LOGOWANIE / REJESTRACJA -->
-      <div class="flex border-b border-stone-200">
-        <button type="button" id="auth-tab-login" class="flex-1 py-2.5 text-xs sm:text-sm font-extrabold text-brand-700 border-b-2 border-brand-600 cursor-pointer text-center">
-          Zaloguj się
-        </button>
-        <button type="button" id="auth-tab-register" class="flex-1 py-2.5 text-xs sm:text-sm font-semibold text-stone-500 hover:text-stone-800 border-b-2 border-transparent cursor-pointer text-center">
-          Zarejestruj się
-        </button>
+      <!-- SECTION 1A: LOGGED IN USER PROFILE -->
+      <div id="auth-logged-in-box" class="hidden p-4 rounded-2xl bg-stone-50 border border-stone-200/80 space-y-3">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-2xl bg-brand-100 text-brand-700 flex items-center justify-center text-lg font-black">
+              <i class="fa-solid fa-user-check"></i>
+            </div>
+            <div>
+              <p id="modal-user-username" class="font-black text-stone-900 text-sm">@username</p>
+              <p id="modal-user-email" class="text-xs text-stone-500 font-medium">user@email.com</p>
+            </div>
+          </div>
+          <button type="button" id="modal-logout-btn" class="px-3 py-1.5 rounded-xl border border-stone-200 hover:border-red-200 text-stone-500 hover:text-red-600 hover:bg-red-50 text-xs font-bold transition cursor-pointer">
+            <i class="fa-solid fa-arrow-right-from-bracket mr-1"></i> Wyloguj
+          </button>
+        </div>
+        <div class="flex items-center gap-2 text-[11px] font-bold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200/70">
+          <i class="fa-solid fa-cloud-check text-xs"></i> Synchronizacja w chmurze Supabase aktywna
+        </div>
       </div>
 
-      <!-- ERROR MESSAGE ALERT -->
-      <div id="auth-error-msg" class="hidden p-3 rounded-xl bg-red-50 border border-red-200 text-red-600 text-xs font-semibold"></div>
+      <!-- SECTION 1B: GUEST AUTH FORMS (LOGIN / REGISTER) -->
+      <div id="auth-guest-box" class="space-y-4">
+        <!-- TABS: LOGOWANIE / REJESTRACJA -->
+        <div class="flex border-b border-stone-200">
+          <button type="button" id="auth-tab-login" class="flex-1 py-2 text-xs sm:text-sm font-extrabold text-brand-700 border-b-2 border-brand-600 cursor-pointer text-center">
+            Zaloguj się
+          </button>
+          <button type="button" id="auth-tab-register" class="flex-1 py-2 text-xs sm:text-sm font-semibold text-stone-500 hover:text-stone-800 border-b-2 border-transparent cursor-pointer text-center">
+            Zarejestruj się
+          </button>
+        </div>
 
-      <!-- FORM 1: LOGIN -->
-      <form id="auth-form-login" class="space-y-3">
-        <div>
-          <label class="block text-[11px] font-bold text-stone-600 uppercase mb-1">Adres Email</label>
-          <input type="email" id="auth-login-email" required placeholder="twoj@email.com" class="w-full p-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm outline-none focus:border-brand-500">
-        </div>
-        <div>
-          <label class="block text-[11px] font-bold text-stone-600 uppercase mb-1">Hasło</label>
-          <input type="password" id="auth-login-password" required placeholder="••••••••" class="w-full p-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm outline-none focus:border-brand-500">
-        </div>
-        <button type="submit" id="auth-login-submit-btn" class="w-full py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-xs transition shadow-xs cursor-pointer">
-          Zaloguj się
-        </button>
-        <p class="text-[11px] text-stone-400 text-center">Dostęp do Twoich dań, jadłospisu i listy zakupów na każdym urządzeniu.</p>
-      </form>
+        <!-- ERROR MESSAGE ALERT -->
+        <div id="auth-error-msg" class="hidden p-3 rounded-xl bg-red-50 border border-red-200 text-red-600 text-xs font-semibold"></div>
 
-      <!-- FORM 2: REGISTER -->
-      <form id="auth-form-register" class="hidden space-y-3">
-        <div>
-          <label class="block text-[11px] font-bold text-stone-600 uppercase mb-1">Nazwa użytkownika (login)</label>
-          <input type="text" id="auth-reg-username" required placeholder="np. klaudia" class="w-full p-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm outline-none focus:border-brand-500">
+        <!-- FORM 1: LOGIN -->
+        <form id="auth-form-login" class="space-y-3">
+          <div>
+            <label class="block text-[11px] font-bold text-stone-600 uppercase mb-1">Adres Email</label>
+            <input type="email" id="auth-login-email" required placeholder="twoj@email.com" class="w-full p-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm outline-none focus:border-brand-500">
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold text-stone-600 uppercase mb-1">Hasło</label>
+            <input type="password" id="auth-login-password" required placeholder="••••••••" class="w-full p-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm outline-none focus:border-brand-500">
+          </div>
+          <button type="submit" id="auth-login-submit-btn" class="w-full py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-xs transition shadow-xs cursor-pointer">
+            Zaloguj się
+          </button>
+          <p class="text-[11px] text-stone-400 text-center">Logowanie zapewnia bezterminowe zachowanie Twojego jadłospisu i listy zakupów.</p>
+        </form>
+
+        <!-- FORM 2: REGISTER -->
+        <form id="auth-form-register" class="hidden space-y-3">
+          <div>
+            <label class="block text-[11px] font-bold text-stone-600 uppercase mb-1">Nazwa użytkownika (login)</label>
+            <input type="text" id="auth-reg-username" required placeholder="np. klaudia" class="w-full p-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm outline-none focus:border-brand-500">
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold text-stone-600 uppercase mb-1">Adres Email</label>
+            <input type="email" id="auth-reg-email" required placeholder="twoj@email.com" class="w-full p-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm outline-none focus:border-brand-500">
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold text-stone-600 uppercase mb-1">Hasło (min. 6 znaków)</label>
+            <input type="password" id="auth-reg-password" minlength="6" required placeholder="••••••••" class="w-full p-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm outline-none focus:border-brand-500">
+          </div>
+          <button type="submit" id="auth-reg-submit-btn" class="w-full py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-xs transition shadow-xs cursor-pointer">
+            Zarejestruj się
+          </button>
+        </form>
+      </div>
+
+      <!-- SECTION 2: MEAL PLAN SETTINGS (PERSONALIZACJA POSIŁKÓW) -->
+      <div class="pt-4 border-t border-stone-200 space-y-3">
+        <div class="flex items-center justify-between">
+          <div>
+            <h4 class="font-extrabold text-stone-900 text-sm flex items-center gap-1.5">
+              <i class="fa-solid fa-sliders text-brand-600"></i> Liczba posiłków w jadłospisie
+            </h4>
+            <p class="text-[11px] text-stone-400">Dostosuj siatkę posiłków na dzień (od 3 do 6).</p>
+          </div>
         </div>
-        <div>
-          <label class="block text-[11px] font-bold text-stone-600 uppercase mb-1">Adres Email</label>
-          <input type="email" id="auth-reg-email" required placeholder="twoj@email.com" class="w-full p-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm outline-none focus:border-brand-500">
+
+        <div id="settings-meal-options" class="space-y-2">
+          <!-- Rendered dynamically via app.js -->
         </div>
-        <div>
-          <label class="block text-[11px] font-bold text-stone-600 uppercase mb-1">Hasło (min. 6 znaków)</label>
-          <input type="password" id="auth-reg-password" minlength="6" required placeholder="••••••••" class="w-full p-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm outline-none focus:border-brand-500">
+      </div>
+
+      <!-- SECTION 3: CREATOR & ADMIN CONTROLS -->
+      <div class="pt-4 border-t border-stone-200 space-y-3">
+        <div class="flex items-center justify-between">
+          <div>
+            <h4 class="font-extrabold text-stone-900 text-xs flex items-center gap-1.5">
+              <i class="fa-solid fa-shield-halved text-stone-700"></i> Tryb Twórcy / Administratora
+            </h4>
+            <p class="text-[10px] text-stone-400">PIN: 0000 odblokowuje usuwanie dań i eksport bazy.</p>
+          </div>
+          <div>
+            <button type="button" id="unlock-creator-btn" class="px-3 py-1.5 rounded-xl bg-stone-900 text-white font-extrabold text-xs transition cursor-pointer">
+              Odblokuj
+            </button>
+            <button type="button" id="lock-creator-btn" class="hidden px-3 py-1.5 rounded-xl bg-stone-100 text-stone-700 font-bold text-xs transition cursor-pointer">
+              Zablokuj
+            </button>
+          </div>
         </div>
-        <button type="submit" id="auth-reg-submit-btn" class="w-full py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-xs transition shadow-xs cursor-pointer">
-          Zarejestruj się
-        </button>
-      </form>
+
+        <!-- EXPORT CLEAN RECIPES.JSON -->
+        <div class="creator-only hidden p-3 rounded-2xl bg-amber-50 border border-amber-200 space-y-2">
+          <p class="text-[11px] text-amber-900 font-bold flex items-center gap-1.5">
+            <i class="fa-solid fa-cloud-arrow-down"></i> Eksport czystej bazy (recipes.json)
+          </p>
+          <button type="button" id="export-recipes-json-btn" class="w-full py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-extrabold text-xs shadow-xs transition cursor-pointer flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-download"></i> Pobierz czyste recipes.json
+          </button>
+        </div>
+      </div>
 
     </div>
   </div>

@@ -120,19 +120,9 @@ class AppStore extends EventTarget {
         }
       }
 
-      const legacyPlan = localStorage.getItem('baza_mealplan');
-      if (legacyPlan) {
-        const entries = JSON.parse(legacyPlan);
-        for (const item of entries) {
-          await this.idbPut('meal_plan', {
-            id: String(item.id || (Date.now() + Math.random())),
-            date_key: item.date_key || new Date().toISOString().split('T')[0],
-            slot_index: typeof item.slot_index === 'number' ? item.slot_index : 0,
-            recipe_id: String(item.recipe_id),
-            portions: item.portions || 1
-          });
-        }
-      }
+      // Legacy meal plan cleanup: do NOT auto-inject old test meals.
+      // Remove stale localStorage key so ghost meals never reappear.
+      localStorage.removeItem('baza_mealplan');
 
       const legacyShopping = localStorage.getItem('baza_shopping');
       if (legacyShopping) {
@@ -165,6 +155,12 @@ class AppStore extends EventTarget {
 
     const delRows = await this.idbGetAll('deleted_recipes');
     this.deletedRecipeIds = new Set(delRows.map(r => String(r.id)));
+
+    // One-time purge of legacy/stale ghost meal plans
+    if (!localStorage.getItem('baza_clean_plan_init')) {
+      await this.idbClear('meal_plan');
+      localStorage.setItem('baza_clean_plan_init', '1');
+    }
 
     this.mealPlan = await this.idbGetAll('meal_plan');
     this.shoppingList = await this.idbGetAll('shopping_list');
@@ -255,6 +251,7 @@ class AppStore extends EventTarget {
   // --- Auth & Cross-Device Cloud Sync ---
   async onAuthChange(user) {
     this.currentUser = user;
+    this.emit('auth_changed', { user });
     if (user) {
       await this.syncWithCloud();
     }
@@ -491,6 +488,29 @@ class AppStore extends EventTarget {
     if (supabase && this.currentUser) {
       supabase.from('meal_plans').delete().eq('id', strId).catch(e => console.warn(e));
     }
+  }
+
+  async clearAllMealPlan() {
+    await this.idbClear('meal_plan');
+    if (supabase && this.currentUser) {
+      await supabase.from('meal_plans').delete().eq('user_id', this.currentUser.id).catch(e => console.warn(e));
+    }
+    this.mealPlan = [];
+    this.emit('mealplan_changed', { action: 'clear_all' });
+  }
+
+  async clearWeekMealPlan(dateKeys) {
+    if (!Array.isArray(dateKeys) || dateKeys.length === 0) return;
+    const keysSet = new Set(dateKeys);
+    const toDelete = this.mealPlan.filter(m => keysSet.has(m.date_key));
+    for (const m of toDelete) {
+      await this.idbDelete('meal_plan', String(m.id));
+      if (supabase && this.currentUser) {
+        supabase.from('meal_plans').delete().eq('id', String(m.id)).catch(e => console.warn(e));
+      }
+    }
+    this.mealPlan = this.mealPlan.filter(m => !keysSet.has(m.date_key));
+    this.emit('mealplan_changed', { action: 'clear_week' });
   }
 
   async updateMealPlanSubstitution(mealPlanId, originalName, replacementData) {

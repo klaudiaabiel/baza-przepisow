@@ -25,9 +25,11 @@ class PlannerModule {
   init() {
     this.bindEvents();
     this.renderBoard();
+    this.updateGuestBanner();
 
     store.addEventListener('ready', () => this.renderBoard());
     store.addEventListener('mealplan_changed', () => this.renderBoard());
+    store.addEventListener('auth_changed', () => this.updateGuestBanner());
     store.addEventListener('setting_changed', (e) => {
       if (e.detail.key === 'dailyMealCount') this.renderBoard();
     });
@@ -36,6 +38,13 @@ class PlannerModule {
     window.addEventListener('open_day_picker', (e) => {
       this.openDayPickerModal(e.detail.id, e.detail.substitutions);
     });
+  }
+
+  updateGuestBanner() {
+    const banner = document.getElementById('planner-guest-banner');
+    if (banner) {
+      banner.classList.toggle('hidden', !!store.currentUser);
+    }
   }
 
   bindEvents() {
@@ -72,6 +81,31 @@ class PlannerModule {
           this.currentDate = new Date(e.target.value);
           this.renderBoard();
         }
+      });
+    }
+
+    // Clear all meal plan button
+    const clearAllBtn = document.getElementById('planner-clear-all-btn');
+    if (clearAllBtn) {
+      clearAllBtn.addEventListener('click', async () => {
+        const plan = store.getMealPlan();
+        if (!plan || plan.length === 0) {
+          showToast('Jadłospis jest już pusty.');
+          return;
+        }
+        if (confirm('Czy na pewno chcesz usunąć wszystkie zaplanowane posiłki z jadłospisu?')) {
+          await store.clearAllMealPlan();
+          showToast('Wyczyszczono cały jadłospis.');
+        }
+      });
+    }
+
+    // Banner login button
+    const bannerLoginBtn = document.querySelector('#planner-guest-banner .banner-login-btn');
+    if (bannerLoginBtn) {
+      bannerLoginBtn.addEventListener('click', () => {
+        const authBtn = document.getElementById('auth-open-btn');
+        if (authBtn) authBtn.click();
       });
     }
 

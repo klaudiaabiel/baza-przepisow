@@ -25,9 +25,18 @@ class ShoppingModule {
   init() {
     this.bindEvents();
     this.renderList();
+    this.updateGuestBanner();
 
     store.addEventListener('ready', () => this.renderList());
     store.addEventListener('shopping_changed', () => this.renderList());
+    store.addEventListener('auth_changed', () => this.updateGuestBanner());
+  }
+
+  updateGuestBanner() {
+    const banner = document.getElementById('shopping-guest-banner');
+    if (banner) {
+      banner.classList.toggle('hidden', !!store.currentUser);
+    }
   }
 
   bindEvents() {
@@ -61,6 +70,15 @@ class ShoppingModule {
     const printBtn = document.getElementById('print-shopping-btn');
     if (printBtn) {
       printBtn.addEventListener('click', () => window.print());
+    }
+
+    // Guest banner login button
+    const bannerLoginBtn = document.querySelector('#shopping-guest-banner .banner-login-btn');
+    if (bannerLoginBtn) {
+      bannerLoginBtn.addEventListener('click', () => {
+        const authBtn = document.getElementById('auth-open-btn');
+        if (authBtn) authBtn.click();
+      });
     }
 
     // Clear checked button
